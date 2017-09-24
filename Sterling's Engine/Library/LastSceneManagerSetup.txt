@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Placeholder Asset.unity
+  isLoaded: 1
+  isActive: 1
