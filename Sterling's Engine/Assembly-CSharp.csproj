@@ -51,8 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\MapDesign\MapTile.cs" />
-     <Compile Include="Assets\MapDesign\TileManager.cs" />
+     <Compile Include="Assets\MapDesign\Tiles\MapTile.cs" />
+     <Compile Include="Assets\MapDesign\Tiles\TileManager.cs" />
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
