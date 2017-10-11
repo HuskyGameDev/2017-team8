@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/dev_Colin.unity
-=======
-- path: Assets/MapDesign/DerrickDev.unity
->>>>>>> ae656ec7ce2477e4d88950da4ee8c46e20b5d551
+- path: Assets/Camera/dev_Colin.unity
   isLoaded: 1
   isActive: 1
