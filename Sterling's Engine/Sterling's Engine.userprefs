@@ -1,8 +1,10 @@
-﻿<Properties StartupItem="Sterling's Engine.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CameraMovement.cs">
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MapDesign\Tiles\MapTile.cs">
     <Files>
-      <File FileName="Assets\Scripts\CameraMovement.cs" Line="26" Column="24" />
+      <File FileName="Assets\MapDesign\Tiles\TileManager.cs" Line="13" Column="43" />
+      <File FileName="Assets\MapDesign\Tiles\MapTile.cs" Line="27" Column="6" />
+      <File FileName="Assets\Scripts\CameraMovement.cs" Line="26" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
