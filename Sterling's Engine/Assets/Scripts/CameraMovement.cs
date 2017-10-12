@@ -73,6 +73,13 @@ public class CameraMovement : MonoBehaviour {
         {
             Camera.main.orthographicSize = Camera.main.orthographicSize -= zoomscrollSpeed;
         }
-        
+
+        //This will be for Mousewheel click movement
+
+        if (Input.GetKey(KeyCode.Mouse2))
+        {
+            //middle mouse is being held, just for proof of concept going to only be increasing the vertical climb.
+            transform.Translate(new Vector3(0, scrollSpeed * Time.deltaTime, 0));
+        }
     }
 }
