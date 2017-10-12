@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Camera/dev_Colin.unity
+- path: Assets/MapDesign/TestMap.unity
   isLoaded: 1
   isActive: 1
