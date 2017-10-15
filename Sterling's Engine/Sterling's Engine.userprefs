@@ -1,10 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MapDesign\Tiles\MapTile.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TileHoverClick.cs">
     <Files>
-      <File FileName="Assets\MapDesign\Tiles\TileManager.cs" Line="13" Column="43" />
-      <File FileName="Assets\MapDesign\Tiles\MapTile.cs" Line="27" Column="6" />
-      <File FileName="Assets\Scripts\CameraMovement.cs" Line="26" Column="4" />
+      <File FileName="Assets\MapDesign\Tiles\TileManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\MapDesign\Tiles\MapTile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CameraMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TileHoverClick.cs" Line="9" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
