@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/MapDesign/TestMap.unity
+- path: Assets/MapDesign/DerrickDev.unity
   isLoaded: 1
   isActive: 1

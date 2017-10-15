@@ -92,7 +92,7 @@ public class CameraMovement : MonoBehaviour {
     /*
      * This method functions to adjust the camera translation with more fidelity than using the arrow (or when implemented the wasd keys)
      * 
-     * multiplier: multiplies the translation, so you can customize the speed of certaiin methods of scrolling.
+     * multiplier: multiplies the translation, so you can customize the speed of certain methods of scrolling.
      * */
     void SmoothMousing(int multiplier)
     {
@@ -105,10 +105,6 @@ public class CameraMovement : MonoBehaviour {
         float angle;
         float changeX;
         float changeY;
-        //middle mouse is being held, just for proof of concept going to only be increasing the vertical climb.
-        //transform.Translate(new Vector3(0, scrollSpeed * Time.deltaTime, 0));
-
-        // Middle Mouse click will allow the user to use the center of the screen as an edge, however moving faster the farther away from the center you are
 
         //get the Pixel Middle of the screen., update
         screenCenterX = Screen.width / 2;
