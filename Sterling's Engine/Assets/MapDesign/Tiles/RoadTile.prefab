@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4316ce850837a8a468482bf8be9e11af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 
+  tileType: Road
 --- !u!212 &212450405180243970
 SpriteRenderer:
   m_ObjectHideFlags: 1
