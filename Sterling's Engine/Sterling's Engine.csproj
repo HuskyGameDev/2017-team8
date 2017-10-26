@@ -221,7 +221,10 @@
   <ItemGroup>
     <Compile Include="Assets\MapDesign\Tiles\MapTile.cs" />
     <Compile Include="Assets\MapDesign\Tiles\TileManager.cs" />
+    <Compile Include="Assets\Scripts\AntiInfClass.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\MeleeUnit.cs" />
+    <Compile Include="Assets\Scripts\RangedUnit.cs" />
     <Compile Include="Assets\Scripts\TileHoverClick.cs" />
     <Compile Include="Assets\Scripts\UnitClass.cs" />
   </ItemGroup>
