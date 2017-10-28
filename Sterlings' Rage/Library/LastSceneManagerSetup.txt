@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Camera/dev_Colin.unity
-  isLoaded: 1
-  isActive: 1
