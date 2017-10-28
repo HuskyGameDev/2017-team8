@@ -5,6 +5,8 @@ using UnityEngine;
 public class UnitClass {
 	private string unitClassName;
 
+    // Test Comment
+
 	// Stats
 	private int health;
 	private int speed;
