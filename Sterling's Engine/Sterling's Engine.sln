@@ -1,11 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-<<<<<<< HEAD
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sterling's Engine.CSharp", "Sterling's Engine.CSharp.csproj", "{67C40093-726B-4B19-D427-B41374D49FE4}"
-=======
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sterling's Engine", "Sterling's Engine.csproj", "{422C5D65-C152-8327-BD7A-11E2BF914A09}"
->>>>>>> 0863988de5386b27763af3efbcf17092adff362f
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,17 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-		{67C40093-726B-4B19-D427-B41374D49FE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67C40093-726B-4B19-D427-B41374D49FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67C40093-726B-4B19-D427-B41374D49FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67C40093-726B-4B19-D427-B41374D49FE4}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{422C5D65-C152-8327-BD7A-11E2BF914A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{422C5D65-C152-8327-BD7A-11E2BF914A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{422C5D65-C152-8327-BD7A-11E2BF914A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{422C5D65-C152-8327-BD7A-11E2BF914A09}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> 0863988de5386b27763af3efbcf17092adff362f
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

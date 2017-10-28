@@ -6,46 +6,46 @@ public class UnitClass {
 	private string unitClassName;
 
 	// Stats
-	private int Health;
-	private int Speed;
-	private int Range;
-	private int Damage;
-	private string Sprite;
-	private int Cost;
+	private int health;
+	private int speed;
+	private int range;
+	private int damage;
+	private string sprite;
+	private int cost;
 
-	public string unitClassName{
+	public string UnitClassName{
 		get{return unitClassName;}
 		set{unitClassName = value;}
 	}
 
 	public string Sprite{
-		get{return Sprite;}
-		set{Sprite = value;}
+		get{return sprite;}
+		set{sprite = value;}
 	}
 
 	public int Health{
-		get{return Health;}
-		set{Health = value;}
+		get{return health;}
+		set{health = value;}
 	}
 
 	public int Speed{
-		get{return Speed;}
-		set{Speed = value;}
+		get{return speed;}
+		set{speed = value;}
 	}
 	
 	public int Range{
-		get{return Range;}
-		set{Range = value;}
+		get{return range;}
+		set{range = value;}
 	}
 	
 	public int Damage{
-		get{return Damage;}
-		set{Damage = value;}
+		get{return damage;}
+		set{damage = value;}
 	}
 
 	public int Cost{
-		get{return Cost;}
-		set{Cost = value;}
+		get{return cost;}
+		set{cost = value;}
 	}
 	
 }
