@@ -1,5 +1,9 @@
-*/[Ll]ibrary/
-*/[Tt]emp/
+/[Ll]ibrary/
+/Library/*
+/Library/metadata
+/Library/metadata/
+Library/metadata/*
+/[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
