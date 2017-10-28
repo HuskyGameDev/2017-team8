@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sterlings' Rage", "Sterlings' Rage.csproj", "{81C2C2A8-79CC-6444-A8EB-B3F975DFE11C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81C2C2A8-79CC-6444-A8EB-B3F975DFE11C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81C2C2A8-79CC-6444-A8EB-B3F975DFE11C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81C2C2A8-79CC-6444-A8EB-B3F975DFE11C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81C2C2A8-79CC-6444-A8EB-B3F975DFE11C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
