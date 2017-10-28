@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitClass {
-	private string unitClassName;
+	public string unitClassName;
 
 	// Stats
 	private int health;
