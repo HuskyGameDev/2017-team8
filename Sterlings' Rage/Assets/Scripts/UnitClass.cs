@@ -56,7 +56,10 @@ public class UnitClass {
         set { currentTile = value; }
     }
 
-    public void moveTo(MapTile dest) {
+    public bool MoveTo(MapTile dest) {
+        // if the destination tile is range, changes unit's current tile to the destination
+        // and returns true
+        // if out of range, returns false and does nothing
         int destx = (int)dest.transform.position.x;
         int desty = (int)dest.transform.position.y;
         int currentx = (int)currentTile.transform.position.x;
@@ -64,8 +67,9 @@ public class UnitClass {
         if(Mathf.Abs(destx - currentx) + Mathf.Abs(desty - currenty) <= range)
         {
             currentTile = dest;
+            return true;
         }
-        
+        return false;
     }
 	
 }
