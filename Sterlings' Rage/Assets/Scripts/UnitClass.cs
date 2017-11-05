@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitClass {
+public class UnitClass : MonoBehaviour {
     private string unitClassName;
 
     // Test Comment
@@ -14,7 +14,10 @@ public class UnitClass {
     private int damage;
     private string sprite;
     private int cost;
-    MapTile currentTile;
+    public MapTile currentTile;
+    private MapTile dest;
+    private bool isMovingX;
+    private bool isMovingY;
 
     public string UnitClassName {
         get { return unitClassName; }
@@ -66,10 +69,67 @@ public class UnitClass {
         int currenty = (int)currentTile.transform.position.y;
         if(Mathf.Abs(destx - currentx) + Mathf.Abs(desty - currenty) <= range)
         {
-            currentTile = dest;
+            isMovingX = true;
+            this.dest = dest;
             return true;
         }
         return false;
     }
-	
+
+    public void Update()
+    {
+        if (isMovingX)
+        {
+            if (dest.transform.position.x < currentTile.transform.position.x)
+            {
+                transform.Translate(-0.1f, 0, 0);
+                if(dest.transform.position.x >= transform.position.x)
+                {
+                    isMovingX = false;
+                    isMovingY = true;
+                }
+            }
+            else
+            {
+                transform.Translate(0.1f, 0, 0);
+                if (dest.transform.position.x <= transform.position.x)
+                {
+                    isMovingX = false;
+                    isMovingY = true;
+                }
+            }
+        }
+        else if (isMovingY)
+        {
+            if(dest.transform.position.y < currentTile.transform.position.y)
+            {
+                transform.Translate(0, 0.1f, 0);
+                if(dest.transform.position.y >= transform.position.y)
+                {
+                    isMovingY = false;
+                    currentTile = dest;
+                    dest = null;
+                }
+            }
+            else
+            {
+                transform.Translate(0, 0.1f, 0);
+                if (dest.transform.position.y <= transform.position.y)
+                {
+                    isMovingY = false;
+                    currentTile = dest;
+                    dest = null;
+                }
+            }
+        }
+    }
+
+    private void Start()
+    {
+        isMovingY = false;
+        isMovingY = false; 
+        range = 10;
+        dest = null;
+    }
+
 }
