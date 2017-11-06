@@ -1,0 +1,134 @@
+﻿Merge branch 'master' of https://github.com/HuskyGameDev/2017-team8
+
+# Conflicts:
+#	Sterling's Engine/.vs/Sterling's Engine/v14/.suo
+#	Sterling's Engine/Library/CurrentLayout.dwlt
+#	Sterling's Engine/Library/ScriptAssemblies/Assembly-CSharp.dll
+#	Sterling's Engine/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+#	Sterling's Engine/Library/assetDatabase3
+#	Sterling's Engine/Library/metadata/00/00000000000000002000000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000003000000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000004000000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000004100000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000005000000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000005100000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000006000000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000006100000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000007000000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000007100000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000008000000000000000
+#	Sterling's Engine/Library/metadata/00/00000000000000009000000000000000
+#	Sterling's Engine/Library/metadata/00/0000000000000000a000000000000000
+#	Sterling's Engine/Library/metadata/00/0000000000000000a100000000000000
+#	Sterling's Engine/Library/metadata/00/0000000000000000b000000000000000
+#	Sterling's Engine/Library/metadata/00/0000000000000000c000000000000000
+#	Sterling's Engine/Library/metadata/00/0000000000000000e100000000000000
+#	Sterling's Engine/Library/metadata/0d/0d3bb855445e36e479c85976fc88383a
+#	Sterling's Engine/Library/metadata/12/12fd8a0055b84bb59e84c9835a37e333
+#	Sterling's Engine/Library/metadata/1c/1c6d1fbb51834b64847b1b73a75bfc77
+#	Sterling's Engine/Library/metadata/21/21eff446d50eaf44a85985cd4c0b6fa1
+#	Sterling's Engine/Library/metadata/26/2682a692a2be7e14e901a738c7806da0
+#	Sterling's Engine/Library/metadata/38/38c8faf1788024c02930a0c68a6e0edc
+#	Sterling's Engine/Library/metadata/40/405b9b51bb344a128608d968297df79c
+#	Sterling's Engine/Library/metadata/41/4113173d5e95493ab8765d7b08371de4
+#	Sterling's Engine/Library/metadata/4b/4b3fa4bde7f1451a8218c03ee6a8ded8
+#	Sterling's Engine/Library/metadata/4b/4ba2329b63d54f0187bcaa12486b1b0f
+#	Sterling's Engine/Library/metadata/51/517af1b5b81b93b43b9745d58f017562
+#	Sterling's Engine/Library/metadata/53/53ebcfaa2e1e4e2dbc85882cd5a73fa1
+#	Sterling's Engine/Library/metadata/5f/5f32cd94baa94578a686d4b9d6b660f7
+#	Sterling's Engine/Library/metadata/6a/6a10b2909283487f913b00d94cd3faf5
+#	Sterling's Engine/Library/metadata/76/7668179ede524d6396c8b7d84461ea29
+#	Sterling's Engine/Library/metadata/76/7668179ede524d6396c8b7d84461ea29.info
+#	Sterling's Engine/Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f
+#	Sterling's Engine/Library/metadata/84/844f815391db42d49455cbf1a7bfc434
+#	Sterling's Engine/Library/metadata/87/870353891bb340e2b2a9c8707e7419ba
+#	Sterling's Engine/Library/metadata/8e/8e7066e382b0fc749b25dbb1a3004dfe
+#	Sterling's Engine/Library/metadata/8f/8fb1c1ab26b00be4b98119ede8fa29e8
+#	Sterling's Engine/Library/metadata/ad/adebbd281f1a4ef3a30be7f21937e02f
+#	Sterling's Engine/Library/metadata/b2/b2bead50dbf86924f8e51f03ddbebf70
+#	Sterling's Engine/Library/metadata/dc/dc443db3e92b4983b9738c1131f555cb
+#	Sterling's Engine/Library/metadata/e1/e1007cd261c84053beb0c3537782908d
+#	Sterling's Engine/Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8
+#	Sterling's Engine/Library/metadata/f7/f70555f144d8491a825f0804e09c671c
+#	Sterling's Engine/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc
+#	Sterling's Engine/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc.info
+#	Sterling's Engine/Sterling's Engine.sln
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 2 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	new file:   Sterling's Engine/Assets/Scripts/AntiInfClass.cs
+#	new file:   Sterling's Engine/Assets/Scripts/AntiInfClass.cs.meta
+#	new file:   Sterling's Engine/Assets/Scripts/MeleeUnit.cs
+#	new file:   Sterling's Engine/Assets/Scripts/MeleeUnit.cs.meta
+#	new file:   Sterling's Engine/Assets/Scripts/RangedUnit.cs
+#	new file:   Sterling's Engine/Assets/Scripts/RangedUnit.cs.meta
+#	new file:   Sterling's Engine/Assets/Scripts/UnitClass.cs
+#	new file:   Sterling's Engine/Assets/Scripts/UnitClass.cs.meta
+#	modified:   Sterling's Engine/Library/CurrentLayout.dwlt
+#	new file:   Sterling's Engine/Library/EditorInstance.json
+#	modified:   Sterling's Engine/Library/LastSceneManagerSetup.txt
+#	deleted:    Sterling's Engine/Library/ScriptAssemblies/BuiltinAssemblies.stamp
+#	modified:   Sterling's Engine/Library/ScriptMapper
+#	modified:   Sterling's Engine/Library/expandedItems
+#	new file:   Sterling's Engine/Library/metadata/00/0000000000000000e100000000000000
+#	new file:   Sterling's Engine/Library/metadata/0d/0d3bb855445e36e479c85976fc88383a
+#	modified:   Sterling's Engine/Library/metadata/12/12fd8a0055b84bb59e84c9835a37e333.info
+#	modified:   Sterling's Engine/Library/metadata/19/19275b6d16e6b6a4a94c6bbf6b2266f3
+#	modified:   Sterling's Engine/Library/metadata/1c/1c6d1fbb51834b64847b1b73a75bfc77.info
+#	modified:   Sterling's Engine/Library/metadata/1d/1d369cca897a5774e96a72ab9fe4f774
+#	new file:   Sterling's Engine/Library/metadata/21/21eff446d50eaf44a85985cd4c0b6fa1
+#	modified:   Sterling's Engine/Library/metadata/24/24fb0ff455e22ed4aaf02e92420aea1a
+#	new file:   Sterling's Engine/Library/metadata/26/2682a692a2be7e14e901a738c7806da0
+#	modified:   Sterling's Engine/Library/metadata/32/32188fd89022c154c81befa2f0e00be0
+#	new file:   Sterling's Engine/Library/metadata/38/38c8faf1788024c02930a0c68a6e0edc
+#	new file:   Sterling's Engine/Library/metadata/40/405b9b51bb344a128608d968297df79c
+#	modified:   Sterling's Engine/Library/metadata/41/4113173d5e95493ab8765d7b08371de4.info
+#	new file:   Sterling's Engine/Library/metadata/51/517af1b5b81b93b43b9745d58f017562
+#	modified:   Sterling's Engine/Library/metadata/57/5782f9e9e6e0bb94bac99aeea24814fc
+#	new file:   Sterling's Engine/Library/metadata/5f/5f32cd94baa94578a686d4b9d6b660f7
+#	modified:   Sterling's Engine/Library/metadata/60/6083ace4909223e459e795ca02eb31e4
+#	new file:   Sterling's Engine/Library/metadata/6a/6a10b2909283487f913b00d94cd3faf5
+#	new file:   Sterling's Engine/Library/metadata/76/7668179ede524d6396c8b7d84461ea29
+#	new file:   Sterling's Engine/Library/metadata/76/7668179ede524d6396c8b7d84461ea29.info
+#	new file:   Sterling's Engine/Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f
+#	new file:   Sterling's Engine/Library/metadata/84/844f815391db42d49455cbf1a7bfc434
+#	new file:   Sterling's Engine/Library/metadata/87/870353891bb340e2b2a9c8707e7419ba
+#	new file:   Sterling's Engine/Library/metadata/8e/8e7066e382b0fc749b25dbb1a3004dfe
+#	modified:   Sterling's Engine/Library/metadata/aa/aa5e12ad7cd00424388b2f56edbfcc31
+#	new file:   Sterling's Engine/Library/metadata/ad/adebbd281f1a4ef3a30be7f21937e02f
+#	new file:   Sterling's Engine/Library/metadata/b2/b2bead50dbf86924f8e51f03ddbebf70
+#	new file:   Sterling's Engine/Library/metadata/dc/dc443db3e92b4983b9738c1131f555cb
+#	new file:   Sterling's Engine/Library/metadata/e1/e1007cd261c84053beb0c3537782908d
+#	new file:   Sterling's Engine/Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8
+#	new file:   Sterling's Engine/Library/metadata/f7/f70555f144d8491a825f0804e09c671c
+#	new file:   Sterling's Engine/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc
+#	new file:   Sterling's Engine/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc.info
+#	modified:   Sterling's Engine/ProjectSettings/ProjectVersion.txt
+#	modified:   Sterling's Engine/Sterling's Engine.csproj
+#	modified:   Sterling's Engine/Sterling's Engine.sln
+#	new file:   Sterling's Engine/Temp/ProcessJobs/e9a6970f79cd12d8b075e7d72f1b07cb.bakert
+#	new file:   Sterling's Engine/Temp/UnityTempFile-23bfde990dbc0cb4d9e270d5075555c5
+#	new file:   Sterling's Engine/Temp/UnityTempFile-2c2f2764ccbe6ed49b383802eff327dc
+#	new file:   Sterling's Engine/Temp/UnityTempFile-5eb5bdbb89a64bc4fbf0affa090bc7ac
+#	new file:   Sterling's Engine/Temp/UnityTempFile-82391ac097019ce479d5000b3b2ba188
+#	new file:   Sterling's Engine/Temp/UnityTempFile-8595154a6a51dcb4bac1ee08e331aee5
+#	new file:   Sterling's Engine/Temp/UnityTempFile-9dcefead672fdf749add3e049642d959
+#	new file:   Sterling's Engine/Temp/UnityTempFile-a7aad2c28df301046b6b6814153d4ea1
+#	new file:   Sterling's Engine/Temp/UnityTempFile-c417c612be108ab4b95bdf5e18fe8074
+#	new file:   Sterling's Engine/Temp/UnityTempFile-db0931071ef9b0b4a9dd0d300ff5d357
+#
+
