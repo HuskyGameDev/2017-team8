@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileInfoToUI : MonoBehaviour {
 
     public MapTile holding;
+    public Text SelectedInfo;
     bool hadRecent = false;
 	// Use this for initialization
 	void Start () {
@@ -35,6 +37,7 @@ public class TileInfoToUI : MonoBehaviour {
         holding.GetComponent<SpriteRenderer>().color = selected;
         //getting here means you clicked on a tile, so update the info
         GetComponent<SpriteRenderer>().sprite = holding.GetComponent<SpriteRenderer>().sprite;
+        SelectedInfo.text = holding.tileType;
     }
     public void ClearRecent()
     {
