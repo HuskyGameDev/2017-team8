@@ -152,7 +152,7 @@ public class CameraMovement : MonoBehaviour {
                 angle = Mathf.Rad2Deg * Mathf.Atan2(y, x);
                 changeX = (90F - angle) / 90F * scrollSpeed * multiplier;
                 changeY = angle / 90F * scrollSpeed * multiplier;
-                print(angle + "yo" + changeX + " " + changeY);
+                //print(angle + "yo" + changeX + " " + changeY);
                 //print(angle + " " + x + " " + y + " " + Screen.height/2 + " " + Screen.width/2);
                 //now you've got each angle related to the X-axis (could probably make this into a method, and do something else to make this perform better), just need to add to the vector with appropriate +-
                 //upper-right, so add X, add Y
@@ -166,7 +166,7 @@ public class CameraMovement : MonoBehaviour {
                 angle = Mathf.Rad2Deg * Mathf.Atan2(y, x);
                 changeX = (90F - angle) / 90F * scrollSpeed * multiplier;
                 changeY = angle / 90F * scrollSpeed * multiplier;
-                print(angle + " No" + changeX + " " + changeY);
+                //print(angle + " No" + changeX + " " + changeY);
                 //print(angle + " " + x + " " + y + " " + Screen.height / 2 + " " + Screen.width / 2);
                 //.lower right, so add X, subtract Y
                 transform.Translate(new Vector3(changeX * Time.deltaTime, changeY * Time.deltaTime * -1, 0));
@@ -182,7 +182,7 @@ public class CameraMovement : MonoBehaviour {
                 angle = Mathf.Rad2Deg * Mathf.Atan2(y, x);
                 changeX = (90F - angle) / 90F * scrollSpeed * multiplier;
                 changeY = angle / 90F * scrollSpeed * multiplier;
-                print(angle + "Hello" + changeX + " " + changeY);
+                //print(angle + "Hello" + changeX + " " + changeY);
                 //print(angle + " " + x + " " + y + " " + Screen.height / 2 + " " + Screen.width / 2);
                 //upper left, so subtract X, add Y
                 transform.Translate(new Vector3(changeX * Time.deltaTime * -1, changeY * Time.deltaTime, 0));
@@ -195,7 +195,7 @@ public class CameraMovement : MonoBehaviour {
                 angle = Mathf.Rad2Deg * Mathf.Atan2(y, x);
                 changeX = (90F - angle) / 90F * scrollSpeed * multiplier;
                 changeY = angle / 90F * scrollSpeed * multiplier;
-                print(angle + "There" + changeX + " " + changeY);
+                //print(angle + "There" + changeX + " " + changeY);
                 //print(angle + " " + x + " " + y + " " + Screen.height / 2 + " " + Screen.width / 2);
                 // lower left so subtract X, subtract Y
                 transform.Translate(new Vector3(changeX * Time.deltaTime * -1, changeY * Time.deltaTime * -1, 0));
