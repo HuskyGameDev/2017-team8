@@ -36,7 +36,7 @@ public class TileInfoToUI : MonoBehaviour {
         selected.g = 0f;
         holding.GetComponent<SpriteRenderer>().color = selected;
         //getting here means you clicked on a tile, so update the info
-        GetComponent<SpriteRenderer>().sprite = holding.GetComponent<SpriteRenderer>().sprite;
+		GetComponent<Image>().sprite = holding.GetComponent<SpriteRenderer>().sprite;
         SelectedInfo.text = holding.tileType;
     }
     public void ClearRecent()
