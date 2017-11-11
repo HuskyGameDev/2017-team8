@@ -13,4 +13,9 @@ public class MeleeUnit : UnitClass {
 		Damage = 2;
 		Cost = 50;
 	}
+
+	void Start(){
+		MeleeUnit melee = new MeleeUnit();
+		print("I am a " + melee.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
+	}
 }

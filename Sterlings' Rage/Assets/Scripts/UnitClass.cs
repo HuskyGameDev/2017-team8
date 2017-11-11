@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitClass : MonoBehaviour {
-    private string unitClassName;
+    public string unitClassName;
 
     // Test Comment
 
     // Stats
-    private int health;
-    private int speed;
-    private int range;
-    private int damage;
-    private string sprite;
-    private int cost;
+    public int health;
+    public int speed;
+    public float range;
+    public int damage;
+    public string sprite;
+    public int cost;
     public MapTile currentTile;
     private MapTile dest;
     private bool isMovingX;
@@ -39,7 +39,7 @@ public class UnitClass : MonoBehaviour {
         set { speed = value; }
     }
 
-    public int Range {
+    public float Range {
         get { return range; }
         set { range = value; }
     }
@@ -57,6 +57,27 @@ public class UnitClass : MonoBehaviour {
     public MapTile CurrentTile{
         get { return currentTile; }
         set { currentTile = value; }
+    }
+
+    public GameObject EnemyInRange(float range){
+        GameObject[] enemies;
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //print("Enemies found " + enemies.Length);
+        GameObject closest = null;
+        float distance = range;
+        //print("targeting range is " + distance);
+        Vector3 pos = transform.position;
+        //print("Pos is " + pos);
+        foreach(GameObject go in enemies){
+            Vector3 diff = go.transform.position - pos;
+            float curDistance = diff.sqrMagnitude;
+            if(curDistance <= distance){
+                //print("target in range");
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
     }
 
     public bool MoveTo(MapTile dest) {

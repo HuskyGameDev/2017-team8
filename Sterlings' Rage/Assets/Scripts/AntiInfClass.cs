@@ -15,4 +15,9 @@ public class AntiInfClass : UnitClass {
 		Damage = 4;
 		Cost = 85;
 	}
+
+	void Start(){
+		AntiInfClass anti = new AntiInfClass();
+		print("I am an " + anti.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
+	}
 }
