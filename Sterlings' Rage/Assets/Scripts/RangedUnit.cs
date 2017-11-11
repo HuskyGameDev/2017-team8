@@ -21,9 +21,9 @@ public class RangedUnit : UnitClass {
 		//print("Hello");
 		//base.currentx = 2;
 		GameObject enemy;
-		string eName;
+		//string eName;
 		enemy = base.EnemyInRange(range.Range);
-		enemy = GameObject.GetComponent(MeleeUnit);
+		//eName = enemy.GetComponent(base.Melee).get();
 		
 		//print("Enemy " + enemy.UnitClassName.get() + " found");
 		//string eName = enemy.base.;

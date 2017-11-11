@@ -88,6 +88,7 @@
     <Compile Include="Assets\MapDesign\Tiles\TileManager.cs" />
     <Compile Include="Assets\Scripts\AntiInfClass.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\DefaultOffScreen.cs" />
     <Compile Include="Assets\Scripts\MeleeUnit.cs" />
     <Compile Include="Assets\Scripts\RangedUnit.cs" />
     <Compile Include="Assets\Scripts\TileInfoToUI.cs" />
