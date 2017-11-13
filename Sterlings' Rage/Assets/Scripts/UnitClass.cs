@@ -65,7 +65,10 @@ public class UnitClass : MonoBehaviour {
         int y = (int)gameObject.transform.position.y;
 
         print("CUrious at:" +x+","+y);
+        if (TileManager.getSelectedUnit() != null)
+            TileManager.resetTiles();
         TileManager.setSelectedUnit(this);
+        
         ArrayList pathTiles = new ArrayList();
 
         if (x - 1 >= 0)
@@ -78,26 +81,34 @@ public class UnitClass : MonoBehaviour {
         }
         if (x + 1 < TileManager.width)
         {
+            print("Here? " + speed);
+            print(" final " + (speed - TileManager.mapTiles[x + 1, y].getMovementWeight()));
             findPossiblePaths(x + 1, y, speed - TileManager.mapTiles[x + 1, y].getMovementWeight(), pathTiles);
         }
         if (y + 1 < TileManager.height)
         {
             findPossiblePaths(x, y + 1, speed - TileManager.mapTiles[x, y + 1].getMovementWeight(), pathTiles);
         }
+        print("What?");
 
         TileManager.setPathList(pathTiles);
     }
 
     private void findPossiblePaths(int x, int y, int speed, ArrayList pathTiles)
     {
+        print("before: "+ speed);
         if(speed < 0)
         {
             return;
         }
+        print("after");
 
         MapTile curTile =TileManager.mapTiles[x, y];
-        curTile.setPossibleMove(true);
-        pathTiles.Add(curTile);
+        if (curTile.currentUnit == null)
+        {
+            curTile.setPossibleMove(true);
+            pathTiles.Add(curTile);
+        }
 
         if (x - 1 >= 0)
             findPossiblePaths(x - 1, y, speed - TileManager.mapTiles[x - 1, y].getMovementWeight(), pathTiles);
