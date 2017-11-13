@@ -59,6 +59,56 @@ public class UnitClass : MonoBehaviour {
         set { currentTile = value; }
     }
 
+    public void displayMovementPath()
+    {
+        int x = (int)gameObject.transform.position.x;
+        int y = (int)gameObject.transform.position.y;
+
+        print("CUrious at:" +x+","+y);
+        TileManager.setSelectedUnit(this);
+        ArrayList pathTiles = new ArrayList();
+
+        if (x - 1 >= 0)
+        {
+            findPossiblePaths(x - 1, y, speed - TileManager.mapTiles[x - 1, y].getMovementWeight(), pathTiles);
+        }
+        if (y - 1 >= 0)
+        {
+            findPossiblePaths(x, y - 1, speed - TileManager.mapTiles[x, y - 1].getMovementWeight(), pathTiles);
+        }
+        if (x + 1 < TileManager.width)
+        {
+            findPossiblePaths(x + 1, y, speed - TileManager.mapTiles[x + 1, y].getMovementWeight(), pathTiles);
+        }
+        if (y + 1 < TileManager.height)
+        {
+            findPossiblePaths(x, y + 1, speed - TileManager.mapTiles[x, y + 1].getMovementWeight(), pathTiles);
+        }
+
+        TileManager.setPathList(pathTiles);
+    }
+
+    private void findPossiblePaths(int x, int y, int speed, ArrayList pathTiles)
+    {
+        if(speed < 0)
+        {
+            return;
+        }
+
+        MapTile curTile =TileManager.mapTiles[x, y];
+        curTile.setPossibleMove(true);
+        pathTiles.Add(curTile);
+
+        if (x - 1 >= 0)
+            findPossiblePaths(x - 1, y, speed - TileManager.mapTiles[x - 1, y].getMovementWeight(), pathTiles);
+        if (y - 1 >= 0)
+            findPossiblePaths(x, y - 1, speed - TileManager.mapTiles[x, y - 1].getMovementWeight(), pathTiles);
+        if (x + 1 < TileManager.width)
+            findPossiblePaths(x + 1, y, speed - TileManager.mapTiles[x + 1, y].getMovementWeight(), pathTiles);
+        if (y + 1 < TileManager.height)
+            findPossiblePaths(x, y+1, speed - TileManager.mapTiles[x, y + 1].getMovementWeight(), pathTiles);
+    }
+
     public GameObject EnemyInRange(float range){
         GameObject[] enemies;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -80,21 +130,12 @@ public class UnitClass : MonoBehaviour {
         return closest;
     }
 
-    public bool MoveTo(MapTile dest) {
-        // if the destination tile is range, changes unit's current tile to the destination
-        // and returns true
-        // if out of range, returns false and does nothing
-        int destx = (int)dest.transform.position.x;
-        int desty = (int)dest.transform.position.y;
-        int currentx = (int)currentTile.transform.position.x;
-        int currenty = (int)currentTile.transform.position.y;
-        if(Mathf.Abs(destx - currentx) + Mathf.Abs(desty - currenty) <= range)
-        {
-            isMovingX = true;
-            this.dest = dest;
-            return true;
-        }
-        return false;
+    public void MoveTo(MapTile dest) {
+        
+        isMovingX = true;
+        this.dest = dest;
+        dest.currentUnit = this;
+        currentTile.currentUnit = null;
     }
 
     public void Update()
@@ -103,44 +144,48 @@ public class UnitClass : MonoBehaviour {
         {
             if (dest.transform.position.x < currentTile.transform.position.x)
             {
-                transform.Translate(-0.1f, 0, 0);
                 if(dest.transform.position.x >= transform.position.x)
                 {
                     isMovingX = false;
                     isMovingY = true;
-                }
+                } else 
+                    transform.Translate(-0.1f, 0, 0);
             }
             else
             {
-                transform.Translate(0.1f, 0, 0);
                 if (dest.transform.position.x <= transform.position.x)
                 {
                     isMovingX = false;
                     isMovingY = true;
-                }
+                } else
+                    transform.Translate(0.1f, 0, 0);
             }
         }
         else if (isMovingY)
         {
             if(dest.transform.position.y < currentTile.transform.position.y)
             {
-                transform.Translate(0, 0.1f, 0);
                 if(dest.transform.position.y >= transform.position.y)
                 {
                     isMovingY = false;
                     currentTile = dest;
+                    // Because of how floats work need to make sure to set the units position to be the same as the tile or
+                    // sometimes it will move to far
+                    gameObject.transform.position = new Vector2(dest.transform.position.x, dest.transform.position.y);
                     dest = null;
-                }
+                } else
+                    transform.Translate(0, -0.1f, 0);
             }
             else
             {
-                transform.Translate(0, 0.1f, 0);
                 if (dest.transform.position.y <= transform.position.y)
                 {
                     isMovingY = false;
                     currentTile = dest;
+                    gameObject.transform.position = new Vector2(dest.transform.position.x, dest.transform.position.y);
                     dest = null;
-                }
+                } else
+                    transform.Translate(0, 0.1f, 0);
             }
         }
     }
