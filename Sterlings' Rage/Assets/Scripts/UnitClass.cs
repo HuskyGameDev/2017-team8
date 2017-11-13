@@ -61,63 +61,61 @@ public class UnitClass : MonoBehaviour {
 
     public void displayMovementPath()
     {
-        int x = (int)gameObject.transform.position.x;
-        int y = (int)gameObject.transform.position.y;
-
-        print("CUrious at:" +x+","+y);
+        // Resets if the user had already selected a different unit
         if (TileManager.getSelectedUnit() != null)
             TileManager.resetTiles();
         TileManager.setSelectedUnit(this);
         
         ArrayList pathTiles = new ArrayList();
+        MapTile curTile = TileManager.mapTiles[(int)gameObject.transform.position.x, (int)gameObject.transform.position.y];
 
-        if (x - 1 >= 0)
+        if (curTile.getLeft() != null)
         {
-            findPossiblePaths(x - 1, y, speed - TileManager.mapTiles[x - 1, y].getMovementWeight(), pathTiles);
+            findPossiblePaths(curTile.getLeft(), speed - curTile.getLeft().getMovementWeight(), pathTiles);
         }
-        if (y - 1 >= 0)
+        if (curTile.getDown() != null)
         {
-            findPossiblePaths(x, y - 1, speed - TileManager.mapTiles[x, y - 1].getMovementWeight(), pathTiles);
+            findPossiblePaths(curTile.getDown(), speed - curTile.getDown().getMovementWeight(), pathTiles);
         }
-        if (x + 1 < TileManager.width)
+        if (curTile.getRight() != null)
         {
-            print("Here? " + speed);
-            print(" final " + (speed - TileManager.mapTiles[x + 1, y].getMovementWeight()));
-            findPossiblePaths(x + 1, y, speed - TileManager.mapTiles[x + 1, y].getMovementWeight(), pathTiles);
+            findPossiblePaths(curTile.getRight(), speed - curTile.getRight().getMovementWeight(), pathTiles);
         }
-        if (y + 1 < TileManager.height)
+        if (curTile.getUp() != null)
         {
-            findPossiblePaths(x, y + 1, speed - TileManager.mapTiles[x, y + 1].getMovementWeight(), pathTiles);
+            findPossiblePaths(curTile.getUp(), speed - curTile.getUp().getMovementWeight(), pathTiles);
         }
-        print("What?");
-
         TileManager.setPathList(pathTiles);
     }
 
-    private void findPossiblePaths(int x, int y, int speed, ArrayList pathTiles)
+    private void findPossiblePaths(MapTile curTile, int speed, ArrayList pathTiles)
     {
-        print("before: "+ speed);
-        if(speed < 0)
+        if (speed < 0)
         {
             return;
         }
-        print("after");
 
-        MapTile curTile =TileManager.mapTiles[x, y];
+        
         if (curTile.currentUnit == null)
         {
             curTile.setPossibleMove(true);
-            pathTiles.Add(curTile);
+            // Stores the speed that it was found with so that if a faster path is found it will know
+            curTile.setStoredSpeed(speed);
+            
         }
+        pathTiles.Add(curTile);
 
-        if (x - 1 >= 0)
-            findPossiblePaths(x - 1, y, speed - TileManager.mapTiles[x - 1, y].getMovementWeight(), pathTiles);
-        if (y - 1 >= 0)
-            findPossiblePaths(x, y - 1, speed - TileManager.mapTiles[x, y - 1].getMovementWeight(), pathTiles);
-        if (x + 1 < TileManager.width)
-            findPossiblePaths(x + 1, y, speed - TileManager.mapTiles[x + 1, y].getMovementWeight(), pathTiles);
-        if (y + 1 < TileManager.height)
-            findPossiblePaths(x, y+1, speed - TileManager.mapTiles[x, y + 1].getMovementWeight(), pathTiles);
+        if (curTile.getLeft() != null && !TileManager.containsTile(speed - curTile.getLeft().getMovementWeight(), curTile.getLeft()))
+            findPossiblePaths(curTile.getLeft(), speed - curTile.getLeft().getMovementWeight(), pathTiles);
+
+        if (curTile.getDown() != null && !TileManager.containsTile(speed - curTile.getDown().getMovementWeight(), curTile.getDown()))
+            findPossiblePaths(curTile.getDown(), speed - curTile.getDown().getMovementWeight(), pathTiles);
+
+        if (curTile.getRight() != null && !TileManager.containsTile(speed - curTile.getRight().getMovementWeight(), curTile.getRight()))
+            findPossiblePaths(curTile.getRight(), speed - curTile.getRight().getMovementWeight(), pathTiles);
+
+        if (curTile.getUp() != null && !TileManager.containsTile(speed - curTile.getUp().getMovementWeight(), curTile.getUp()))
+            findPossiblePaths(curTile.getUp(), speed - curTile.getUp().getMovementWeight(), pathTiles);
     }
 
     public GameObject EnemyInRange(float range){
