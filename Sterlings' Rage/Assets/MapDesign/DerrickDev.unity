@@ -27479,11 +27479,6 @@ Prefab:
       propertyPath: currentTile
       value: 
       objectReference: {fileID: 1249889008}
-    - target: {fileID: 114614159737620376, guid: 33ff876e110ffdc4ba5028b17260d106,
-        type: 2}
-      propertyPath: speed
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 33ff876e110ffdc4ba5028b17260d106, type: 2}
   m_IsPrefabParent: 0
