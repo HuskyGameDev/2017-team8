@@ -213,6 +213,10 @@ public class UnitClass : MonoBehaviour {
 
             if (!isMovingX && !isMovingY)
             {
+                if(dest.contraband != null)
+                {
+                    ResourceManager.pickUpContraband(dest);
+                }
                 if (path.Count > 0)
                 {
                     dest = (MapTile)path[0];

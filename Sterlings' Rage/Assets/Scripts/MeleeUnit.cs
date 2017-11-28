@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeleeUnit : UnitClass {
 
 	public MeleeUnit(){
-		UnitClassName = "Melee";
+		UnitClassName = "MeleeUnit";
 		//Sprite = ""
 		Health = 5;
 		Speed = 3;
@@ -17,5 +17,11 @@ public class MeleeUnit : UnitClass {
 	void Start(){
 		MeleeUnit melee = new MeleeUnit();
 		print("I am a " + melee.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
-	}
+        if (TileManager.mapTiles != null && TileManager.checkIfFull())
+        {
+            currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
+            print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
+            currentTile.currentUnit = this;
+        }
+    }
 }
