@@ -76,14 +76,10 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MapDesign\ResourceManager.cs" />
+    <Compile Include="Assets\MapDesign\Tiles\Contraband.cs" />
     <Compile Include="Assets\MapDesign\Tiles\MapTile.cs" />
     <Compile Include="Assets\MapDesign\Tiles\TileManager.cs" />
     <Compile Include="Assets\Scripts\AntiInfClass.cs" />
