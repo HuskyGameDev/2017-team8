@@ -5954,7 +5954,7 @@ Prefab:
     - target: {fileID: 114786094201395738, guid: c23786a6b72962d4bb69164cdb4b4364,
         type: 2}
       propertyPath: initialContraband
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114540152143162568, guid: c23786a6b72962d4bb69164cdb4b4364, type: 2}
@@ -27598,6 +27598,10 @@ Prefab:
       propertyPath: currentTile
       value: 
       objectReference: {fileID: 1249889008}
+    - target: {fileID: 1134510143185346, guid: 33ff876e110ffdc4ba5028b17260d106, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 33ff876e110ffdc4ba5028b17260d106, type: 2}
   m_IsPrefabParent: 0

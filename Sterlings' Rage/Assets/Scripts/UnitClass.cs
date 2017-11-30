@@ -10,7 +10,7 @@ public class UnitClass : MonoBehaviour {
     // Stats
     public int health;
     public int speed;
-    public float range;
+    public int range;
     public int damage;
     public string sprite;
     public int cost;
@@ -41,7 +41,7 @@ public class UnitClass : MonoBehaviour {
         set { speed = value; }
     }
 
-    public float Range {
+    public int Range {
         get { return range; }
         set { range = value; }
     }
@@ -61,31 +61,86 @@ public class UnitClass : MonoBehaviour {
         set { currentTile = value; }
     }
 
+    public void DisplayAttackRange()
+    {
+        ArrayList attackTiles = new ArrayList();
+        TileManager.resetMovementTiles();
+
+        if (currentTile.getLeft() != null)
+        {
+            findAttackTiles(currentTile.getLeft(), range - 1, attackTiles);
+        }
+        if (currentTile.getDown() != null)
+        {
+            findAttackTiles(currentTile.getDown(), range - 1, attackTiles);
+        }
+        if (currentTile.getRight() != null)
+        {
+            findAttackTiles(currentTile.getRight(), range - 1, attackTiles);
+        }
+        if (currentTile.getUp() != null)
+        {
+            findAttackTiles(currentTile.getUp(), range - 1, attackTiles);
+        }
+        TileManager.setAttackList(attackTiles);
+    }
+
+    public void findAttackTiles(MapTile curTile, int range, ArrayList attackTiles)
+    {
+        if (range < 0)
+        {
+            return;
+        }
+        if (curTile != currentTile)
+        {
+            curTile.setPossibleAttack(true);
+            curTile.setStoredRange(range);
+            attackTiles.Add(curTile);
+        }
+
+
+        if (curTile.getLeft() != null && !TileManager.containsAttackTile(range - 1, curTile.getLeft()))
+        {
+            findAttackTiles(curTile.getLeft(), range - 1, attackTiles);
+        }
+        if (curTile.getDown() != null && !TileManager.containsAttackTile(range - 1, curTile.getDown()))
+        {
+            findAttackTiles(curTile.getDown(), range - 1, attackTiles);
+        }
+        if (curTile.getRight() != null && !TileManager.containsAttackTile(range - 1, curTile.getRight()))
+        {
+            findAttackTiles(curTile.getRight(), range - 1, attackTiles);
+        }
+        if (curTile.getUp() != null && !TileManager.containsAttackTile(range - 1, curTile.getUp()))
+        {
+            findAttackTiles(curTile.getUp(), range - 1, attackTiles);
+        }
+    }
+
     public void displayMovementPath()
     {
         // Resets if the user had already selected a different unit
         if (TileManager.getSelectedUnit() != null)
-            TileManager.resetTiles();
+            TileManager.resetMovementTiles();
         TileManager.setSelectedUnit(this);
-        
-        ArrayList pathTiles = new ArrayList();
-        MapTile curTile = TileManager.mapTiles[(int)gameObject.transform.position.x, (int)gameObject.transform.position.y];
 
-        if (curTile.getLeft() != null)
+        ArrayList pathTiles = new ArrayList();
+
+        if (currentTile.getLeft() != null)
         {
-            findPossiblePaths(curTile.getLeft(), speed - curTile.getLeft().getMovementWeight(), pathTiles, curTile);
+            findPossiblePaths(currentTile.getLeft(), speed - currentTile.getLeft().getMovementWeight(), pathTiles, currentTile);
         }
-        if (curTile.getDown() != null)
+        if (currentTile.getDown() != null)
         {
-            findPossiblePaths(curTile.getDown(), speed - curTile.getDown().getMovementWeight(), pathTiles, curTile);
+            findPossiblePaths(currentTile.getDown(), speed - currentTile.getDown().getMovementWeight(), pathTiles, currentTile);
         }
-        if (curTile.getRight() != null)
+        if (currentTile.getRight() != null)
         {
-            findPossiblePaths(curTile.getRight(), speed - curTile.getRight().getMovementWeight(), pathTiles, curTile);
+            findPossiblePaths(currentTile.getRight(), speed - currentTile.getRight().getMovementWeight(), pathTiles, currentTile);
         }
-        if (curTile.getUp() != null)
+        if (currentTile.getUp() != null)
         {
-            findPossiblePaths(curTile.getUp(), speed - curTile.getUp().getMovementWeight(), pathTiles, curTile);
+            findPossiblePaths(currentTile.getUp(), speed - currentTile.getUp().getMovementWeight(), pathTiles, currentTile);
         }
         TileManager.setPathList(pathTiles);
     }
@@ -96,11 +151,14 @@ public class UnitClass : MonoBehaviour {
         {
             return;
         }
-        curTile.setPossibleMove(true);
-        curTile.setPreviousTile(previous);
-        // Stores the speed that it was found with so that if a faster path is found it will know
-        curTile.setStoredSpeed(speed);
-        pathTiles.Add(curTile);
+        if (curTile != currentTile)
+        {
+            curTile.setPossibleMove(true);
+            curTile.setPreviousTile(previous);
+            // Stores the speed that it was found with so that if a faster path is found it will know
+            curTile.setStoredSpeed(speed);
+            pathTiles.Add(curTile);
+        }
 
         // Recursive calls to all adjacent tiles that haven't already been checked or that have but had a lower speed when they were reached.
         if (curTile.getLeft() != null && !TileManager.containsTile(speed - curTile.getLeft().getMovementWeight(), curTile.getLeft()))

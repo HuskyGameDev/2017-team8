@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangedUnit : UnitClass {
 
 	public RangedUnit(){
-		UnitClassName = "Ranged";
+		UnitClassName = "RangedUnit";
 		//Sprite = ""
 		Health = 3;
 		Speed = 2;
@@ -16,8 +16,15 @@ public class RangedUnit : UnitClass {
 	}
 
 	void Start(){
-		//RangedUnit();
-		RangedUnit range = new RangedUnit();
+
+        if(TileManager.mapTiles != null && TileManager.checkIfFull())
+        {
+            currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
+            print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
+            currentTile.currentUnit = this;
+        }
+        //RangedUnit();
+        RangedUnit range = new RangedUnit();
 		//print("Hello");
 		//base.currentx = 2;
 		GameObject enemy;
