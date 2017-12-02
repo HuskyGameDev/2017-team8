@@ -17,6 +17,7 @@ public class RangedUnit : UnitClass {
 
 	void Start(){
 
+        // Need update the units current tile as well is indicate the tile that there is now a unit on it
         if(TileManager.mapTiles != null && TileManager.checkIfFull())
         {
             currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
