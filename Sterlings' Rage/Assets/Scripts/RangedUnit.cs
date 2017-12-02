@@ -10,7 +10,7 @@ public class RangedUnit : UnitClass {
 		Health = 3;
 		Speed = 2;
 		Range = 3;
-		Damage = 4;
+		Damage = 5;
 		Cost = 175;
 		//CurrentTile = Tile;
 	}
@@ -53,9 +53,10 @@ public class RangedUnit : UnitClass {
 	}
 
 	void Update(){
-        base.Update();
-			if(Input.GetMouseButtonDown(0)){
-				print("Pressed Left click");
-			}
-	}
+		base.Update();
+    	if(Health <= 0){
+    		print("Ranged is Dead!");
+    		Destroy(gameObject);
+    	}
+    }
 }

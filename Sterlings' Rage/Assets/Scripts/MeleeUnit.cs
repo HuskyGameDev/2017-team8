@@ -28,4 +28,12 @@ public class MeleeUnit : UnitClass {
         else
             UnitManager.EnemyUnits.Add(this);
     }
+
+    void Update(){
+    	base.Update();
+    	if(Health <= 0){
+    		print("Melee is Dead!");
+    		Destroy(gameObject);
+    	}
+    }
 }
