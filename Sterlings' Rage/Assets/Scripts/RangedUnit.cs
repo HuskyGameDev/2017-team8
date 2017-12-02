@@ -10,7 +10,7 @@ public class RangedUnit : UnitClass {
 		Health = 3;
 		Speed = 2;
 		Range = 3;
-		Damage = 4;
+		Damage = 5;
 		Cost = 175;
 		//CurrentTile = Tile;
 	}
@@ -24,7 +24,7 @@ public class RangedUnit : UnitClass {
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
-        RangedUnit range = new RangedUnit();
+        /*RangedUnit range = new RangedUnit();
         int curHealth =  range.Health;
         print("Health is " + curHealth);
 		GameObject enemy;
@@ -44,12 +44,13 @@ public class RangedUnit : UnitClass {
 			enemy.GetComponent<MeleeUnit>().Health -= range.Damage;
 			print("Enemy Health " + enemy.GetComponent<MeleeUnit>().Health);
 			//enemy.GetComponent<curHealth>()
-		}
+		}*/
 	}
 
 	void Update(){
-			if(Input.GetMouseButtonDown(0)){
-				print("Pressed Left click");
-			}
-	}
+    	if(Health <= 0){
+    		print("Dead!");
+    	}
+    }
+
 }

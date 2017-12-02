@@ -28,4 +28,10 @@ public class AntiInfClass : UnitClass {
         AntiInfClass anti = new AntiInfClass();
 		print("I am an " + anti.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
 	}
+
+	void Update(){
+    	if(Health <= 0){
+    		print("Dead!");
+    	}
+    }
 }

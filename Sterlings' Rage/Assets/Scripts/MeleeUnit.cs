@@ -24,4 +24,10 @@ public class MeleeUnit : UnitClass {
             currentTile.currentUnit = this;
         }
     }
+
+    void Update(){
+    	if(Health <= 0){
+    		print("Dead!");
+    	}
+    }
 }
