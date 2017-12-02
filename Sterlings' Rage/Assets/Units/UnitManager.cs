@@ -6,6 +6,7 @@ public class UnitManager : MonoBehaviour {
 
     public static ArrayList PlayerUnits = new ArrayList();
     public static ArrayList EnemyUnits = new ArrayList();
+    private static UnitClass selectedUnit;
 
     // Use this for initialization
     void Start () {
@@ -29,5 +30,15 @@ public class UnitManager : MonoBehaviour {
     {
         foreach (UnitClass unit in PlayerUnits)
             unit.newTurn();
+    }
+
+    public static void setSelectedUnit(UnitClass unit)
+    {
+        selectedUnit = unit;
+    }
+
+    public static UnitClass getSelectedUnit()
+    {
+        return selectedUnit;
     }
 }

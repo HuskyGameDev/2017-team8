@@ -131,9 +131,9 @@ public class UnitClass : MonoBehaviour {
     public void displayMovementPath()
     {
         // Resets if the user had already selected a different unit
-        if (TileManager.getSelectedUnit() != null)
+        if (UnitManager.getSelectedUnit() != null)
             TileManager.resetMovementTiles();
-        TileManager.setSelectedUnit(this);
+        UnitManager.setSelectedUnit(this);
 
         ArrayList pathTiles = new ArrayList();
 
