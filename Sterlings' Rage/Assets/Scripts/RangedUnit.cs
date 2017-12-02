@@ -48,9 +48,9 @@ public class RangedUnit : UnitClass {
 	}
 
 	void Update(){
+		base.Update();
     	if(Health <= 0){
     		print("Dead!");
     	}
     }
-
 }
