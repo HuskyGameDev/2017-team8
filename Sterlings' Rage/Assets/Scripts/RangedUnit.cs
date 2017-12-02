@@ -48,6 +48,7 @@ public class RangedUnit : UnitClass {
 	}
 
 	void Update(){
+        base.Update();
 			if(Input.GetMouseButtonDown(0)){
 				print("Pressed Left click");
 			}
