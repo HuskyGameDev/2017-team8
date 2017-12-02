@@ -10,30 +10,47 @@ public class RangedUnit : UnitClass {
 		Health = 3;
 		Speed = 2;
 		Range = 3;
-		Damage = 4;
+		Damage = 5;
 		Cost = 175;
 		//CurrentTile = Tile;
 	}
 
 	void Start(){
 
+        // Need update the units current tile as well is indicate the tile that there is now a unit on it
         if(TileManager.mapTiles != null && TileManager.checkIfFull())
         {
             currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
-        //RangedUnit();
-        RangedUnit range = new RangedUnit();
-		//print("Hello");
-		//base.currentx = 2;
+        /*RangedUnit range = new RangedUnit();
+        int curHealth =  range.Health;
+        print("Health is " + curHealth);
 		GameObject enemy;
-		//string eName;
 		enemy = base.EnemyInRange(range.Range);
-		//eName = enemy.GetComponent(base.Melee).get();
+		print("Enemy is " + enemy);
 		
-		//print("Enemy " + enemy.UnitClassName.get() + " found");
-		//string eName = enemy.base.;
+		int inRange = 0;
+		if(enemy != null){
+			print("Made it");
+			inRange = 1;
+		}
+		print("inRange is " + inRange);
 		print("I am a " + range.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
+
+		if(inRange == 1){
+			print("Enemy Health " + enemy.GetComponent<MeleeUnit>().Health);
+			enemy.GetComponent<MeleeUnit>().Health -= range.Damage;
+			print("Enemy Health " + enemy.GetComponent<MeleeUnit>().Health);
+			//enemy.GetComponent<curHealth>()
+		}*/
 	}
+
+	void Update(){
+		base.Update();
+    	if(Health <= 0){
+    		print("Dead!");
+    	}
+    }
 }
