@@ -30,8 +30,10 @@ public class AntiInfClass : UnitClass {
 	}
 
 	void Update(){
+		base.Update();
     	if(Health <= 0){
-    		print("Dead!");
+    		print("Anti is Dead!");
+    		Destroy(gameObject);
     	}
     }
 }

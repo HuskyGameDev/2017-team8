@@ -26,8 +26,10 @@ public class MeleeUnit : UnitClass {
     }
 
     void Update(){
+    	base.Update();
     	if(Health <= 0){
-    		print("Dead!");
+    		print("Melee is Dead!");
+    		Destroy(gameObject);
     	}
     }
 }

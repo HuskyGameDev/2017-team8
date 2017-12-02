@@ -24,33 +24,13 @@ public class RangedUnit : UnitClass {
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
-        /*RangedUnit range = new RangedUnit();
-        int curHealth =  range.Health;
-        print("Health is " + curHealth);
-		GameObject enemy;
-		enemy = base.EnemyInRange(range.Range);
-		print("Enemy is " + enemy);
-		
-		int inRange = 0;
-		if(enemy != null){
-			print("Made it");
-			inRange = 1;
-		}
-		print("inRange is " + inRange);
-		print("I am a " + range.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
-
-		if(inRange == 1){
-			print("Enemy Health " + enemy.GetComponent<MeleeUnit>().Health);
-			enemy.GetComponent<MeleeUnit>().Health -= range.Damage;
-			print("Enemy Health " + enemy.GetComponent<MeleeUnit>().Health);
-			//enemy.GetComponent<curHealth>()
-		}*/
 	}
 
 	void Update(){
 		base.Update();
     	if(Health <= 0){
-    		print("Dead!");
+    		print("Ranged is Dead!");
+    		Destroy(gameObject);
     	}
     }
 }
