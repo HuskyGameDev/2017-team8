@@ -16,6 +16,7 @@ public class RangedUnit : UnitClass {
 	}
 
 	void Start(){
+        newTurn();
 
         // Need update the units current tile as well is indicate the tile that there is now a unit on it
         if(TileManager.mapTiles != null && TileManager.checkIfFull())
@@ -24,6 +25,10 @@ public class RangedUnit : UnitClass {
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
+        if (gameObject.tag == "PlayerUnit")
+            UnitManager.PlayerUnits.Add(this);
+        else
+            UnitManager.EnemyUnits.Add(this);
         RangedUnit range = new RangedUnit();
         int curHealth =  range.Health;
         print("Health is " + curHealth);

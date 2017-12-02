@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114918506342082162}
   m_Layer: 0
   m_Name: MeleeUnit
-  m_TagString: Untagged
+  m_TagString: PlayerUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,6 +61,7 @@ MonoBehaviour:
   sprite: 
   cost: 50
   currentTile: {fileID: 0}
+  speedLeft: 0
 --- !u!114 &114918506342082162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,6 +81,7 @@ MonoBehaviour:
   sprite: 
   cost: 0
   currentTile: {fileID: 0}
+  speedLeft: 0
 --- !u!212 &212431262870541830
 SpriteRenderer:
   m_ObjectHideFlags: 1

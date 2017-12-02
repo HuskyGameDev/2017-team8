@@ -25,6 +25,10 @@ public class AntiInfClass : UnitClass {
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
+        if (gameObject.tag == "PlayerUnit")
+            UnitManager.PlayerUnits.Add(this);
+        else
+            UnitManager.EnemyUnits.Add(this);
         AntiInfClass anti = new AntiInfClass();
 		print("I am an " + anti.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
 	}

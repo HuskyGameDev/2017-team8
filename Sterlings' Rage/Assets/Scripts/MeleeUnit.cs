@@ -23,5 +23,9 @@ public class MeleeUnit : UnitClass {
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
+        if (gameObject.tag == "PlayerUnit")
+            UnitManager.PlayerUnits.Add(this);
+        else
+            UnitManager.EnemyUnits.Add(this);
     }
 }

@@ -17,6 +17,8 @@ public class UnitClass : MonoBehaviour {
     public MapTile currentTile;
     private MapTile dest;
     private ArrayList path;
+    private int speedLeft;
+    public bool alreadyAttacked;
     private bool isMovingX;
     private bool isMovingY;
     private bool moving;
@@ -61,28 +63,37 @@ public class UnitClass : MonoBehaviour {
         set { currentTile = value; }
     }
 
+    public void newTurn()
+    {
+        speedLeft = speed;
+        alreadyAttacked = false;
+    }
+
     public void DisplayAttackRange()
     {
-        ArrayList attackTiles = new ArrayList();
-        TileManager.resetMovementTiles();
+        if (!alreadyAttacked)
+        {
+            ArrayList attackTiles = new ArrayList();
+            TileManager.resetMovementTiles();
 
-        if (currentTile.getLeft() != null)
-        {
-            findAttackTiles(currentTile.getLeft(), range - 1, attackTiles);
+            if (currentTile.getLeft() != null)
+            {
+                findAttackTiles(currentTile.getLeft(), range - 1, attackTiles);
+            }
+            if (currentTile.getDown() != null)
+            {
+                findAttackTiles(currentTile.getDown(), range - 1, attackTiles);
+            }
+            if (currentTile.getRight() != null)
+            {
+                findAttackTiles(currentTile.getRight(), range - 1, attackTiles);
+            }
+            if (currentTile.getUp() != null)
+            {
+                findAttackTiles(currentTile.getUp(), range - 1, attackTiles);
+            }
+            TileManager.setAttackList(attackTiles);
         }
-        if (currentTile.getDown() != null)
-        {
-            findAttackTiles(currentTile.getDown(), range - 1, attackTiles);
-        }
-        if (currentTile.getRight() != null)
-        {
-            findAttackTiles(currentTile.getRight(), range - 1, attackTiles);
-        }
-        if (currentTile.getUp() != null)
-        {
-            findAttackTiles(currentTile.getUp(), range - 1, attackTiles);
-        }
-        TileManager.setAttackList(attackTiles);
     }
 
     public void findAttackTiles(MapTile curTile, int range, ArrayList attackTiles)
@@ -128,19 +139,19 @@ public class UnitClass : MonoBehaviour {
 
         if (currentTile.getLeft() != null)
         {
-            findPossiblePaths(currentTile.getLeft(), speed - currentTile.getLeft().getMovementWeight(), pathTiles, currentTile);
+            findPossiblePaths(currentTile.getLeft(), speedLeft - currentTile.getLeft().getMovementWeight(), pathTiles, currentTile);
         }
         if (currentTile.getDown() != null)
         {
-            findPossiblePaths(currentTile.getDown(), speed - currentTile.getDown().getMovementWeight(), pathTiles, currentTile);
+            findPossiblePaths(currentTile.getDown(), speedLeft - currentTile.getDown().getMovementWeight(), pathTiles, currentTile);
         }
         if (currentTile.getRight() != null)
         {
-            findPossiblePaths(currentTile.getRight(), speed - currentTile.getRight().getMovementWeight(), pathTiles, currentTile);
+            findPossiblePaths(currentTile.getRight(), speedLeft - currentTile.getRight().getMovementWeight(), pathTiles, currentTile);
         }
         if (currentTile.getUp() != null)
         {
-            findPossiblePaths(currentTile.getUp(), speed - currentTile.getUp().getMovementWeight(), pathTiles, currentTile);
+            findPossiblePaths(currentTile.getUp(), speedLeft - currentTile.getUp().getMovementWeight(), pathTiles, currentTile);
         }
         TileManager.setPathList(pathTiles);
     }
@@ -217,6 +228,7 @@ public class UnitClass : MonoBehaviour {
         currentTile = dest;
         isMovingX = true;
         moving = true;
+        speedLeft = speedLeft - this.dest.getMovementWeight();
     }
 
     public void Update()
@@ -282,6 +294,7 @@ public class UnitClass : MonoBehaviour {
                 if (path.Count > 0)
                 {
                     dest = (MapTile)path[0];
+                    speedLeft = speedLeft - dest.getMovementWeight();
                     path.Remove(dest);
                     isMovingX = true;
                 } else
