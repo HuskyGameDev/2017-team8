@@ -185,13 +185,17 @@ public class UnitClass : MonoBehaviour {
         //print("Pos is " + pos);
         foreach(GameObject go in enemies){
             Vector3 diff = go.transform.position - pos;
-            float curDistance = diff.sqrMagnitude;
+            //print("Diff is " + diff);
+            float curDistance = diff.sqrMagnitude - 1;
+            //print("curDistance  is " + curDistance);
             if(curDistance <= distance){
                 //print("target in range");
+                //print("GO is " + go);
                 closest = go;
                 distance = curDistance;
             }
         }
+        //print("Closest is " + closest);
         return closest;
     }
 
