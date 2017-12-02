@@ -17,17 +17,13 @@ public class RangedUnit : UnitClass {
 
 	void Start(){
 
-<<<<<<< HEAD
-        /*if(TileManager.mapTiles != null && TileManager.checkIfFull())
-=======
         // Need update the units current tile as well is indicate the tile that there is now a unit on it
         if(TileManager.mapTiles != null && TileManager.checkIfFull())
->>>>>>> 3cce4c0143b616f377c431dadd702b3ee6845b41
         {
             currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
-        }*/
+        }
         RangedUnit range = new RangedUnit();
         int curHealth =  range.Health;
         print("Health is " + curHealth);
