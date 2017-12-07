@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class EndTurnButton : MonoBehaviour {
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
-        UnitManager.newTurn();
+        print("This was clicked");
+        newTurn();
     }
 
-    private void OnMouseOver()
+    private void newTurn()
     {
-        print("the mouse is over this");
+        UnitManager.newTurn();
+        TileManager.resetAllTiles();
+        print("Ending turn");
     }
 
     // Use this for initialization
     void Start () {
-        print("something has to happen");
+        print("something has to happen " + gameObject.transform.position.x);
 		
 	}
 	
@@ -24,9 +27,7 @@ public class EndTurnButton : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            TileManager.resetAllTiles();
-            UnitManager.newTurn();
-            print("Ending turn");
+            newTurn();
         }
     }
 }
