@@ -61,7 +61,7 @@ MonoBehaviour:
   sprite: 
   cost: 85
   currentTile: {fileID: 0}
-  speedLeft: 0
+  alreadyAttacked: 0
 --- !u!114 &114789253547309662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
   sprite: 
   cost: 0
   currentTile: {fileID: 0}
-  speedLeft: 0
+  alreadyAttacked: 0
 --- !u!212 &212973443515944376
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -114,7 +114,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 94b92aed49d29e5408949cb9e23f0352, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8085150c704cfa948a7d76ec02fcd59a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
