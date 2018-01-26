@@ -77,18 +77,15 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFilterTypeDirect: 0
-    m_PVRFilterTypeIndirect: 0
-    m_PVRFilterTypeAO: 0
+    m_PVRFiltering: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
-    m_PVRFilteringAtrousPositionSigmaIndirect: 2
-    m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -110,8 +107,6 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-    debug:
-      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1001 &35175174
 Prefab:
@@ -219,6 +214,11 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 93dc742499f34274b94209c7efbc40f5,
         type: 3}
+    - target: {fileID: 114554922491099506, guid: 0fd17d3fa092f9d4baf1f469756f1638,
+        type: 2}
+      propertyPath: currentUnit
+      value: 
+      objectReference: {fileID: 822845001}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0fd17d3fa092f9d4baf1f469756f1638, type: 2}
   m_IsPrefabParent: 0
@@ -1297,7 +1297,7 @@ Prefab:
         type: 2}
       propertyPath: currentTile
       value: 
-      objectReference: {fileID: 2115594376}
+      objectReference: {fileID: 994660016}
     - target: {fileID: 4160682871731516, guid: 33ff876e110ffdc4ba5028b17260d106, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
@@ -1504,7 +1504,7 @@ Prefab:
         type: 2}
       propertyPath: currentUnit
       value: 
-      objectReference: {fileID: 822845001}
+      objectReference: {fileID: 0}
     - target: {fileID: 212983920542279562, guid: 0fd17d3fa092f9d4baf1f469756f1638,
         type: 2}
       propertyPath: m_Sprite
@@ -1915,11 +1915,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!4 &1599697364
 Transform:
   m_ObjectHideFlags: 0
@@ -2223,12 +2223,12 @@ Prefab:
     - target: {fileID: 114239371619111752, guid: 72c077c6b1c188049951bbb85a337929,
         type: 2}
       propertyPath: mapWidthX
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114239371619111752, guid: 72c077c6b1c188049951bbb85a337929,
         type: 2}
       propertyPath: mapHeightY
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72c077c6b1c188049951bbb85a337929, type: 2}
@@ -2300,12 +2300,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4992616336002376, guid: 0fd17d3fa092f9d4baf1f469756f1638,
     type: 2}
   m_PrefabInternal: {fileID: 1484744714}
---- !u!114 &2115594376 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114554922491099506, guid: 0fd17d3fa092f9d4baf1f469756f1638,
-    type: 2}
-  m_PrefabInternal: {fileID: 1484744714}
-  m_Script: {fileID: 11500000, guid: 4316ce850837a8a468482bf8be9e11af, type: 3}
 --- !u!1001 &2115730452
 Prefab:
   m_ObjectHideFlags: 0
