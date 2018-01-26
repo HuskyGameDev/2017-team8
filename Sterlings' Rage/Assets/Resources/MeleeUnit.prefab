@@ -61,7 +61,7 @@ MonoBehaviour:
   sprite: 
   cost: 50
   currentTile: {fileID: 0}
-  speedLeft: 0
+  alreadyAttacked: 0
 --- !u!114 &114918506342082162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
   sprite: 
   cost: 0
   currentTile: {fileID: 0}
-  speedLeft: 0
+  alreadyAttacked: 0
 --- !u!212 &212431262870541830
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -91,6 +91,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -106,6 +107,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -114,7 +116,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 19abd6ca9650cce45af214fb1fb7e360, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a223550d605b51e4baee82dfde592b13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

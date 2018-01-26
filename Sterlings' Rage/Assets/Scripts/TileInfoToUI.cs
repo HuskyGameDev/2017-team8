@@ -45,9 +45,7 @@ public class TileInfoToUI : MonoBehaviour {
             hadRecent = true;
         }
         holding = recent;
-        Color selected = holding.GetComponent<SpriteRenderer>().color;
-        selected.g = 0f;
-        holding.GetComponent<SpriteRenderer>().color = selected;
+       
         //getting here means you clicked on a tile, so update the info
 		GetComponent<Image>().sprite = holding.GetComponent<SpriteRenderer>().sprite;
         SelectedInfo.text = holding.tileType;
@@ -56,9 +54,7 @@ public class TileInfoToUI : MonoBehaviour {
     {
         //Add in a case where Recent is null (I want to set it to null when not in use)
         //for now only clears the color selection
-        Color selected = holding.GetComponent<SpriteRenderer>().color;
-        selected.g = 255f;
-        holding.GetComponent<SpriteRenderer>().color = selected;
+        holding.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
 }
