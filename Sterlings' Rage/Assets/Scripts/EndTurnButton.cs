@@ -7,13 +7,12 @@ public class EndTurnButton : MonoBehaviour {
     public void OnMouseDown()
     {
         print("This was clicked");
-        newTurn();
+        endTurn();
     }
 
-    private void newTurn()
+    private void endTurn()
     {
-        UnitManager.newTurn();
-        TileManager.resetAllTiles();
+        TurnManager.endTurn();
         print("Ending turn");
     }
 
@@ -27,7 +26,7 @@ public class EndTurnButton : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            newTurn();
+            endTurn();
         }
     }
 }

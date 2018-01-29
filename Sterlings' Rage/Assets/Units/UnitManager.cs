@@ -32,6 +32,12 @@ public class UnitManager : MonoBehaviour {
             unit.newTurn();
     }
 
+    public static void aiTurn()
+    {
+        foreach (UnitClass unit in EnemyUnits)
+            unit.newTurn();
+    }
+
     public static void setSelectedUnit(UnitClass unit)
     {
         selectedUnit = unit;
