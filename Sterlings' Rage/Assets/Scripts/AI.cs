@@ -25,11 +25,13 @@ public class AI : MonoBehaviour {
         foreach (UnitClass unit in UnitManager.EnemyUnits)
         {
             UnitClass playerUnit = findNearestPlayerUnit(unit);
+            print("AI unit at " + unit.gameObject.transform.position.x + "," + unit.gameObject.transform.position.y+ "  found closest to be " 
+                + playerUnit.gameObject.transform.position.x + ", " + playerUnit.gameObject.transform.position.y);
             if (playerUnit != null)
             {
                 if (tilesTo(unit.gameObject, playerUnit.gameObject) > unit.range)
                     move(unit, playerUnit);
-                if (tilesTo(unit.gameObject, playerUnit.gameObject) <= unit.range)
+                if (tilesTo(unit.currentTile.gameObject, playerUnit.gameObject) <= unit.range)
                     attack(unit, playerUnit);
             }
         }
@@ -63,7 +65,9 @@ public class AI : MonoBehaviour {
 
     private void attack (UnitClass aiUnit, UnitClass playerUnit)
     {
-
+        print("yeah the computers killing things");
+        playerUnit.currentTile.attack(aiUnit, playerUnit, aiUnit.currentTile, playerUnit.currentTile);
+        TileManager.resetAllTiles();
     }
 
     private int tilesTo (GameObject unit, GameObject otherUnit)
@@ -92,6 +96,6 @@ public class AI : MonoBehaviour {
     private float distanceBetween(GameObject unit, GameObject otherUnit)
     {
         return Mathf.Sqrt(Mathf.Pow((unit.transform.position.x - otherUnit.transform.position.x),2f) 
-            + Mathf.Pow((unit.transform.position.x - otherUnit.transform.position.y),2f));
+            + Mathf.Pow((unit.transform.position.y - otherUnit.transform.position.y),2f));
     }
 }
