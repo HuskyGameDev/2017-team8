@@ -6,11 +6,13 @@ public class RangedUnit : UnitClass {
 
 	public RangedUnit(){
 		UnitClassName = "RangedUnit";
+		UnitType = "Infantry";
 		//Sprite = ""
 		Health = 3;
 		Speed = 2;
 		Range = 3;
-		Damage = 5;
+		//  If attacking infantry damage is 7
+		Damage = 3;
 		Cost = 175;
 		//CurrentTile = Tile;
 	}
@@ -36,7 +38,8 @@ public class RangedUnit : UnitClass {
 		base.Update();
     	if(Health <= 0){
     		print("Ranged is Dead!");
-    		Destroy(gameObject);
+            UnitManager.unitKilled(this);
+            Destroy(gameObject);
     	}
     }
 }

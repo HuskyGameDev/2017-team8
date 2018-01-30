@@ -24,6 +24,13 @@ public class UnitManager : MonoBehaviour {
             foreach (UnitClass unit in PlayerUnits)
                 print(unit.unitClassName);
         }
+        // Win/Lose condition checking
+        if(PlayerUnits.Length == 0){
+            print("You Lose!");
+        }
+        if(EnemyUnits.Length == 0){
+            print("You Win!");
+        }
     }
 
     public static void newTurn()
@@ -36,6 +43,17 @@ public class UnitManager : MonoBehaviour {
     {
         foreach (UnitClass unit in EnemyUnits)
             unit.newTurn();
+    }
+    public static void unitKilled(UnitClass unit)
+    {
+        print("this should be called");
+        if (unit.tag == "PlayerUnit")
+        {
+            PlayerUnits.Remove(unit);
+        } else
+        {
+            EnemyUnits.Remove(unit);
+        }
     }
 
     public static void setSelectedUnit(UnitClass unit)
