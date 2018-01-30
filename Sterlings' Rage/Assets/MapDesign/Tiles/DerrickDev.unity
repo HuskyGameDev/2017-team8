@@ -4937,6 +4937,11 @@ Prefab:
       propertyPath: m_Name
       value: Flame Unit
       objectReference: {fileID: 0}
+    - target: {fileID: 114614159737620376, guid: 33ff876e110ffdc4ba5028b17260d106,
+        type: 2}
+      propertyPath: health
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 33ff876e110ffdc4ba5028b17260d106, type: 2}
   m_IsPrefabParent: 0
@@ -17504,6 +17509,10 @@ Prefab:
       propertyPath: currentUnit
       value: 
       objectReference: {fileID: 2021061606}
+    - target: {fileID: 1941453930789628, guid: a8cac65a0bc632b4482462c9220b1210, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a8cac65a0bc632b4482462c9220b1210, type: 2}
   m_IsPrefabParent: 0
@@ -25316,8 +25325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037a196ffc7f85a499163ce76cf442b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
-  delegates: []
+  AttachedTo: {fileID: 0}
 --- !u!1001 &1544386456
 Prefab:
   m_ObjectHideFlags: 0
