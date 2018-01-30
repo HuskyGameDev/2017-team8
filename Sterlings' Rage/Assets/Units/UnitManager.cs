@@ -25,10 +25,10 @@ public class UnitManager : MonoBehaviour {
                 print(unit.unitClassName);
         }
         // Win/Lose condition checking
-        if(PlayerUnits.Length == 0){
+        if(PlayerUnits.Count == 0){
             print("You Lose!");
         }
-        if(EnemyUnits.Length == 0){
+        if(EnemyUnits.Count == 0){
             print("You Win!");
         }
     }
