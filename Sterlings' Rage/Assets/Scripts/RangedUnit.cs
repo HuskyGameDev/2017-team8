@@ -36,7 +36,8 @@ public class RangedUnit : UnitClass {
 		base.Update();
     	if(Health <= 0){
     		print("Ranged is Dead!");
-    		Destroy(gameObject);
+            UnitManager.unitKilled(this);
+            Destroy(gameObject);
     	}
     }
 }

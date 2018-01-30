@@ -37,6 +37,17 @@ public class UnitManager : MonoBehaviour {
         foreach (UnitClass unit in EnemyUnits)
             unit.newTurn();
     }
+    public static void unitKilled(UnitClass unit)
+    {
+        print("this should be called");
+        if (unit.tag == "PlayerUnit")
+        {
+            PlayerUnits.Remove(unit);
+        } else
+        {
+            EnemyUnits.Remove(unit);
+        }
+    }
 
     public static void setSelectedUnit(UnitClass unit)
     {

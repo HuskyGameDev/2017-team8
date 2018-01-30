@@ -37,6 +37,7 @@ public class AntiInfClass : UnitClass {
 		base.Update();
     	if(Health <= 0){
     		print("Anti is Dead!");
+            UnitManager.unitKilled(this);
     		Destroy(gameObject);
     	}
     }
