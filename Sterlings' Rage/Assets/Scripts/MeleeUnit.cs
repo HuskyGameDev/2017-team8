@@ -6,11 +6,12 @@ public class MeleeUnit : UnitClass {
 
 	public MeleeUnit(){
 		UnitClassName = "MeleeUnit";
+		UnitType = "Infantry";
 		//Sprite = ""
 		Health = 5;
 		Speed = 3;
 		Range = 1;
-		Damage = 2;
+		Damage = 3;
 		Cost = 50;
 	}
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitClass : MonoBehaviour {
     public string unitClassName;
+    public string unitType;
 
     // Test Comment
 
@@ -26,6 +27,11 @@ public class UnitClass : MonoBehaviour {
     public string UnitClassName {
         get { return unitClassName; }
         set { unitClassName = value; }
+    }
+
+     public string UnitType{
+        get{ return unitType;}
+        set{ unitType = value;}
     }
 
     public string Sprite {

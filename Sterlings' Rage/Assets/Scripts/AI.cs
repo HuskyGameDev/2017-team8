@@ -71,6 +71,7 @@ public class AI : MonoBehaviour {
     }
 
     private IEnumerator attack (UnitClass aiUnit, UnitClass playerUnit)
+
     {
         print("yeah the computers killing things");
         playerUnit.currentTile.attack(aiUnit, playerUnit, aiUnit.currentTile, playerUnit.currentTile);

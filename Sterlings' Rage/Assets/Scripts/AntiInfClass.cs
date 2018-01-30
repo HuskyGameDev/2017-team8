@@ -6,13 +6,14 @@ public class AntiInfClass : UnitClass {
 
 	public AntiInfClass(){
 		UnitClassName = "AntiInfantry";
+		UnitType = "Infantry";
 		//Sprite = ""
-		Health = 3;
+		Health = 7;
 		Speed = 3;
 		Range = 1;
 		//If not Infantry Damage = 2
 		//Else
-		Damage = 4;
+		Damage = 5;
 		Cost = 85;
 	}
 
