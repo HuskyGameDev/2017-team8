@@ -63,7 +63,7 @@ public class AI : MonoBehaviour {
         TileManager.resetAllTiles();
     }
 
-    private void attack (UnitClass aiUnit, UnitClass playerUnit)
+    public void attack (UnitClass aiUnit, UnitClass playerUnit)
     {
         print("yeah the computers killing things");
         playerUnit.currentTile.attack(aiUnit, playerUnit, aiUnit.currentTile, playerUnit.currentTile);
