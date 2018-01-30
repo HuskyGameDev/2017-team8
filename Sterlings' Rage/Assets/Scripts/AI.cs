@@ -15,24 +15,30 @@ public class AI : MonoBehaviour {
         if (!TurnManager.playerTurn && !aiTurn)
         {
             aiTurn = true;
-            takeTurn();
+            // Need coroutine so that the AI can wait for units to move before attacking
+            StartCoroutine(takeTurn());
         }
 		
 	}
 
-    private void takeTurn()
+    private IEnumerator takeTurn()
     {
+        // Makes a copy of the AI's current units because if one happens to die it will change the list causing the following loop to crash
+        ArrayList temp = new ArrayList();
         foreach (UnitClass unit in UnitManager.EnemyUnits)
+            temp.Add(unit);
+        
+        foreach (UnitClass unit in temp)
         {
             UnitClass playerUnit = findNearestPlayerUnit(unit);
-            print("AI unit at " + unit.gameObject.transform.position.x + "," + unit.gameObject.transform.position.y+ "  found closest to be " 
-                + playerUnit.gameObject.transform.position.x + ", " + playerUnit.gameObject.transform.position.y);
             if (playerUnit != null)
             {
                 if (tilesTo(unit.gameObject, playerUnit.gameObject) > unit.range)
-                    move(unit, playerUnit);
-                if (tilesTo(unit.currentTile.gameObject, playerUnit.gameObject) <= unit.range)
-                    attack(unit, playerUnit);
+                    yield return StartCoroutine(move(unit, playerUnit));
+                // Currently possible for a different unit to kill the inteded target before reaching this point so
+                // null check makes sure it is still alive
+                if (playerUnit != null && tilesTo(unit.currentTile.gameObject, playerUnit.gameObject) <= unit.range)
+                    yield return StartCoroutine(attack(unit, playerUnit));
             }
         }
         TurnManager.newTurn();
@@ -43,7 +49,7 @@ public class AI : MonoBehaviour {
     /**
      * Moves the aiUnit towards the playerUnit
      */
-    private void move (UnitClass aiUnit, UnitClass playerUnit)
+    private IEnumerator move (UnitClass aiUnit, UnitClass playerUnit)
     {
         aiUnit.displayMovementPath();
         int distance = int.MaxValue;
@@ -61,13 +67,16 @@ public class AI : MonoBehaviour {
         aiUnit.MoveTo(movementPath, targetTile);
         targetTile.currentUnit = aiUnit;
         TileManager.resetAllTiles();
+        return new WaitUntil(()=> aiUnit.moving == false);
     }
 
-    private void attack (UnitClass aiUnit, UnitClass playerUnit)
+    private IEnumerator attack (UnitClass aiUnit, UnitClass playerUnit)
     {
         print("yeah the computers killing things");
         playerUnit.currentTile.attack(aiUnit, playerUnit, aiUnit.currentTile, playerUnit.currentTile);
         TileManager.resetAllTiles();
+        // Need to return some sort of Enumerator to work as intended
+        return new WaitUntil(()=> 1==1);
     }
 
     private int tilesTo (GameObject unit, GameObject otherUnit)

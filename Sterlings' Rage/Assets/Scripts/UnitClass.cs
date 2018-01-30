@@ -21,7 +21,7 @@ public class UnitClass : MonoBehaviour {
     public bool alreadyAttacked;
     private bool isMovingX;
     private bool isMovingY;
-    private bool moving;
+    public bool moving;
 
     public string UnitClassName {
         get { return unitClassName; }
