@@ -8,5 +8,11 @@ public class LoadSceneOnClick : MonoBehaviour {
     {
       SceneManager.LoadScene("MapDesign/BasicMap");
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown("escape"))
+        {
+            SceneManager.LoadScene("Scenes/mainMenu");
+        }
+    }
 }
