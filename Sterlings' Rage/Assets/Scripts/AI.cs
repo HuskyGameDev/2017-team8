@@ -75,6 +75,8 @@ public class AI : MonoBehaviour {
     {
         print("yeah the computers killing things");
         playerUnit.currentTile.attack(aiUnit, playerUnit, aiUnit.currentTile, playerUnit.currentTile);
+        //play animation
+        aiUnit.gameObject.GetComponent<Animator>().Play("Attack");
         TileManager.resetAllTiles();
         // Need to return some sort of Enumerator to work as intended
         return new WaitUntil(()=> 1==1);
