@@ -8,9 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 548032e230588a74e9d1609a52a8c9aa
-  - enabled: 1
-    path: Assets/Scenes/mainMenu.unity
+  - enabled: 0
+    path: 
     guid: 6b7acbb5e20316b4abfeb3b0f8226977
-  - enabled: 1
+  - enabled: 0
     path: Assets/MapDesign/BasicMap.unity
     guid: 2e73915ec9d471a4bb40199ac16fe8d3
+  - enabled: 1
+    path: Assets/Scenes/mainMenu.unity
+    guid: 25b40c31161312842948d1a331d7835b
+  - enabled: 1
+    path: Assets/MapDesign/Colin Scene.unity
+    guid: 41b1718c3031b684f87bed507288c82b
