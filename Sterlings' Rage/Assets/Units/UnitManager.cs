@@ -7,6 +7,7 @@ public class UnitManager : MonoBehaviour {
     public static ArrayList PlayerUnits = new ArrayList();
     public static ArrayList EnemyUnits = new ArrayList();
     private static UnitClass selectedUnit;
+    public int hasWon = 0;
 
     // Use this for initialization
     void Start () {
@@ -25,11 +26,16 @@ public class UnitManager : MonoBehaviour {
                 print(unit.unitClassName);
         }
         // Win/Lose condition checking
-        if(PlayerUnits.Count == 0){
-            print("You Lose!");
-        }
-        if(EnemyUnits.Count == 0){
-            print("You Win!");
+        if( hasWon == 0)
+        {
+            if(PlayerUnits.Count == 0){
+                print("You Lose!");
+                hasWon = 1;
+            }
+            if(EnemyUnits.Count == 0){
+                print("You Win!");
+                hasWon = 1;
+            }
         }
     }
 
