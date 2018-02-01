@@ -12718,17 +12718,17 @@ Prefab:
       propertyPath: currentTile
       value: 
       objectReference: {fileID: 315466415}
-    - target: {fileID: 212564201647198688, guid: ab3cdc579acbe6348acd6eb0ad95485f,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a223550d605b51e4baee82dfde592b13,
-        type: 3}
     - target: {fileID: 114143872196817016, guid: ab3cdc579acbe6348acd6eb0ad95485f,
         type: 2}
       propertyPath: speed
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 212564201647198688, guid: ab3cdc579acbe6348acd6eb0ad95485f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 76c09328b6a954341a3e83c9e968eda8,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab3cdc579acbe6348acd6eb0ad95485f, type: 2}
   m_IsPrefabParent: 0
@@ -14274,11 +14274,6 @@ Prefab:
       propertyPath: currentTile
       value: 
       objectReference: {fileID: 2060295708}
-    - target: {fileID: 114143872196817016, guid: ab3cdc579acbe6348acd6eb0ad95485f,
-        type: 2}
-      propertyPath: speed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1906786187022280, guid: ab3cdc579acbe6348acd6eb0ad95485f, type: 2}
       propertyPath: m_Name
       value: RangedUnit (3)
