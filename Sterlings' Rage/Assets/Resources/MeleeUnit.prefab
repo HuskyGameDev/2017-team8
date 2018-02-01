@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212431262870541830}
   - component: {fileID: 114614159737620376}
   - component: {fileID: 114918506342082162}
+  - component: {fileID: 95559756083423310}
   m_Layer: 0
   m_Name: MeleeUnit
   m_TagString: PlayerUnit
@@ -42,6 +43,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95559756083423310
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134510143185346}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b79910763f8042a4094b327a94e30876, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114614159737620376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,6 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitClassName: Melee
+  unitType: Infantry
   health: 5
   speed: 3
   range: 1
@@ -62,6 +81,7 @@ MonoBehaviour:
   cost: 50
   currentTile: {fileID: 0}
   alreadyAttacked: 0
+  moving: 0
 --- !u!114 &114918506342082162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitClassName: 
+  unitType: 
   health: 0
   speed: 0
   range: 0
@@ -82,6 +103,7 @@ MonoBehaviour:
   cost: 0
   currentTile: {fileID: 0}
   alreadyAttacked: 0
+  moving: 0
 --- !u!212 &212431262870541830
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -91,7 +113,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -107,7 +128,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
