@@ -436,8 +436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000076294, y: -7.7}
-  m_SizeDelta: {x: 310.7, y: 186.2}
+  m_AnchoredPosition: {x: -0.0000076294, y: 3.31}
+  m_SizeDelta: {x: 310.7, y: 208.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &227446098
 MonoBehaviour:
@@ -475,7 +475,13 @@ MonoBehaviour:
 
 
     Use the mouse to move characters. first click the character then and then where
-    you want them to move.'
+    you want them to move.
+
+
+    Attack by Clicking the Unit you want to attack with, then pressing A
+
+
+    You can move the screen around by moving the cursor over to the edge of the screen'
 --- !u!222 &227446099
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1996,7 +2002,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 68ed27a9b7c8fb341bb15d0ea849b499, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e364f1beceb45984d9bfffc078138dfe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3594,8 +3600,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000076294, y: -7.7}
-  m_SizeDelta: {x: 310.7, y: 186.2}
+  m_AnchoredPosition: {x: -0.0000076294, y: 3.31}
+  m_SizeDelta: {x: 310.7, y: 208.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2015978154
 MonoBehaviour:
@@ -3633,7 +3639,13 @@ MonoBehaviour:
 
 
     Use the mouse to move characters. first click the character then and then where
-    you want them to move.'
+    you want them to move.
+
+
+    Attack by Clicking the Unit you want to attack with, then pressing A
+
+
+    You can move the screen around by moving the cursor over to the edge of the screen'
 --- !u!222 &2015978155
 CanvasRenderer:
   m_ObjectHideFlags: 0
