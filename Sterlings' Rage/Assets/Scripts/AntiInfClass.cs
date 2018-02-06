@@ -8,13 +8,13 @@ public class AntiInfClass : UnitClass {
 		UnitClassName = "AntiInfantry";
 		UnitType = "Infantry";
 		//Sprite = ""
-		Health = 7;
-		Speed = 3;
-		Range = 1;
+		Health = 3;
+		Speed = 2;
+		Range = 5;
 		//If not Infantry Damage = 2
 		//Else
-		Damage = 5;
-		Cost = 85;
+		Damage = 3;
+		Cost = 175;
 	}
 
 	void Start(){

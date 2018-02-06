@@ -75,7 +75,7 @@ MonoBehaviour:
   unitType: Infantry
   health: 3
   speed: 3
-  range: 1
+  range: 3
   damage: 4
   sprite: 
   cost: 85
