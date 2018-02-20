@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EndTurnButton : MonoBehaviour {
+    private TurnManager turnManager;
 
     public void OnMouseDown()
     {
@@ -12,7 +13,7 @@ public class EndTurnButton : MonoBehaviour {
 
     private void endTurn()
     {
-        TurnManager.endTurn();
+        turnManager.endTurn();
         print("Ending turn");
     }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeUnit : UnitClass {
+    private TileManager tileManager;
+    private UnitManager unitManager;
 
 	public MeleeUnit(){
 		UnitClassName = "MeleeUnit";
@@ -16,25 +18,28 @@ public class MeleeUnit : UnitClass {
 	}
 
 	void Start(){
-		MeleeUnit melee = new MeleeUnit();
+        
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+        tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+        MeleeUnit melee = new MeleeUnit();
 		print("I am a " + melee.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
-        if (TileManager.mapTiles != null && TileManager.checkIfFull())
+        if (tileManager.mapTiles != null && tileManager.checkIfFull())
         {
-            currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
+            currentTile = tileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
         if (gameObject.tag == "PlayerUnit")
-            UnitManager.PlayerUnits.Add(this);
+            unitManager.PlayerUnits.Add(this);
         else
-            UnitManager.EnemyUnits.Add(this);
+            unitManager.EnemyUnits.Add(this);
     }
 
     void Update(){
     	base.Update();
     	if(Health <= 0){
     		print("Melee is Dead!");
-            UnitManager.unitKilled(this);
+            unitManager.unitKilled(this);
             Destroy(gameObject);
     	}
     }

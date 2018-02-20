@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitClass : MonoBehaviour {
+public class UnitClass : MonoBehaviour
+{
     public string unitClassName;
     public string unitType;
+    private TileManager tileManager;
+    private UnitManager unitManager;
 
     // Test Comment
 
@@ -24,47 +27,56 @@ public class UnitClass : MonoBehaviour {
     private bool isMovingY;
     public bool moving;
 
-    public string UnitClassName {
+    public string UnitClassName
+    {
         get { return unitClassName; }
         set { unitClassName = value; }
     }
 
-     public string UnitType{
-        get{ return unitType;}
-        set{ unitType = value;}
+    public string UnitType
+    {
+        get { return unitType; }
+        set { unitType = value; }
     }
 
-    public string Sprite {
+    public string Sprite
+    {
         get { return sprite; }
         set { sprite = value; }
     }
 
-    public int Health {
+    public int Health
+    {
         get { return health; }
         set { health = value; }
     }
 
-    public int Speed {
+    public int Speed
+    {
         get { return speed; }
         set { speed = value; }
     }
 
-    public int Range {
+    public int Range
+    {
         get { return range; }
         set { range = value; }
     }
 
-    public int Damage {
+    public int Damage
+    {
         get { return damage; }
         set { damage = value; }
     }
 
-    public int Cost {
+    public int Cost
+    {
         get { return cost; }
         set { cost = value; }
     }
 
-    public MapTile CurrentTile{
+    public MapTile CurrentTile
+    {
         get { return currentTile; }
         set { currentTile = value; }
     }
@@ -80,7 +92,7 @@ public class UnitClass : MonoBehaviour {
         if (!alreadyAttacked)
         {
             ArrayList attackTiles = new ArrayList();
-            TileManager.resetMovementTiles();
+            tileManager.resetMovementTiles();
 
             if (currentTile.getLeft() != null)
             {
@@ -98,7 +110,7 @@ public class UnitClass : MonoBehaviour {
             {
                 findAttackTiles(currentTile.getUp(), range - 1, attackTiles);
             }
-            TileManager.setAttackList(attackTiles);
+            tileManager.setAttackList(attackTiles);
         }
     }
 
@@ -116,19 +128,19 @@ public class UnitClass : MonoBehaviour {
         }
 
 
-        if (curTile.getLeft() != null && !TileManager.containsAttackTile(range - 1, curTile.getLeft()))
+        if (curTile.getLeft() != null && !tileManager.containsAttackTile(range - 1, curTile.getLeft()))
         {
             findAttackTiles(curTile.getLeft(), range - 1, attackTiles);
         }
-        if (curTile.getDown() != null && !TileManager.containsAttackTile(range - 1, curTile.getDown()))
+        if (curTile.getDown() != null && !tileManager.containsAttackTile(range - 1, curTile.getDown()))
         {
             findAttackTiles(curTile.getDown(), range - 1, attackTiles);
         }
-        if (curTile.getRight() != null && !TileManager.containsAttackTile(range - 1, curTile.getRight()))
+        if (curTile.getRight() != null && !tileManager.containsAttackTile(range - 1, curTile.getRight()))
         {
             findAttackTiles(curTile.getRight(), range - 1, attackTiles);
         }
-        if (curTile.getUp() != null && !TileManager.containsAttackTile(range - 1, curTile.getUp()))
+        if (curTile.getUp() != null && !tileManager.containsAttackTile(range - 1, curTile.getUp()))
         {
             findAttackTiles(curTile.getUp(), range - 1, attackTiles);
         }
@@ -137,9 +149,9 @@ public class UnitClass : MonoBehaviour {
     public void displayMovementPath()
     {
         // Resets if the user had already selected a different unit
-        if (UnitManager.getSelectedUnit() != null)
-            TileManager.resetMovementTiles();
-        UnitManager.setSelectedUnit(this);
+        if (unitManager.getSelectedUnit() != null)
+            tileManager.resetMovementTiles();
+        unitManager.setSelectedUnit(this);
 
         ArrayList pathTiles = new ArrayList();
 
@@ -159,7 +171,7 @@ public class UnitClass : MonoBehaviour {
         {
             findPossiblePaths(currentTile.getUp(), speedLeft - currentTile.getUp().getMovementWeight(), pathTiles, currentTile);
         }
-        TileManager.setPathList(pathTiles);
+        tileManager.setPathList(pathTiles);
     }
 
     private void findPossiblePaths(MapTile curTile, int speed, ArrayList pathTiles, MapTile previous)
@@ -178,20 +190,21 @@ public class UnitClass : MonoBehaviour {
         }
 
         // Recursive calls to all adjacent tiles that haven't already been checked or that have but had a lower speed when they were reached.
-        if (curTile.getLeft() != null && !TileManager.containsTile(speed - curTile.getLeft().getMovementWeight(), curTile.getLeft()))
+        if (curTile.getLeft() != null && !tileManager.containsTile(speed - curTile.getLeft().getMovementWeight(), curTile.getLeft()))
             findPossiblePaths(curTile.getLeft(), speed - curTile.getLeft().getMovementWeight(), pathTiles, curTile);
 
-        if (curTile.getDown() != null && !TileManager.containsTile(speed - curTile.getDown().getMovementWeight(), curTile.getDown()))
+        if (curTile.getDown() != null && !tileManager.containsTile(speed - curTile.getDown().getMovementWeight(), curTile.getDown()))
             findPossiblePaths(curTile.getDown(), speed - curTile.getDown().getMovementWeight(), pathTiles, curTile);
 
-        if (curTile.getRight() != null && !TileManager.containsTile(speed - curTile.getRight().getMovementWeight(), curTile.getRight()))
+        if (curTile.getRight() != null && !tileManager.containsTile(speed - curTile.getRight().getMovementWeight(), curTile.getRight()))
             findPossiblePaths(curTile.getRight(), speed - curTile.getRight().getMovementWeight(), pathTiles, curTile);
 
-        if (curTile.getUp() != null && !TileManager.containsTile(speed - curTile.getUp().getMovementWeight(), curTile.getUp()))
+        if (curTile.getUp() != null && !tileManager.containsTile(speed - curTile.getUp().getMovementWeight(), curTile.getUp()))
             findPossiblePaths(curTile.getUp(), speed - curTile.getUp().getMovementWeight(), pathTiles, curTile);
     }
 
-    public GameObject EnemyInRange(float range){
+    public GameObject EnemyInRange(float range)
+    {
         GameObject[] enemies;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         //print("Enemies found " + enemies.Length);
@@ -200,12 +213,14 @@ public class UnitClass : MonoBehaviour {
         //print("targeting range is " + distance);
         Vector3 pos = transform.position;
         //print("Pos is " + pos);
-        foreach(GameObject go in enemies){
+        foreach (GameObject go in enemies)
+        {
             Vector3 diff = go.transform.position - pos;
             //print("Diff is " + diff);
             float curDistance = diff.sqrMagnitude - 1;
             //print("curDistance  is " + curDistance);
-            if(curDistance <= distance){
+            if (curDistance <= distance)
+            {
                 //print("target in range");
                 //print("GO is " + go);
                 closest = go;
@@ -218,7 +233,7 @@ public class UnitClass : MonoBehaviour {
 
     public void MoveTo(ArrayList movementPath, MapTile dest)
     {
-        if(path == null)
+        if (path == null)
             path = new ArrayList();
         path.Clear();
         // Have to add to the path for this unit because the tile will clear it's movement path 
@@ -239,6 +254,11 @@ public class UnitClass : MonoBehaviour {
 
     public void Update()
     {
+        if (unitManager == null || tileManager == null)
+        {
+            unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+            tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+        }
         if (moving)
         {
             if (isMovingX)
@@ -277,7 +297,7 @@ public class UnitClass : MonoBehaviour {
                         isMovingY = false;
                         // Because of how floats work need to make sure to set the units position to be the same as the tile or
                         // sometimes it will move to far
-                        gameObject.transform.position = new Vector2(dest.transform.position.x, dest.transform.position.y);                        
+                        gameObject.transform.position = new Vector2(dest.transform.position.x, dest.transform.position.y);
                     }
                 }
                 else
@@ -293,7 +313,7 @@ public class UnitClass : MonoBehaviour {
 
             if (!isMovingX && !isMovingY)
             {
-                if(dest.contraband != null)
+                if (dest.contraband != null)
                 {
                     ResourceManager.pickUpContraband(dest);
                 }
@@ -303,7 +323,8 @@ public class UnitClass : MonoBehaviour {
                     speedLeft = speedLeft - dest.getMovementWeight();
                     path.Remove(dest);
                     isMovingX = true;
-                } else
+                }
+                else
                 {
                     moving = false;
                 }
@@ -313,9 +334,10 @@ public class UnitClass : MonoBehaviour {
 
     private void Start()
     {
+        tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
         isMovingY = false;
-        isMovingY = false; 
-        range = 10;
+        isMovingY = false;
         dest = null;
     }
 

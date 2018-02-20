@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlameUnit : UnitClass {
+public class RangedUnit : UnitClass {
 
-	public FlameUnit(){
-		UnitClassName = "FlameUnit";
+    private TileManager tileManager;
+    private UnitManager unitManager;
+
+	public RangedUnit(){
+		UnitClassName = "RangedUnit";
 		UnitType = "Infantry";
 		//Sprite = ""
 		Health = 7;//7
@@ -18,18 +21,20 @@ public class FlameUnit : UnitClass {
 	}
 
 	void Start(){
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+        tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
 
         // Need update the units current tile as well is indicate the tile that there is now a unit on it
-        if(TileManager.mapTiles != null && TileManager.checkIfFull())
+        if (tileManager.mapTiles != null && tileManager.checkIfFull())
         {
-            currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
+            currentTile = tileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
         if (gameObject.tag == "PlayerUnit")
-            UnitManager.PlayerUnits.Add(this);
+            unitManager.PlayerUnits.Add(this);
         else
-            UnitManager.EnemyUnits.Add(this);
+            unitManager.EnemyUnits.Add(this);
         
 	}
 
@@ -37,7 +42,7 @@ public class FlameUnit : UnitClass {
 		base.Update();
     	if(Health <= 0){
     		print("Ranged is Dead!");
-            UnitManager.unitKilled(this);
+            unitManager.unitKilled(this);
             Destroy(gameObject);
     	}
     }

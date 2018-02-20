@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class AI : MonoBehaviour {
     private bool aiTurn = false;
+    private TurnManager turnManager;
+    private TileManager tileManager;
+    private UnitManager unitManager;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+       
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+        tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+        turnManager = GameObject.Find("GameManager").GetComponent<TurnManager>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!TurnManager.playerTurn && !aiTurn)
+        // In case it didn't find it the first time
+        if (unitManager == null || tileManager == null || turnManager == null)
+        {
+            unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+            tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+            turnManager = GameObject.Find("GameManager").GetComponent<TurnManager>();
+        }
+        if (!turnManager.playerTurn && !aiTurn)
         {
             aiTurn = true;
             // Need coroutine so that the AI can wait for units to move before attacking
@@ -25,7 +38,7 @@ public class AI : MonoBehaviour {
     {
         // Makes a copy of the AI's current units because if one happens to die it will change the list causing the following loop to crash
         ArrayList temp = new ArrayList();
-        foreach (UnitClass unit in UnitManager.EnemyUnits)
+        foreach (UnitClass unit in unitManager.EnemyUnits)
             temp.Add(unit);
         
         foreach (UnitClass unit in temp)
@@ -41,7 +54,7 @@ public class AI : MonoBehaviour {
                     yield return StartCoroutine(attack(unit, playerUnit));
             }
         }
-        TurnManager.newTurn();
+        turnManager.newTurn();
         aiTurn = false;
 
     }
@@ -54,7 +67,7 @@ public class AI : MonoBehaviour {
         aiUnit.displayMovementPath();
         int distance = int.MaxValue;
         MapTile targetTile = null;
-        foreach (MapTile tile in TileManager.getPathList())
+        foreach (MapTile tile in tileManager.getPathList())
         {
             if (tilesTo(playerUnit.gameObject, tile.gameObject) < distance && tile.currentUnit == null)
             {
@@ -66,7 +79,7 @@ public class AI : MonoBehaviour {
         ArrayList movementPath = targetTile.highlightRoute(false);
         aiUnit.MoveTo(movementPath, targetTile);
         targetTile.currentUnit = aiUnit;
-        TileManager.resetAllTiles();
+        tileManager.resetAllTiles();
         return new WaitUntil(()=> aiUnit.moving == false);
     }
 
@@ -77,7 +90,7 @@ public class AI : MonoBehaviour {
         playerUnit.currentTile.attack(aiUnit, playerUnit, aiUnit.currentTile, playerUnit.currentTile);
         //play animation
         aiUnit.gameObject.GetComponent<Animator>().Play("Attack");
-        TileManager.resetAllTiles();
+        tileManager.resetAllTiles();
         // Need to return some sort of Enumerator to work as intended
         return new WaitUntil(()=> 1==1);
     }
@@ -91,7 +104,7 @@ public class AI : MonoBehaviour {
     {
         float minDist = float.MaxValue;
         UnitClass nearestUnit = null;
-        foreach (UnitClass playerUnit in  UnitManager.PlayerUnits)
+        foreach (UnitClass playerUnit in  unitManager.PlayerUnits)
         {
 
             float curDist = distanceBetween(playerUnit.gameObject, aiUnit.gameObject);
