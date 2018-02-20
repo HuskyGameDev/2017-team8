@@ -7,24 +7,24 @@ public class EndTurnButton : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        print("This was clicked");
         endTurn();
     }
 
     private void endTurn()
     {
         turnManager.endTurn();
-        print("Ending turn");
     }
 
     // Use this for initialization
     void Start () {
-        print("something has to happen " + gameObject.transform.position.x);
+        turnManager = GameObject.Find("GameManager").GetComponent<TurnManager>();
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (turnManager == null)
+            turnManager = GameObject.Find("GameManager").GetComponent<TurnManager>();
         if (Input.GetKeyDown(KeyCode.E))
         {
             endTurn();
