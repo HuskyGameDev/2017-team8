@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlameUnit : UnitClass {
+public class RangedUnit : UnitClass {
 
-	public FlameUnit(){
-		UnitClassName = "FlameUnit";
-		UnitType = "Infantry";
-		//Sprite = ""
-		Health = 7;//7
-		Speed = 3;//3
-		Range = 1;//1
-		//  If attacking infantry damage is 7
-		Damage = 5;//5
-		Cost = 85;//85
-		//CurrentTile = Tile;
-	}
+	// public FlameUnit(){
+	// 	UnitClassName = "FlameUnit";
+	// 	UnitType = "Infantry";
+	// 	//Sprite = ""
+	// 	Health = 7;//7
+	// 	Speed = 3;//3
+	// 	Range = 1;//1
+	// 	//  If attacking infantry damage is 7
+	// 	Damage = 5;//5
+	// 	Cost = 85;//85
+	// 	//CurrentTile = Tile;
+	// }
 
 	void Start(){
 

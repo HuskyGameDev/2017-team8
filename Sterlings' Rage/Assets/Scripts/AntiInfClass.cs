@@ -8,13 +8,15 @@ public class AntiInfClass : UnitClass {
 		UnitClassName = "AntiInfantry";
 		UnitType = "Infantry";
 		//Sprite = ""
-		Health = 3;
+		health = 3;
+        checkHealth = 3;
 		Speed = 2;
 		Range = 5;
 		//If not Infantry Damage = 2
 		//Else
 		Damage = 3;
 		Cost = 175;
+
 	}
 
 	void Start(){
@@ -30,16 +32,15 @@ public class AntiInfClass : UnitClass {
             UnitManager.PlayerUnits.Add(this);
         else
             UnitManager.EnemyUnits.Add(this);
-        AntiInfClass anti = new AntiInfClass();
-		print("I am an " + anti.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
+
 	}
 
 	void Update(){
 		base.Update();
-    	if(Health <= 0){
+    	if(health <= 0){
     		print("Anti is Dead!");
             UnitManager.unitKilled(this);
-    		Destroy(gameObject);
+            checkHealth = 0;
     	}
     }
 }

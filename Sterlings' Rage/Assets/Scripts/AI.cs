@@ -73,7 +73,7 @@ public class AI : MonoBehaviour {
     private IEnumerator attack (UnitClass aiUnit, UnitClass playerUnit)
 
     {
-        print("yeah the computers killing things");
+        //print("yeah the computers killing things");
         playerUnit.currentTile.attack(aiUnit, playerUnit, aiUnit.currentTile, playerUnit.currentTile);
         //play animation
         aiUnit.gameObject.GetComponent<Animator>().Play("Attack");
@@ -95,7 +95,7 @@ public class AI : MonoBehaviour {
         {
 
             float curDist = distanceBetween(playerUnit.gameObject, aiUnit.gameObject);
-            print("playerUnit at " + playerUnit.transform.position.x + "," + playerUnit.transform.position.y + " and " + curDist);
+            //print("playerUnit at " + playerUnit.transform.position.x + "," + playerUnit.transform.position.y + " and " + curDist);
             if (curDist < minDist)
             {
                 nearestUnit = playerUnit;

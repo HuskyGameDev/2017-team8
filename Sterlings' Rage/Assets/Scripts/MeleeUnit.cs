@@ -16,8 +16,7 @@ public class MeleeUnit : UnitClass {
 	}
 
 	void Start(){
-		MeleeUnit melee = new MeleeUnit();
-		print("I am a " + melee.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
+        
         if (TileManager.mapTiles != null && TileManager.checkIfFull())
         {
             currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
