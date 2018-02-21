@@ -3,28 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour {
-    public static bool playerTurn = true;
+    public bool playerTurn = true;
+    private TileManager tileManager;
+    private UnitManager unitManager;
 
 	// Use this for initialization
-	void Start () {
-		
-	}
+	void Start ()
+    {
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+        tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        if (unitManager == null || tileManager == null)
+        {
+            unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+            tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+        }
 		
 	}
 
-    public static void endTurn()
+    public void endTurn()
     {
         playerTurn = false;
-        UnitManager.aiTurn();
+        unitManager.aiTurn();
     }
 
-    public static void newTurn()
+    public void newTurn()
     {
-        UnitManager.newTurn();
-        TileManager.resetAllTiles();
+        unitManager.newTurn();
+        tileManager.resetAllTiles();
         playerTurn = true;
     }
 }

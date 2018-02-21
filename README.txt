@@ -1,1 +1,0 @@
-Just here so when y'all first connect it doesn't give you an empty repository warning.

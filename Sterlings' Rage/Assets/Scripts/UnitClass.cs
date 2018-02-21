@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+<<<<<<< HEAD
 public class UnitClass : MonoBehaviour {
 	public string unitClassName;
 	public string unitType;

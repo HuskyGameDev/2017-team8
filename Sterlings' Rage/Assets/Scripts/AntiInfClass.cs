@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AntiInfClass : UnitClass {
 
+    private TileManager tileManager;
+    private UnitManager unitManager;
+
 	public AntiInfClass(){
 		UnitClassName = "AntiInfantry";
 		UnitType = "Infantry";
@@ -20,27 +23,30 @@ public class AntiInfClass : UnitClass {
 	}
 
 	void Start(){
-
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+        tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
         // Need update the units current tile as well is indicate the tile that there is now a unit on it
-        if (TileManager.mapTiles != null && TileManager.checkIfFull())
+        if (tileManager.mapTiles != null && tileManager.checkIfFull())
         {
-            currentTile = TileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
+            currentTile = tileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
             print("currentTile " + currentTile.getXPosition() + "," + currentTile.getYPosition());
             currentTile.currentUnit = this;
         }
         if (gameObject.tag == "PlayerUnit")
-            UnitManager.PlayerUnits.Add(this);
+            unitManager.PlayerUnits.Add(this);
         else
-            UnitManager.EnemyUnits.Add(this);
 
-	}
+            unitManager.EnemyUnits.Add(this);
+        AntiInfClass anti = new AntiInfClass();
+		print("I am an " + anti.UnitClassName + " unit. I am located at " + transform.position.x + "," + transform.position.y);
+    }
 
 	void Update(){
 		base.Update();
     	if(health <= 0){
     		print("Anti is Dead!");
             UnitManager.unitKilled(this);
-            checkHealth = 0;
+
     	}
     }
 }
