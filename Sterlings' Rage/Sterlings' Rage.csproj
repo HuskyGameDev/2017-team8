@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\TileInfoToUI.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\UnitClass.cs" />
+    <Compile Include="Assets\steam.cs" />
     <Compile Include="Assets\Units\UnitManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
