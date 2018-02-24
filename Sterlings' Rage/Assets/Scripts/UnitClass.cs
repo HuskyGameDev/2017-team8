@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-<<<<<<< HEAD
 public class UnitClass : MonoBehaviour {
 	public string unitClassName;
 	public string unitType;
+    private TileManager tileManager;
+    private UnitManager unitManager;
 
-	// Test Comment
+    // Test Comment
 
-	// Stats
-	public int health;
+    // Stats
+    public int health;
 	public int speed;
 	public int range;
 	public int damage;
@@ -91,123 +92,123 @@ public class UnitClass : MonoBehaviour {
 		}
 	}
 
-	public void DisplayAttackRange()
-	{
-		if (!alreadyAttacked)
-		{
-			ArrayList attackTiles = new ArrayList();
-			TileManager.resetMovementTiles();
+    public void DisplayAttackRange()
+    {
+        if (!alreadyAttacked)
+        {
+            ArrayList attackTiles = new ArrayList();
+            tileManager.resetMovementTiles();
 
-			if (currentTile.getLeft() != null)
-			{
-				findAttackTiles(currentTile.getLeft(), range - 1, attackTiles);
-			}
-			if (currentTile.getDown() != null)
-			{
-				findAttackTiles(currentTile.getDown(), range - 1, attackTiles);
-			}
-			if (currentTile.getRight() != null)
-			{
-				findAttackTiles(currentTile.getRight(), range - 1, attackTiles);
-			}
-			if (currentTile.getUp() != null)
-			{
-				findAttackTiles(currentTile.getUp(), range - 1, attackTiles);
-			}
-			TileManager.setAttackList(attackTiles);
-		}
-	}
+            if (currentTile.getLeft() != null)
+            {
+                findAttackTiles(currentTile.getLeft(), range - 1, attackTiles);
+            }
+            if (currentTile.getDown() != null)
+            {
+                findAttackTiles(currentTile.getDown(), range - 1, attackTiles);
+            }
+            if (currentTile.getRight() != null)
+            {
+                findAttackTiles(currentTile.getRight(), range - 1, attackTiles);
+            }
+            if (currentTile.getUp() != null)
+            {
+                findAttackTiles(currentTile.getUp(), range - 1, attackTiles);
+            }
+            tileManager.setAttackList(attackTiles);
+        }
+    }
 
-	public void findAttackTiles(MapTile curTile, int range, ArrayList attackTiles)
-	{
-		if (range < 0)
-		{
-			return;
-		}
-		if (curTile != currentTile)
-		{
-			curTile.setPossibleAttack(true);
-			curTile.setStoredRange(range);
-			attackTiles.Add(curTile);
-		}
+    public void findAttackTiles(MapTile curTile, int range, ArrayList attackTiles)
+    {
+        if (range < 0)
+        {
+            return;
+        }
+        if (curTile != currentTile)
+        {
+            curTile.setPossibleAttack(true);
+            curTile.setStoredRange(range);
+            attackTiles.Add(curTile);
+        }
 
 
-		if (curTile.getLeft() != null && !TileManager.containsAttackTile(range - 1, curTile.getLeft()))
-		{
-			findAttackTiles(curTile.getLeft(), range - 1, attackTiles);
-		}
-		if (curTile.getDown() != null && !TileManager.containsAttackTile(range - 1, curTile.getDown()))
-		{
-			findAttackTiles(curTile.getDown(), range - 1, attackTiles);
-		}
-		if (curTile.getRight() != null && !TileManager.containsAttackTile(range - 1, curTile.getRight()))
-		{
-			findAttackTiles(curTile.getRight(), range - 1, attackTiles);
-		}
-		if (curTile.getUp() != null && !TileManager.containsAttackTile(range - 1, curTile.getUp()))
-		{
-			findAttackTiles(curTile.getUp(), range - 1, attackTiles);
-		}
-	}
+        if (curTile.getLeft() != null && !tileManager.containsAttackTile(range - 1, curTile.getLeft()))
+        {
+            findAttackTiles(curTile.getLeft(), range - 1, attackTiles);
+        }
+        if (curTile.getDown() != null && !tileManager.containsAttackTile(range - 1, curTile.getDown()))
+        {
+            findAttackTiles(curTile.getDown(), range - 1, attackTiles);
+        }
+        if (curTile.getRight() != null && !tileManager.containsAttackTile(range - 1, curTile.getRight()))
+        {
+            findAttackTiles(curTile.getRight(), range - 1, attackTiles);
+        }
+        if (curTile.getUp() != null && !tileManager.containsAttackTile(range - 1, curTile.getUp()))
+        {
+            findAttackTiles(curTile.getUp(), range - 1, attackTiles);
+        }
+    }
 
-	public void displayMovementPath()
-	{
-		// Resets if the user had already selected a different unit
-		if (UnitManager.getSelectedUnit() != null)
-		TileManager.resetMovementTiles();
-		UnitManager.setSelectedUnit(this);
+    public void displayMovementPath()
+    {
+        // Resets if the user had already selected a different unit
+        if (unitManager.getSelectedUnit() != null)
+            tileManager.resetMovementTiles();
+        unitManager.setSelectedUnit(this);
 
-		ArrayList pathTiles = new ArrayList();
+        ArrayList pathTiles = new ArrayList();
 
-		if (currentTile.getLeft() != null)
-		{
-			findPossiblePaths(currentTile.getLeft(), speedLeft - currentTile.getLeft().getMovementWeight(), pathTiles, currentTile);
-		}
-		if (currentTile.getDown() != null)
-		{
-			findPossiblePaths(currentTile.getDown(), speedLeft - currentTile.getDown().getMovementWeight(), pathTiles, currentTile);
-		}
-		if (currentTile.getRight() != null)
-		{
-			findPossiblePaths(currentTile.getRight(), speedLeft - currentTile.getRight().getMovementWeight(), pathTiles, currentTile);
-		}
-		if (currentTile.getUp() != null)
-		{
-			findPossiblePaths(currentTile.getUp(), speedLeft - currentTile.getUp().getMovementWeight(), pathTiles, currentTile);
-		}
-		TileManager.setPathList(pathTiles);
-	}
+        if (currentTile.getLeft() != null)
+        {
+            findPossiblePaths(currentTile.getLeft(), speedLeft - currentTile.getLeft().getMovementWeight(), pathTiles, currentTile);
+        }
+        if (currentTile.getDown() != null)
+        {
+            findPossiblePaths(currentTile.getDown(), speedLeft - currentTile.getDown().getMovementWeight(), pathTiles, currentTile);
+        }
+        if (currentTile.getRight() != null)
+        {
+            findPossiblePaths(currentTile.getRight(), speedLeft - currentTile.getRight().getMovementWeight(), pathTiles, currentTile);
+        }
+        if (currentTile.getUp() != null)
+        {
+            findPossiblePaths(currentTile.getUp(), speedLeft - currentTile.getUp().getMovementWeight(), pathTiles, currentTile);
+        }
+        tileManager.setPathList(pathTiles);
+    }
 
-	private void findPossiblePaths(MapTile curTile, int speed, ArrayList pathTiles, MapTile previous)
-	{
-		if (speed < 0)
-		{
-			return;
-		}
-		if (curTile != currentTile)
-		{
-			curTile.setPossibleMove(true);
-			curTile.setPreviousTile(previous);
-			// Stores the speed that it was found with so that if a faster path is found it will know
-			curTile.setStoredSpeed(speed);
-			pathTiles.Add(curTile);
-		}
+    private void findPossiblePaths(MapTile curTile, int speed, ArrayList pathTiles, MapTile previous)
+    {
+        if (speed < 0)
+        {
+            return;
+        }
+        if (curTile != currentTile)
+        {
+            curTile.setPossibleMove(true);
+            curTile.setPreviousTile(previous);
+            // Stores the speed that it was found with so that if a faster path is found it will know
+            curTile.setStoredSpeed(speed);
+            pathTiles.Add(curTile);
+        }
 
-		// Recursive calls to all adjacent tiles that haven't already been checked or that have but had a lower speed when they were reached.
-		if (curTile.getLeft() != null && !TileManager.containsTile(speed - curTile.getLeft().getMovementWeight(), curTile.getLeft()))
-		findPossiblePaths(curTile.getLeft(), speed - curTile.getLeft().getMovementWeight(), pathTiles, curTile);
+        // Recursive calls to all adjacent tiles that haven't already been checked or that have but had a lower speed when they were reached.
+        if (curTile.getLeft() != null && !tileManager.containsTile(speed - curTile.getLeft().getMovementWeight(), curTile.getLeft()))
+            findPossiblePaths(curTile.getLeft(), speed - curTile.getLeft().getMovementWeight(), pathTiles, curTile);
 
-		if (curTile.getDown() != null && !TileManager.containsTile(speed - curTile.getDown().getMovementWeight(), curTile.getDown()))
-		findPossiblePaths(curTile.getDown(), speed - curTile.getDown().getMovementWeight(), pathTiles, curTile);
+        if (curTile.getDown() != null && !tileManager.containsTile(speed - curTile.getDown().getMovementWeight(), curTile.getDown()))
+            findPossiblePaths(curTile.getDown(), speed - curTile.getDown().getMovementWeight(), pathTiles, curTile);
 
-		if (curTile.getRight() != null && !TileManager.containsTile(speed - curTile.getRight().getMovementWeight(), curTile.getRight()))
-		findPossiblePaths(curTile.getRight(), speed - curTile.getRight().getMovementWeight(), pathTiles, curTile);
+        if (curTile.getRight() != null && !tileManager.containsTile(speed - curTile.getRight().getMovementWeight(), curTile.getRight()))
+            findPossiblePaths(curTile.getRight(), speed - curTile.getRight().getMovementWeight(), pathTiles, curTile);
 
-		if (curTile.getUp() != null && !TileManager.containsTile(speed - curTile.getUp().getMovementWeight(), curTile.getUp()))
-		findPossiblePaths(curTile.getUp(), speed - curTile.getUp().getMovementWeight(), pathTiles, curTile);
-	}
+        if (curTile.getUp() != null && !tileManager.containsTile(speed - curTile.getUp().getMovementWeight(), curTile.getUp()))
+            findPossiblePaths(curTile.getUp(), speed - curTile.getUp().getMovementWeight(), pathTiles, curTile);
+    }
 
-	public GameObject EnemyInRange(float range){
+    public GameObject EnemyInRange(float range){
 		GameObject[] enemies;
 		enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		//print("Enemies found " + enemies.Length);
@@ -260,8 +261,13 @@ public class UnitClass : MonoBehaviour {
 			checkHealth = health;
 			maxHealth = health;
 		}
-		//check if unit should be moving
-		if (moving)
+        if (unitManager == null || tileManager == null)
+        {
+            unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+            tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+        }
+        //check if unit should be moving
+        if (moving)
 		{
 			if (isMovingX)
 			{
@@ -376,10 +382,10 @@ public class UnitClass : MonoBehaviour {
 
 		private void Start()
 		{
-			
+            tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+            unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+            isMovingY = false;
 			isMovingY = false;
-			isMovingY = false; 
-			range = 10;
 			dest = null;
 		}
 

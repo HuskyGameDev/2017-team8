@@ -12,6 +12,7 @@ public class TileInfoToUI : MonoBehaviour {
 	private GameObject UIRightClick;
 	private GameObject UICanvas;
     private GameObject UIIcon;
+    private GameObject UIUnit;
 	// Use this for initialization
 	void Start () {
 		//should only be called once per use, so don't need to use update
@@ -20,6 +21,7 @@ public class TileInfoToUI : MonoBehaviour {
 		UIInfo = GameObject.Find("Canvas/TilePanel").GetComponent<TileInfoToUI>();
 		UIRightClick = GameObject.Find("Canvas/RightClickPanel");
         UIIcon = GameObject.Find("Canvas/TilePanel/TileImage");
+        UIUnit = GameObject.Find("Canvas/TilePanel/UnitImage");
 	}
 	
 	// Update is called once per frame
@@ -50,7 +52,8 @@ public class TileInfoToUI : MonoBehaviour {
        
         //getting here means you clicked on a tile, so update the info
 		UIIcon.GetComponent<Image>().sprite = holding.GetComponent<SpriteRenderer>().sprite;
-        SelectedInfo.text = holding.tileType;
+        //UIUnit.GetComponent<Image>().sprite = holding.GetComponent<MapTile>().currentUnit.GetComponent<SpriteRenderer>().sprite;
+        //SelectedInfo.text = holding.tileType + " " + holding.currentUnit.UnitClassName;
     }
     public void ClearRecent()
     {

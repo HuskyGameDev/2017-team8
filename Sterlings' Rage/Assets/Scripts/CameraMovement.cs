@@ -44,7 +44,7 @@ public class CameraMovement : MonoBehaviour {
 
         //edge-scrolling, very unpolished right now
         
-        if(Input.mousePosition.x <= Screen.width * (scrollPercent/100))
+        /*if(Input.mousePosition.x <= Screen.width * (scrollPercent/100))
         {
             //left-side of the screen
             //transform.Translate(new Vector3(-scrollSpeed * Time.deltaTime, 0, 0));
@@ -68,7 +68,7 @@ public class CameraMovement : MonoBehaviour {
             //top of the screen
             //transform.Translate(new Vector3(0, scrollSpeed * Time.deltaTime, 0));
             SmoothMousing(2);
-        }
+        }*/
 
         //This will be the area for camera zoom
         //Scroll In
