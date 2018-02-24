@@ -45,7 +45,7 @@ public class AntiInfClass : UnitClass {
 		base.Update();
     	if(health <= 0){
     		print("Anti is Dead!");
-            UnitManager.unitKilled(this);
+            unitManager.unitKilled(this);
 
     	}
     }
