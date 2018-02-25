@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitManager : MonoBehaviour
 {
@@ -19,29 +20,46 @@ public class UnitManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            print("Enemys");
-            foreach (UnitClass enemy in EnemyUnits)
-                print(enemy.unitClassName);
-            print("PlayerUnits");
-            foreach (UnitClass unit in PlayerUnits)
-                print(unit.unitClassName);
-        }
-        // Win/Lose condition checking
-        if (hasWon == 0)
-        {
-            if (PlayerUnits.Count == 0)
-            {
-                print("You Lose!");
-                hasWon = 1;
-            }
-            if (EnemyUnits.Count == 0)
-            {
-                print("You Win!");
-                hasWon = 1;
-            }
-        }
+		if (hasWon == 0)
+		{
+			if (Input.GetKeyDown(KeyCode.S))
+			{
+				print("Enemys");
+				foreach (UnitClass enemy in EnemyUnits)
+					print(enemy.unitClassName);
+				print("PlayerUnits");
+				foreach (UnitClass unit in PlayerUnits)
+					print(unit.unitClassName);
+			}
+			// Win/Lose condition checking
+			if (hasWon == 0)
+			{
+				if (PlayerUnits.Count == 0)
+				{
+					print("You Lose!");
+					hasWon = 1;
+				}
+				if (EnemyUnits.Count == 0)
+				{
+					print("You Win!");
+					try
+					{
+						Transform unit = this.transform;
+						for (int i = 0; i < unit.childCount; i++)
+						{
+							GameObject indicator = unit.GetChild(i).gameObject;
+							if (indicator != null && indicator.name == "winIndicator") indicator.SetActive(true);
+						}
+
+					}
+					catch (Exception e)
+					{
+
+					}
+					hasWon = 1;
+				}
+			}
+		}
     }
 
     public void newTurn()
