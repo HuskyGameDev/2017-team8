@@ -50,8 +50,11 @@ public class AI : MonoBehaviour {
             UnitClass playerUnit = findNearestPlayerUnit(unit);
             if (playerUnit != null)
             {
+                //print("before moving");
                 if (ManhattanDistance(unit.gameObject, playerUnit.gameObject) > unit.range)
                     yield return StartCoroutine(move(unit, playerUnit));
+                
+                //print("after Moving");
                 // Currently possible for a different unit to kill the inteded target before reaching this point so
                 // null check makes sure it is still alive
                 if (playerUnit != null && ManhattanDistance(unit.currentTile.gameObject, playerUnit.gameObject) <= unit.range)
@@ -68,6 +71,7 @@ public class AI : MonoBehaviour {
      */
     private IEnumerator move(UnitClass aiUnit, UnitClass playerUnit)
     {
+        //print("entering");
         aiUnit.displayMovementPath();
         int distance = int.MaxValue;
         MapTile targetTile = findClosestOpenAdjacentTile(aiUnit.currentTile, playerUnit.currentTile);
@@ -75,13 +79,14 @@ public class AI : MonoBehaviour {
             MapTile closest = findClosestAdjacentTile(aiUnit.currentTile, playerUnit.currentTile);
             while (targetTile == null)
                 {
-                    targetTile = findClosestOpenAdjacentTile(aiUnit.currentTile, closest);
+                //print("stuck? here");
+                targetTile = findClosestOpenAdjacentTile(aiUnit.currentTile, closest);
                     closest = findClosestAdjacentTile(aiUnit.currentTile, closest);
                 }
         }
-
+        //print("finding");
         ArrayList pathToUnit = FindPathToUnit(aiUnit.currentTile, targetTile);
-
+        //print("done");
         ArrayList movementPath = new ArrayList();
         for(int i = aiUnit.speed; i > 0; i--)
         {
@@ -95,18 +100,23 @@ public class AI : MonoBehaviour {
         targetTile = (MapTile)movementPath[0];
         if (targetTile.currentUnit != null)
         {
+            //print("problem");
             movementPath.Remove(targetTile);
             while (movementPath.Count > 0)
             {
+                //print("stuck? hmmm");
                 targetTile = (MapTile)movementPath[0];
                 if (targetTile.currentUnit == null)
                     break;
                 movementPath.Remove(targetTile);
             }
         }
+        //print("move");
         aiUnit.MoveTo(movementPath, targetTile);
+        //print("done");
         targetTile.currentUnit = aiUnit;
         tileManager.resetAllTiles();
+        //print("before return");
         return new WaitUntil(() => aiUnit.moving == false);
     }
 
@@ -165,6 +175,9 @@ public class AI : MonoBehaviour {
         return (int)(Mathf.Abs((unit.transform.position.x - otherUnit.transform.position.x)) + Mathf.Abs((unit.transform.position.y - otherUnit.transform.position.y)));
     }
 
+    /**
+     * A* search to find a path from the AI unit to the player unit
+     **/
     private ArrayList FindPathToUnit(MapTile startTile, MapTile endTile)
     {
         ArrayList visited = new ArrayList();
@@ -174,6 +187,7 @@ public class AI : MonoBehaviour {
         int currentPathLength = 0;
         while(true)
         {
+            //print("stuck?");
             if (queue.Size() == 0)
                 print("well theres a problem");
             Node curNode = queue.Pop();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DefaultOffScreen : MonoBehaviour
 {
-    public GameObject AttachedTo;
+    public MapTile RightClicked;
 
 	// Use this for initialization
 	void Start () {
@@ -36,5 +36,10 @@ public class DefaultOffScreen : MonoBehaviour
         print("Hello");
         Vector3 temp = new Vector3(-1000, 0, 0);
         transform.localPosition = temp;
+        if(RightClicked.GetComponent<SpriteRenderer>().color == Color.grey)
+        {
+            RightClicked.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+       
     }
 }
