@@ -242,7 +242,9 @@ public class UnitClass : MonoBehaviour {
 		// before it is able to travel there
 		for (int i = movementPath.Count - 1; i >= 0; i--)
 		{
-			path.Add(movementPath[i]);
+            MapTile tile = (MapTile)movementPath[i];
+            print("movement: " + tile.gameObject.transform.position.x + "," + tile.gameObject.transform.position.y);
+            path.Add(movementPath[i]);
 		}
 		path.Add(dest);
 		this.dest = (MapTile)path[0];
