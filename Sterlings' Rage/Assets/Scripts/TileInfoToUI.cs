@@ -52,8 +52,19 @@ public class TileInfoToUI : MonoBehaviour {
        
         //getting here means you clicked on a tile, so update the info
 		UIIcon.GetComponent<Image>().sprite = holding.GetComponent<SpriteRenderer>().sprite;
-        //UIUnit.GetComponent<Image>().sprite = holding.GetComponent<MapTile>().currentUnit.GetComponent<SpriteRenderer>().sprite;
-        //SelectedInfo.text = holding.tileType + " " + holding.currentUnit.UnitClassName;
+        if(holding.GetComponent<MapTile>().currentUnit != null ){
+            UIUnit.GetComponent<Image>().sprite = holding.GetComponent<MapTile>().currentUnit.GetComponent<SpriteRenderer>().sprite;
+        }
+        else
+        {
+            UIUnit.GetComponent<Image>().sprite = null;
+        }
+        SelectedInfo.text = holding.tileType;
+        if (holding.GetComponent<MapTile>().currentUnit != null)
+        {
+            SelectedInfo.text = holding.tileType + holding.currentUnit.UnitClassName.ToString();
+        }
+        //UIInfo.GetComponent<Text>().text = SelectedInfo;
     }
     public void ClearRecent()
     {
