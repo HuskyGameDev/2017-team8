@@ -10,6 +10,25 @@ public class AI : MonoBehaviour {
     private TileManager tileManager;
     private UnitManager unitManager;
 
+    private void testQueue()
+    {
+        ArrayList visited = new ArrayList();
+        PriorityQueue<Node> queue = new PriorityQueue<Node>();
+        for (int i = 0; i < 10; i++)
+        {
+            Node start = new Node(tileManager.mapTiles[0,0], null, UnityEngine.Random.Range(0, 100));
+            queue.Push(start);
+        }
+        test = true;
+        queue.Push(new Node(tileManager.mapTiles[1, 1], null, -1));
+        test = false;
+        while (queue.Size() > 0)
+        {
+            Node temp = queue.Pop();
+            print(temp.value);
+        }
+    }
+
     // Use this for initialization
     void Start() {
 
@@ -22,6 +41,8 @@ public class AI : MonoBehaviour {
     void Update() {
         if (Input.GetKey(KeyCode.T))
             test = true;
+        if (Input.GetKey(KeyCode.P))
+            testQueue();
         // In case it didn't find it the first time
         if (unitManager == null || tileManager == null || turnManager == null)
         {
@@ -263,14 +284,17 @@ public class AI : MonoBehaviour {
             data.Add(item);
 
             int child = data.Count - 1;
+            
             while(child > 0)
             {
-                int parent = child / 2;
+                int parent = ((child-1) / 2);
+
                 if (data[parent].CompareTo(data[child]) < 0)
                     break;
                 T temp = data[parent];
                 data[parent] = data[child];
                 data[child] = temp;
+                child = parent;
             }
         }
 
@@ -323,6 +347,11 @@ public class AI : MonoBehaviour {
             tile = t;
             parent = p;
             value = v;
+        }
+
+        public override string ToString()
+        {
+            return ""+value;
         }
 
         public int CompareTo(Node other)
