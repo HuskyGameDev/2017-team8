@@ -36,5 +36,6 @@ public class TurnManager : MonoBehaviour {
         unitManager.newTurn();
         tileManager.resetAllTiles();
         playerTurn = true;
+        //tileManager.GameStateUpdate();
     }
 }

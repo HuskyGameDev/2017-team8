@@ -244,7 +244,7 @@ public class UnitClass : MonoBehaviour {
 		{
             MapTile tile = (MapTile)movementPath[i];
             path.Add(movementPath[i]);
-		}
+        }
 		path.Add(dest);
 		this.dest = (MapTile)path[0];
 		path.Remove(this.dest);
