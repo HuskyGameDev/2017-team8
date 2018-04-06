@@ -253,7 +253,7 @@ public class AI : MonoBehaviour {
         UnitClass nearestUnit = null;
         foreach (UnitClass playerUnit in unitManager.PlayerUnits)
         {
-
+            //add in a visibility modifier
             float curDist = distanceBetween(playerUnit.gameObject, aiUnit.gameObject);
             if (curDist < minDist)
             {
