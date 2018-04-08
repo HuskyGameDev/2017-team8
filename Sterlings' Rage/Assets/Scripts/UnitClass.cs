@@ -28,6 +28,7 @@ public class UnitClass : MonoBehaviour {
 	private bool isMovingX;
 	private bool isMovingY;
 	public bool moving;
+    public bool spotted;
 
 	public string UnitClassName {
 		get { return unitClassName; }
@@ -388,6 +389,7 @@ public class UnitClass : MonoBehaviour {
             isMovingY = false;
 			isMovingY = false;
 			dest = null;
+            spotted = false;
 		}
 
 	}
