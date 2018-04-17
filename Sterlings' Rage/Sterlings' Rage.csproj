@@ -76,6 +76,12 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MapDesign\ResourceManager.cs" />
@@ -92,6 +98,7 @@
     <Compile Include="Assets\Scripts\TileInfoToUI.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Units\FlameUnit.cs" />
+    <Compile Include="Assets\Scripts\Units\GrenadierUnit.cs" />
     <Compile Include="Assets\Scripts\Units\RangedUnit.cs" />
     <Compile Include="Assets\Scripts\Units\UnitClass.cs" />
     <Compile Include="Assets\steam.cs" />
