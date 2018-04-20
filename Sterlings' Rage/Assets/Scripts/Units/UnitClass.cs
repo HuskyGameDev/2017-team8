@@ -8,6 +8,9 @@ public class UnitClass : MonoBehaviour {
 	public string unitType;
     private TileManager tileManager;
     private UnitManager unitManager;
+    private MapTile currentPatrolTile;
+    private int xPos;
+    private int yPos;
 
     // Test Comment
 
@@ -74,6 +77,12 @@ public class UnitClass : MonoBehaviour {
 		get { return currentTile; }
 		set { currentTile = value; }
 	}
+
+    public MapTile CurrentPatrolTile
+    {
+        get { return currentPatrolTile; }
+        set { currentPatrolTile = value; }
+    }
 
     public int getSpeedLeft()
     {
@@ -388,16 +397,31 @@ public class UnitClass : MonoBehaviour {
 			}
 		}
 
-		public void Start()
-		{
-            tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
-            unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
-            isMovingY = false;
-			isMovingY = false;
-			dest = null;
-            print(gameObject.tag);
-            playerUnit = gameObject.tag.Equals("PlayerUnit");
-            spotted = false;
-		}
+    private IEnumerator AddToTile()
+    {
+        yield return new WaitWhile(() => !tileManager.checkIfFull());
+        print("this was ran" + tileManager.checkIfFull());
+        currentTile = tileManager.mapTiles[xPos, yPos];
+        currentTile.currentUnit = this;
+        gameObject.transform.position = new Vector2(xPos, yPos);
+    }
 
+	public void Start()
+	{
+        tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+        xPos = (int)(.5 + gameObject.transform.position.x);
+        yPos = (int)(.5 + gameObject.transform.position.y);
+        isMovingY = false;
+		isMovingY = false;
+		dest = null;
+        print(gameObject.tag);
+        playerUnit = gameObject.tag.Equals("PlayerUnit");
+        spotted = false;
+    if (currentTile == null || currentTile.currentUnit == null)
+    {
+        StartCoroutine(AddToTile());
+    }
 	}
+
+}

@@ -9,6 +9,7 @@ TagManager:
   - Neutral
   - PlayerUnit
   - Canvas
+  - Patrol
   layers:
   - Default
   - TransparentFX
