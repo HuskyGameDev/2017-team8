@@ -589,23 +589,25 @@ public class AI : MonoBehaviour {
         
         return path;
     }
-
-    private UnitClass findNearestPlayerUnit(UnitClass aiUnit)
+    // Method shouldn't be needed anymore
+    /*private UnitClass findNearestPlayerUnit(UnitClass aiUnit)
     {
         float minDist = float.MaxValue;
         UnitClass nearestUnit = null;
         foreach (UnitClass playerUnit in unitManager.PlayerUnits)
         {
-
-            float curDist = distanceBetween(playerUnit.gameObject, aiUnit.gameObject);
-            if (curDist < minDist)
-            {
-                nearestUnit = playerUnit;
-                minDist = curDist;
+            //add in a visibility modifier
+            if (playerUnit.spotted) {
+                float curDist = distanceBetween(playerUnit.gameObject, aiUnit.gameObject);
+                if (curDist < minDist)
+                {
+                    nearestUnit = playerUnit;
+                    minDist = curDist;
+                }
             }
         }
         return nearestUnit;
-    }
+    }*/
 
     private float distanceBetween(GameObject unit, GameObject otherUnit)
     {

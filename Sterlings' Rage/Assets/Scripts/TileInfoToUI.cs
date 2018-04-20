@@ -32,7 +32,7 @@ public class TileInfoToUI : MonoBehaviour {
 	public void RightClick(){
 		//should already have recent, if not, exit with an error
 		//this is oh so messy, figure out a better way to get valid coordinates
-		print("MouseX: " + Input.mousePosition.x + " MouseY: " + Input.mousePosition.y + "Screen Width: " + Screen.width + " Screen hiehgt: " + Screen.height + " New X: " + (Input.mousePosition.x-Screen.width/2) + " New Y: " + (Input.mousePosition.y-Screen.height/2));
+		//print("MouseX: " + Input.mousePosition.x + " MouseY: " + Input.mousePosition.y + "Screen Width: " + Screen.width + " Screen hiehgt: " + Screen.height + " New X: " + (Input.mousePosition.x-Screen.width/2) + " New Y: " + (Input.mousePosition.y-Screen.height/2));
 		Vector3 temp = new Vector3((Input.mousePosition.x/Screen.width)*UICanvas.GetComponent<RectTransform>().rect.width - UICanvas.GetComponent<RectTransform>().rect.width/2 + 35, (Input.mousePosition.y/Screen.height)*UICanvas.GetComponent<RectTransform>().rect.height - UICanvas.GetComponent<RectTransform>().rect.height/2 - 80, 0);
 		UIRightClick.transform.localPosition = temp;
 	}
@@ -54,10 +54,11 @@ public class TileInfoToUI : MonoBehaviour {
 		UIIcon.GetComponent<Image>().sprite = holding.GetComponent<SpriteRenderer>().sprite;
         if(holding.GetComponent<MapTile>().currentUnit != null ){
             UIUnit.GetComponent<Image>().sprite = holding.GetComponent<MapTile>().currentUnit.GetComponent<SpriteRenderer>().sprite;
+            UIUnit.GetComponent<Image>().enabled = true;
         }
         else
         {
-            UIUnit.GetComponent<Image>().sprite = null;
+            UIUnit.GetComponent<Image>().enabled = false;
         }
         SelectedInfo.text = holding.tileType;
         if (holding.GetComponent<MapTile>().currentUnit != null)
