@@ -6,19 +6,27 @@ public class Contraband : MonoBehaviour {
 
     public MapTile currentTile;
     public int value;
+    private AI ai;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start()
+    {
+        ai = GameObject.Find("AI").GetComponent<AI>();
+    }
+
+    void Awake()
+    {
+        ai = GameObject.Find("AI").GetComponent<AI>();
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
     public void Remove()
     {
+        ai.remove(this);
         Destroy(gameObject);
     }
 }

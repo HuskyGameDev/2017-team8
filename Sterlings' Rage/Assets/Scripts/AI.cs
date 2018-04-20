@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections;
+using System.Threading;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AI : MonoBehaviour {
     private bool aiTurn = false;
     private bool test = false;
+    private bool endThreads = false;
+    private ArrayList objectives;
+    private Thread objectiveBuilder;
+    private Thread aiTurnTaker;
     private TurnManager turnManager;
     private TileManager tileManager;
     private UnitManager unitManager;
+
+    private static int inAttckRangeValue = 6;
+    private static int inPossibleAttackRangeValue = 3;
+    private static int acquireContrabandValue = -2;
+    private static int attackUnitValue = -8;
+    private static int killUnitValue = -15;
+
 
     private void testQueue()
     {
@@ -28,9 +40,17 @@ public class AI : MonoBehaviour {
             print(temp.value);
         }
     }
+    void OnApplicationQuit()
+    {
+        endThreads = true;
+    }
 
     // Use this for initialization
     void Start() {
+        //objectives = new List<KeyValuePair<MapTile, string>>();
+        objectives = new ArrayList();
+        objectiveBuilder = new Thread(objectiveListHandler);
+        objectiveBuilder.Start();
 
         unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
         tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
@@ -40,7 +60,12 @@ public class AI : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (Input.GetKey(KeyCode.T))
-            test = true;
+        {
+            foreach (KeyValuePair<MapTile, object> cur in objectives)
+            {
+                print(cur);
+            }
+        }
         if (Input.GetKey(KeyCode.P))
             testQueue();
         // In case it didn't find it the first time
@@ -53,10 +78,109 @@ public class AI : MonoBehaviour {
         if (!turnManager.playerTurn && !aiTurn)
         {
             aiTurn = true;
-            // Need coroutine so that the AI can wait for units to move before attacking
+            // New thread keeps the game from "freezing" while the AI is determining the correct move
+            //aiTurnTaker = new Thread(startTurn); Have to fix a few things before this can be implemented
             StartCoroutine(takeTurn());
+
         }
 
+    }
+
+    /**
+     * This will be it's own thread that will build a list of objectives that the AI can choose from
+     **/
+    private void objectiveListHandler()
+    {
+        while(!endThreads)
+        {
+            try
+            {
+                //print("still running");
+                foreach (UnitClass unit in unitManager.EnemyUnits)
+                {
+                    ArrayList foundObectives = new ArrayList();
+                    for (int rangeX = -5; rangeX <= 5; rangeX++)
+                    {
+                        for (int rangeY = -5; rangeY <= 5; rangeY++)
+                        {
+                            if (Mathf.Abs(rangeX) + Mathf.Abs(rangeY) <= 5)
+                            {
+                                unit.currentTile.Bern(unit.currentTile.xPosition + rangeX, unit.currentTile.yPosition + rangeY, foundObectives);
+                            }
+                        }
+                    }
+
+                    if (foundObectives != null)
+                    {
+                        foreach (KeyValuePair<MapTile, object> obj in foundObectives)
+                        {
+                            if (!objectives.Contains(obj))
+                            {
+                                foreach (KeyValuePair<MapTile, object> cur in objectives)
+                                {
+                                    if (cur.Value == obj.Value)
+                                    {
+                                        lock (objectives)
+                                        {
+                                            objectives.Remove(cur);
+                                        }
+                                    }
+                                }
+                                lock (objectives)
+                                {
+                                    objectives.Add(obj);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch(Exception e)
+            {
+                print(e.StackTrace);
+            }
+            unitManager.getSelectedUnit();
+        }
+    }
+
+    public void remove(UnitClass unit)
+    {
+        lock (objectives)
+        {
+            foreach (KeyValuePair<MapTile, object> obj in objectives)
+            {
+                if(obj.Value == unit)
+                {
+                    objectives.Remove(obj);
+                    print("removed");
+                    break;
+                }
+            }
+        }
+    }
+
+    public void remove(Contraband contraband)
+    {
+        lock (objectives)
+        {
+            foreach (KeyValuePair<MapTile, object> obj in objectives)
+            {
+                if (obj.Value == contraband)
+                {
+                    objectives.Remove(obj);
+                    print("removed");
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Function used as a new thread to take the AI's turn
+     **/
+    private void startTurn()
+    {
+        // Need coroutine so that the AI can wait for units to move before attacking
+        StartCoroutine(takeTurn());
     }
 
     private IEnumerator takeTurn()
@@ -69,16 +193,20 @@ public class AI : MonoBehaviour {
         {
             foreach (UnitClass unit in temp)
             {
-                UnitClass playerUnit = findNearestPlayerUnit(unit);
-                if (playerUnit != null)
+                Objective next = determineMove(unit);
+                
+                MapTile nextMove = next.tile;
+                //UnitClass playerUnit = findNearestPlayerUnit(unit);
+                if (nextMove != null)
                 {
-                    if (ManhattanDistance(unit.gameObject, playerUnit.gameObject) > unit.range)
-                        yield return StartCoroutine(move(unit, playerUnit));
+                    // if (ManhattanDistance(unit.gameObject, playerUnit.gameObject) > unit.range)
+                    //     yield return StartCoroutine(move(unit, playerUnit));
+                    yield return StartCoroutine(move(unit, nextMove));
                     
                     // Currently possible for a different unit to kill the inteded target before reaching this point so
                     // null check makes sure it is still alive
-                    if (playerUnit != null && ManhattanDistance(unit.currentTile.gameObject, playerUnit.gameObject) <= unit.range)
-                        yield return StartCoroutine(attack(unit, playerUnit));
+                    if (next.unit != null && next.attack)
+                        yield return StartCoroutine(attack(unit, next.unit));
                 }
             }
         }
@@ -91,47 +219,252 @@ public class AI : MonoBehaviour {
 
     }
 
+    private Objective determineMove(UnitClass unit)
+    {
+        // Used to copy the objective list so it isn't locked for too long
+        //List<KeyValuePair<MapTile, string>> tempList = new List<KeyValuePair<MapTile, string>>();
+        ArrayList tempList = new ArrayList();
+        // lock makes sure the objective list isn't being written over as it is being checked
+        if (objectives.Count > 0)
+        {
+            lock (objectives)
+            {
+                foreach (KeyValuePair<MapTile, object> obj in objectives)
+                {
+                    tempList.Add(obj);
+                }
+            }
+        }
+        setDangerousTiles(tempList);
+        unit.displayMovementPath();
+        PriorityQueue<Objective> queue = new PriorityQueue<Objective>();
+        foreach (KeyValuePair<MapTile, object> obj in tempList)
+        {
+            Contraband contraband;
+            UnitClass objUnit;
+            ArrayList pathToObj;
+            ArrayList movementPath = new ArrayList();
+
+            try
+            {
+                print("Made it here");
+                objUnit = (UnitClass)obj.Value;
+                pathToObj = FindPathToUnit(unit.currentTile, findClosestAdjacentTile(unit.currentTile, objUnit.currentTile));
+                int closerToObj = 0;
+                for (int i = unit.speed; i > 0; i--) 
+                {
+                    if (pathToObj.Count - i >= 0)
+                    {
+                        movementPath.Add(pathToObj[pathToObj.Count - i]);
+                    }
+                }
+                foreach (MapTile curTile in movementPath)
+                {
+                    queue.Push(DetermineObjectiveValue(curTile, unit, objUnit, closerToObj));
+                    closerToObj++;
+                }
+            } catch (Exception e) {
+                print("also it here");
+                contraband = (Contraband)obj.Value;
+                pathToObj = FindPathToUnit(unit.currentTile, contraband.currentTile);
+                int closerToObj = 0;
+                for (int i = unit.speed; i > 0; i--)
+                {
+                    if (pathToObj.Count - i >= 0)
+                    {
+                        movementPath.Add(pathToObj[pathToObj.Count - i]);
+                    }
+                }
+                foreach (MapTile curTile in movementPath)
+                {
+                    queue.Push(DetermineObjectiveValue(obj.Key, unit, contraband, closerToObj));
+                    closerToObj++;
+                }
+            }
+        }
+        foreach(MapTile tile in tileManager.getPathList())
+        {
+            queue.Push(DetermineObjectiveValue(tile));
+        }
+        return queue.Pop();
+    }
+
+    private Objective DetermineObjectiveValue(MapTile tile, UnitClass aiUnit, UnitClass playerUnit, int closerTo)
+    {
+        Objective ret = new Objective(tile, 0);
+        int value = 0;
+        if (tile.isInAttackRange())
+            value += inAttckRangeValue;
+        else if (tile.isInPossibleAttackRange())
+            value += inPossibleAttackRangeValue;
+        if (ManhattanDistance(tile.gameObject, playerUnit.gameObject) <= aiUnit.range)
+        {
+            if (tile.calculateAttackDamage(aiUnit, playerUnit) >= playerUnit.health)
+            {
+                value += killUnitValue;
+            }
+            else
+                value += attackUnitValue;
+            ret.unit = playerUnit;
+            ret.attack = true;
+        }
+        value += closerTo;
+        ret.value = value;
+        print(ret.tile + ", " + ret.value);
+        return ret;
+    }
+
+    /** Determines the value if the objective tile has contraband
+     **/
+    private Objective DetermineObjectiveValue(MapTile tile, UnitClass aiUnit, Contraband contraband, int closerTo)
+    {
+        int value = 0;
+        if (tile.isInAttackRange())
+            value += inAttckRangeValue;
+        else if (tile.isInPossibleAttackRange())
+            value += inPossibleAttackRangeValue;
+        if (contraband.currentTile == tile)
+            value += acquireContrabandValue;
+        value += 2 * closerTo;
+        Objective ret = new Objective(tile, value);
+        print(ret.tile + ", " + ret.value);
+        return ret;
+    }
+
+    private Objective DetermineObjectiveValue(MapTile tile)
+    {
+        int value = 10;
+        if (tile.isInAttackRange())
+            value += inAttckRangeValue;
+        else if (tile.isInPossibleAttackRange())
+            value += inPossibleAttackRangeValue;
+        //print("Here: " + tile + ", " + value);
+        return new Objective(tile, value);
+    }
+
+    private void setDangerousTiles(ArrayList objList)
+    {
+        ArrayList dangerousTiles = new ArrayList();
+        foreach (KeyValuePair<MapTile, object> obj in objList)
+        {
+            if (obj.Value == typeof(UnitClass))
+            {
+                UnitClass playerUnit = (UnitClass)obj.Value;
+                playerUnit.displayMovementPath();
+                foreach (MapTile tile in tileManager.getPathList())
+                {
+                    if (tile == playerUnit.currentTile)
+                        determineDangerousTiles(tile, true, playerUnit.range, dangerousTiles);
+                    else
+                        determineDangerousTiles(tile, false, playerUnit.range, dangerousTiles);
+                }
+                tileManager.resetMovementTiles();
+            }
+        }
+        tileManager.setDangerousTiles(dangerousTiles);
+    }
+
+    /**
+     * Will determine which tiles spotted units can attack so the AI will avoid them if necessary
+     * 
+     * currentTile is the tile the the attack range of the player unit is being determined from
+     * playerTile indicates if the AI thinks the player is on this tile. This will be used to know if it is walking into immediate attack
+     *            range of the playerUnit or if it is possible for the unit to move and attack the AI's unit. The AI is more likely to avoid
+     *            walking into immediate attack range than somewhere that the player could potentailly move to and attack.
+     **/
+    public void determineDangerousTiles(MapTile currentTile, bool playerTile, int range, ArrayList dangerousTiles)
+    {
+        ArrayList temp = new ArrayList();
+        if (currentTile.getLeft() != null)
+        {
+            findDangerousTiles(currentTile.getLeft(), range - 1, dangerousTiles, playerTile, temp);
+        }
+        if (currentTile.getDown() != null)
+        {
+            findDangerousTiles(currentTile.getDown(), range - 1, dangerousTiles, playerTile, temp);
+        }
+        if (currentTile.getRight() != null)
+        {
+            findDangerousTiles(currentTile.getRight(), range - 1, dangerousTiles, playerTile, temp);
+        }
+        if (currentTile.getUp() != null)
+        {
+            findDangerousTiles(currentTile.getUp(), range - 1, dangerousTiles, playerTile, temp);
+        }
+
+        foreach(MapTile tile in temp)
+        {
+            tile.resetAttackTile();
+        }
+    }
+
+    public void findDangerousTiles(MapTile curTile, int range, ArrayList dangerousTiles, bool playerTile, ArrayList temp)
+    {
+        if (range < 0)
+        {
+            return;
+        }
+        if (playerTile)
+            curTile.setInAttackRange(true);
+        else
+            curTile.setInPossibleAttackRange(true);
+
+        temp.Add(curTile);
+        curTile.setStoredRange(range);
+        //if (!dangerousTiles.Contains(curTile))
+        dangerousTiles.Add(curTile);
+
+
+        if (curTile.getLeft() != null && !tileManager.containsDangerousTile(range - 1, curTile.getLeft(), playerTile))
+        {
+            findDangerousTiles(curTile.getLeft(), range - 1, dangerousTiles, playerTile, temp);
+        }
+        if (curTile.getDown() != null && !tileManager.containsDangerousTile(range - 1, curTile.getDown(), playerTile))
+        {
+            findDangerousTiles(curTile.getDown(), range - 1, dangerousTiles, playerTile, temp);
+        }
+        if (curTile.getRight() != null && !tileManager.containsDangerousTile(range - 1, curTile.getRight(), playerTile))
+        {
+            findDangerousTiles(curTile.getRight(), range - 1, dangerousTiles, playerTile, temp);
+        }
+        if (curTile.getUp() != null && !tileManager.containsDangerousTile(range - 1, curTile.getUp(), playerTile))
+        {
+            findDangerousTiles(curTile.getUp(), range - 1, dangerousTiles, playerTile, temp);
+        }
+    }
+
     /**
      * Moves the aiUnit towards the playerUnit
      */
-    private IEnumerator move(UnitClass aiUnit, UnitClass playerUnit)
+    private IEnumerator move(UnitClass aiUnit, MapTile dest)
     {
         aiUnit.displayMovementPath();
         int distance = int.MaxValue;
-        MapTile targetTile = findClosestOpenAdjacentTile(aiUnit.currentTile, playerUnit.currentTile);
-        if (targetTile == null) {
-            MapTile closest = findClosestAdjacentTile(aiUnit.currentTile, playerUnit.currentTile);
-            while (targetTile == null)
-                {
-                targetTile = findClosestOpenAdjacentTile(aiUnit.currentTile, closest);
-                    closest = findClosestAdjacentTile(aiUnit.currentTile, closest);
-                }
-        }
-        ArrayList pathToUnit = FindPathToUnit(aiUnit.currentTile, targetTile);
+        
+        ArrayList pathToUnit = FindPathToUnit(aiUnit.currentTile, dest);
         ArrayList movementPath = new ArrayList();
         for(int i = aiUnit.speed; i > 0; i--)
         {
             if (pathToUnit.Count - i >= 0)
             {
                 MapTile tile = (MapTile)pathToUnit[pathToUnit.Count - i];
-                //rint(tile.gameObject.transform.position.x + "," + tile.gameObject.transform.position.y);
                 movementPath.Add(pathToUnit[pathToUnit.Count - i]);
             }
         }
-        targetTile = (MapTile)movementPath[0];
-        if (targetTile.currentUnit != null)
+        dest = (MapTile)movementPath[0];
+        if (dest.currentUnit != null)
         {
-            movementPath.Remove(targetTile);
+            movementPath.Remove(dest);
             while (movementPath.Count > 0)
             {
-                targetTile = (MapTile)movementPath[0];
-                if (targetTile.currentUnit == null)
+                dest = (MapTile)movementPath[0];
+                if (dest.currentUnit == null)
                     break;
-                movementPath.Remove(targetTile);
+                movementPath.Remove(dest);
             }
         }
-        aiUnit.MoveTo(movementPath, targetTile);
-        targetTile.currentUnit = aiUnit;
+        aiUnit.MoveTo(movementPath, dest);
+        dest.currentUnit = aiUnit;
         tileManager.resetAllTiles();
         return new WaitUntil(() => aiUnit.moving == false);
     }
@@ -169,7 +502,7 @@ public class AI : MonoBehaviour {
     private MapTile findClosestOpenAdjacentTile(MapTile ai, MapTile player)
     {
 
-        MapTile closest = null;
+        MapTile targetTile = null;
         List<MapTile> adjacentTiles = player.getAdjacentTiles();
 
         int min = int.MaxValue;
@@ -180,12 +513,22 @@ public class AI : MonoBehaviour {
                 if (ManhattanDistance(ai.gameObject, tile.gameObject) < min && tile.currentUnit == null)
                 {
                     min = ManhattanDistance(ai.gameObject, tile.gameObject);
-                    closest = tile;
+                    targetTile = tile;
                 }
             }
         }
 
-        return closest;
+        if (targetTile == null)
+        {
+            MapTile closest = findClosestAdjacentTile(ai, player);
+            while (targetTile == null)
+            {
+                targetTile = findClosestOpenAdjacentTile(ai, closest);
+                closest = findClosestAdjacentTile(ai, closest);
+            }
+        }
+
+        return targetTile;
     }
 
     private int ManhattanDistance(GameObject unit, GameObject otherUnit)
@@ -270,6 +613,7 @@ public class AI : MonoBehaviour {
             + Mathf.Pow((unit.transform.position.y - otherUnit.transform.position.y), 2f));
     }
 
+
     public class PriorityQueue<T> where T : IComparable<T> {
 
         private List<T> data;
@@ -332,6 +676,27 @@ public class AI : MonoBehaviour {
         public int Size()
         {
             return data.Count;
+        }
+    }
+
+    public class Objective : IComparable<Objective>
+    {
+        public MapTile tile;
+        public int value;
+        public bool attack;
+        public UnitClass unit;
+        public Objective(MapTile t, int v)
+        {
+            tile = t;
+            value = v;
+        }
+
+        public int CompareTo(Objective other)
+        {
+            if (value > other.value)
+                return 1;
+            else
+                return -1;
         }
     }
 

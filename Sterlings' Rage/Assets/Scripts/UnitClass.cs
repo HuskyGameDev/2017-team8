@@ -28,6 +28,7 @@ public class UnitClass : MonoBehaviour {
 	private bool isMovingX;
 	private bool isMovingY;
 	public bool moving;
+    public bool playerUnit;
 
 	public string UnitClassName {
 		get { return unitClassName; }
@@ -72,6 +73,11 @@ public class UnitClass : MonoBehaviour {
 		get { return currentTile; }
 		set { currentTile = value; }
 	}
+
+    public int getSpeedLeft()
+    {
+        return speedLeft;
+    }
 
 	public void newTurn()
 	{
@@ -381,13 +387,15 @@ public class UnitClass : MonoBehaviour {
 			}
 		}
 
-		private void Start()
+		public void Start()
 		{
             tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
             unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
             isMovingY = false;
 			isMovingY = false;
 			dest = null;
+            print(gameObject.tag);
+            playerUnit = gameObject.tag.Equals("PlayerUnit");
 		}
 
 	}

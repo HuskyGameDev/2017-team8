@@ -22,6 +22,7 @@ public class RangedUnit : UnitClass {
 	}
 
 	void Start(){
+        base.Start();
         unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
         tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
 

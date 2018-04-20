@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Neutral
   - PlayerUnit
+  - Canvas
   layers:
   - Default
   - TransparentFX

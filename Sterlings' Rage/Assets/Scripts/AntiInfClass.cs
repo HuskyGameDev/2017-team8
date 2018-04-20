@@ -23,6 +23,7 @@ public class AntiInfClass : UnitClass {
 	}
 
 	void Start(){
+        base.Start();
         unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
         tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
         // Need update the units current tile as well is indicate the tile that there is now a unit on it

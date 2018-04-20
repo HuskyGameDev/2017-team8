@@ -10,11 +10,17 @@ public class UnitManager : MonoBehaviour
     public ArrayList EnemyUnits = new ArrayList();
     private UnitClass selectedUnit;
     public int hasWon = 0;
+    private AI ai;
 
     // Use this for initialization
     void Start()
     {
+        ai = GameObject.Find("AI").GetComponent<AI>();
+    }
 
+    void Awake()
+    {
+        ai = GameObject.Find("AI").GetComponent<AI>();
     }
 
     // Update is called once per frame
@@ -75,10 +81,10 @@ public class UnitManager : MonoBehaviour
     }
     public void unitKilled(UnitClass unit)
     {
-        print("this should be called");
         if (unit.tag == "PlayerUnit")
         {
             PlayerUnits.Remove(unit);
+            ai.remove(unit);
         }
         else
         {
