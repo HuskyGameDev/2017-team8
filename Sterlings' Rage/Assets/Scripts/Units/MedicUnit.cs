@@ -11,8 +11,8 @@ public class MedicUnit : UnitClass {
 		UnitClassName = "MedicUnit";
 		UnitType = "Infantry";
 		//Sprite = ""
-		Health = 7;//7
-		Speed = 3;//3
+		Health = 6;//7
+		Speed = 4;//3
 		Range = 1;//1
 		//  If attacking infantry damage is 7
 		Damage = -5;//5
