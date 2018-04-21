@@ -399,7 +399,7 @@ public class UnitClass : MonoBehaviour {
 
     private IEnumerator AddToTile()
     {
-        yield return new WaitWhile(() => !tileManager.checkIfFull());
+        yield return new WaitWhile(() => !tileManager.instantiated || !tileManager.checkIfFull());
         print("this was ran" + tileManager.checkIfFull());
         currentTile = tileManager.mapTiles[xPos, yPos];
         currentTile.currentUnit = this;
