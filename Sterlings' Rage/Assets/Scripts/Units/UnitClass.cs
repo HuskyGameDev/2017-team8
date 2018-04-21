@@ -404,7 +404,11 @@ public class UnitClass : MonoBehaviour {
         currentTile = tileManager.mapTiles[xPos, yPos];
         currentTile.currentUnit = this;
         gameObject.transform.position = new Vector2(xPos, yPos);
+
+        if (unitManager.unitsAssignedTiles())
+            tileManager.mapTiles[xPos, yPos].tileManager.resetAllTiles();
     }
+
 
 	public void Start()
 	{

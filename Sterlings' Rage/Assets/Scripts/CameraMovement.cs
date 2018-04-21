@@ -10,11 +10,15 @@ public class CameraMovement : MonoBehaviour {
     public int maxZoom = 10;
     public int minZoom = 1;
     public float zoomscrollSpeed = 0.2F;
+    private UnitManager unitManager;
+    private int currUnitCycle;
     
     // Use this for initialization
     void Start () {
-		
-	}
+        unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
+        currUnitCycle = 0;
+        cycleUnitCamera();
+    }
 	//TEsting Unitty Gitignore
 	// Update is called once per frame
 	void Update () {
@@ -38,37 +42,7 @@ public class CameraMovement : MonoBehaviour {
 			transform.Translate(new Vector3(0,scrollSpeed * Time.deltaTime,0));
 		}
 
-        //print(Screen.height);
-        //print(Input.mousePosition.y);
-        //print(Input.mousePosition.x);
-
-        //edge-scrolling, very unpolished right now
-        
-        /*if(Input.mousePosition.x <= Screen.width * (scrollPercent/100))
-        {
-            //left-side of the screen
-            //transform.Translate(new Vector3(-scrollSpeed * Time.deltaTime, 0, 0));
-            //print(Input.mousePosition.x + " Scroll Percent/100:" + scrollPercent/100 + " ScreenW:" + Screen.width + " " + Screen.width * (scrollPercent / 100));
-            SmoothMousing(2);
-        }
-        else if (Input.mousePosition.x >= (Screen.width * (1 - (scrollPercent / 100))))
-        {
-            //right of the screen
-            //transform.Translate(new Vector3(scrollSpeed * Time.deltaTime, 0, 0));
-            SmoothMousing(2);
-        }
-        else if (Input.mousePosition.y <= Screen.height * (scrollPercent / 100))
-        {
-            //bottom of the screen
-            //transform.Translate(new Vector3(0, -scrollSpeed * Time.deltaTime, 0));
-            SmoothMousing(2);
-        }
-        else if (Input.mousePosition.y >= (Screen.height * (1 - (scrollPercent / 100))))
-        {
-            //top of the screen
-            //transform.Translate(new Vector3(0, scrollSpeed * Time.deltaTime, 0));
-            SmoothMousing(2);
-        }*/
+        // Cycle the Camera Movement around Allied Units
 
         //This will be the area for camera zoom
         //Scroll In
@@ -94,6 +68,20 @@ public class CameraMovement : MonoBehaviour {
      * 
      * multiplier: multiplies the translation, so you can customize the speed of certain methods of scrolling.
      * */
+
+    void cycleUnitCamera()
+    {
+        print("Here Camera");
+        int x = 0;
+        transform.position.Set(10, 10, -10);
+        foreach (UnitClass unit in unitManager.PlayerUnits)
+        {
+            if (x == currUnitCycle)
+            {
+                transform.position.Set(unit.CurrentTile.xPosition, unit.CurrentTile.yPosition, -10);
+            }
+        }
+    }
     void SmoothMousing(int multiplier)
     {
         int screenCenterX;

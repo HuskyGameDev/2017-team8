@@ -101,4 +101,22 @@ public class UnitManager : MonoBehaviour
     {
         return selectedUnit;
     }
+    public bool unitsAssignedTiles()
+    {
+        foreach (UnitClass unit in PlayerUnits)
+        {
+            if(unit.currentTile == null)
+            {
+                return false;
+            }
+        }
+        foreach (UnitClass unit in EnemyUnits)
+        {
+            if(unit.currentTile == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
