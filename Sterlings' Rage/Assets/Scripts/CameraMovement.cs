@@ -17,7 +17,6 @@ public class CameraMovement : MonoBehaviour {
     void Start () {
         unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
         currUnitCycle = 0;
-        cycleUnitCamera();
     }
 	//TEsting Unitty Gitignore
 	// Update is called once per frame
@@ -41,6 +40,10 @@ public class CameraMovement : MonoBehaviour {
 		{
 			transform.Translate(new Vector3(0,scrollSpeed * Time.deltaTime,0));
 		}
+        if (Input.GetKeyUp(KeyCode.RightControl))
+        {
+            cycleUnitCamera();
+        }
 
         // Cycle the Camera Movement around Allied Units
 
@@ -73,14 +76,21 @@ public class CameraMovement : MonoBehaviour {
     {
         print("Here Camera");
         int x = 0;
-        transform.position.Set(10, 10, -10);
         foreach (UnitClass unit in unitManager.PlayerUnits)
         {
             if (x == currUnitCycle)
             {
-                transform.position.Set(unit.CurrentTile.xPosition, unit.CurrentTile.yPosition, -10);
+                transform.position = new Vector3(unit.CurrentTile.xPosition, unit.CurrentTile.yPosition, -10);
+                currUnitCycle++;
+                break;
             }
+            x++;
         }
+        if (currUnitCycle > unitManager.PlayerUnits.Count - 1)
+        {
+            currUnitCycle = 0;
+        }
+        print("X: " + x + " Cycle: " + currUnitCycle);
     }
     void SmoothMousing(int multiplier)
     {
