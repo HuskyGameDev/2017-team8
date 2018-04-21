@@ -18,12 +18,11 @@ public class GrenadierUnit : UnitClass {
 		
 	}
 
-	void Start()
-    {
+void Start(){
+
+        base.Start();
         unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
         tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
-
-        // Need update the units current tile as well is indicate the tile that there is now a unit on it
         if (tileManager.mapTiles != null && tileManager.checkIfFull())
         {
             currentTile = tileManager.mapTiles[(int)transform.position.x, (int)transform.position.y];
@@ -34,13 +33,12 @@ public class GrenadierUnit : UnitClass {
             unitManager.PlayerUnits.Add(this);
         else
             unitManager.EnemyUnits.Add(this);
-        
-	}
+    }
 
-	void Update(){
-		base.Update();
+    void Update(){
+    	base.Update();
     	if(Health <= 0){
-    		print("Ranged is Dead!");
+    		print("Melee is Dead!");
             unitManager.unitKilled(this);
             Destroy(gameObject);
     	}
