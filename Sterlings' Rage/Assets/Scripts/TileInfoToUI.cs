@@ -71,7 +71,15 @@ public class TileInfoToUI : MonoBehaviour {
     {
         //Add in a case where Recent is null (I want to set it to null when not in use)
         //for now only clears the color selection
-        holding.GetComponent<SpriteRenderer>().color = Color.white;
+        if (holding.visible == 1)
+        {
+            holding.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        else
+        {
+            holding.GetComponent<SpriteRenderer>().color = Color.grey;
+        }
+        
     }
 
 }
