@@ -94,11 +94,12 @@
     <Compile Include="Assets\Scripts\DefaultOffScreen.cs" />
     <Compile Include="Assets\Scripts\EndTurnButton.cs" />
     <Compile Include="Assets\Scripts\LoadSceneOnClick.cs" />
-    <Compile Include="Assets\Scripts\MeleeUnit.cs" />
     <Compile Include="Assets\Scripts\TileInfoToUI.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Units\FlameUnit.cs" />
     <Compile Include="Assets\Scripts\Units\GrenadierUnit.cs" />
+    <Compile Include="Assets\Scripts\Units\MedicUnit.cs" />
+    <Compile Include="Assets\Scripts\Units\MeleeUnit.cs" />
     <Compile Include="Assets\Scripts\Units\RangedUnit.cs" />
     <Compile Include="Assets\Scripts\Units\UnitClass.cs" />
     <Compile Include="Assets\steam.cs" />

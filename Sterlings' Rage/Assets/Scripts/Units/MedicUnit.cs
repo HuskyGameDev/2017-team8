@@ -2,24 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadierUnit : UnitClass {
+public class MedicUnit : UnitClass {
 
     private TileManager tileManager;
     private UnitManager unitManager;
 
-	public GrenadierUnit(){
-		UnitClassName = "GrenadierUnit";
+	public MedicUnit(){
+		UnitClassName = "MedicUnit";
 		UnitType = "Infantry";
-		Health = 10;//7
-		Speed = 4;//3
-		Range = 4;//1
-		Damage = 3;//5
-		Cost = 100;//85
-		
+		//Sprite = ""
+		Health = 7;//7
+		Speed = 3;//3
+		Range = 1;//1
+		//  If attacking infantry damage is 7
+		Damage = -5;//5
+		Cost = 85;//85
+		//CurrentTile = Tile;
 	}
 
 	void Start()
     {
+        base.Start();
         unitManager = GameObject.Find("GameManager").GetComponent<UnitManager>();
         tileManager = GameObject.Find("GameManager").GetComponent<TileManager>();
 
