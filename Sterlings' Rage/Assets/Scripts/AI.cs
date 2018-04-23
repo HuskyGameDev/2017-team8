@@ -4,7 +4,8 @@ using System.Threading;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI : MonoBehaviour {
+public class AI : MonoBehaviour
+{
     private bool aiTurn = false;
     private bool test = false;
     private bool endThreads = false;
@@ -18,38 +19,23 @@ public class AI : MonoBehaviour {
     System.Random random = new System.Random();
 
 
-    private static int inAttckRangeValue = 6;
-    private static int inPossibleAttackRangeValue = 3;
-    private static int acquireContrabandValue = -2;
-    private static int attackUnitValue = -8;
-    private static int killUnitValue = -15;
+    private static int inAttckRangeValue = 16;
+    private static int inPossibleAttackRangeValue = 12;
+    private static int acquireContrabandValue = -8;
+    private static int attackUnitValue = -32;
+    private static int killUnitValue = -60;
+    private static int unitViewDistance = 10;
 
+    private bool debug = false;
 
-    private void testQueue()
-    {
-        ArrayList visited = new ArrayList();
-        PriorityQueue<Node> queue = new PriorityQueue<Node>();
-        for (int i = 0; i < 10; i++)
-        {
-            Node start = new Node(tileManager.mapTiles[0,0], null, UnityEngine.Random.Range(0, 100));
-            queue.Push(start);
-        }
-        test = true;
-        queue.Push(new Node(tileManager.mapTiles[1, 1], null, -1));
-        test = false;
-        while (queue.Size() > 0)
-        {
-            Node temp = queue.Pop();
-            print(temp.value);
-        }
-    }
     void OnApplicationQuit()
     {
         endThreads = true;
     }
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         //objectives = new List<KeyValuePair<MapTile, string>>();
         objectives = new ArrayList();
         objectiveBuilder = new Thread(objectiveListHandler);
@@ -61,7 +47,8 @@ public class AI : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         if (Input.GetKey(KeyCode.T))
         {
             print(objectives.Count);
@@ -72,8 +59,14 @@ public class AI : MonoBehaviour {
                     print("I'm confused...");
             }
         }
-        if (Input.GetKey(KeyCode.P))
-            testQueue();
+        if (Input.GetKey(KeyCode.D))
+        {
+            debug = true;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            debug = false;
+        }
         // In case it didn't find it the first time
         if (unitManager == null || tileManager == null || turnManager == null)
         {
@@ -97,19 +90,21 @@ public class AI : MonoBehaviour {
      **/
     private void objectiveListHandler()
     {
-        while(!endThreads)
+        while (!endThreads)
         {
             try
             {
                 //print("still running");
                 foreach (UnitClass unit in unitManager.EnemyUnits)
                 {
+                    if (unit.currentTile == null)
+                        continue;
                     ArrayList foundObectives = new ArrayList();
-                    for (int rangeX = -5; rangeX <= 5; rangeX++)
+                    for (int rangeX = -unitViewDistance; rangeX <= unitViewDistance; rangeX++)
                     {
-                        for (int rangeY = -5; rangeY <= 5; rangeY++)
+                        for (int rangeY = -unitViewDistance; rangeY <= unitViewDistance; rangeY++)
                         {
-                            if (Mathf.Abs(rangeX) + Mathf.Abs(rangeY) <= 5)
+                            if (Mathf.Abs(rangeX) + Mathf.Abs(rangeY) <= unitViewDistance)
                             {
                                 unit.currentTile.Bern(unit.currentTile.xPosition + rangeX, unit.currentTile.yPosition + rangeY, foundObectives);
                             }
@@ -134,14 +129,15 @@ public class AI : MonoBehaviour {
                                 }
                                 lock (objectives)
                                 {
-                                    if(obj.Value != null)
+                                    if (obj.Value != null)
                                         objectives.Add(obj);
                                 }
                             }
                         }
                     }
                 }
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 print(e.StackTrace);
             }
@@ -155,7 +151,7 @@ public class AI : MonoBehaviour {
         {
             foreach (KeyValuePair<MapTile, object> obj in objectives)
             {
-                if(obj.Value == unit)
+                if (obj.Value == unit)
                 {
                     objectives.Remove(obj);
                     break;
@@ -179,7 +175,7 @@ public class AI : MonoBehaviour {
         }
     }
 
-    public void remove (KeyValuePair<MapTile, object> obj)
+    public void remove(KeyValuePair<MapTile, object> obj)
     {
         lock (objectives)
         {
@@ -207,7 +203,8 @@ public class AI : MonoBehaviour {
             foreach (UnitClass unit in temp)
             {
                 Objective next = determineMove(unit);
-                
+                if (debug)
+                    print(next.tile + "  :  " + next.value);
                 MapTile nextMove = next.tile;
                 //UnitClass playerUnit = findNearestPlayerUnit(unit);
                 if (nextMove != null)
@@ -215,7 +212,7 @@ public class AI : MonoBehaviour {
                     // if (ManhattanDistance(unit.gameObject, playerUnit.gameObject) > unit.range)
                     //     yield return StartCoroutine(move(unit, playerUnit));
                     yield return StartCoroutine(move(unit, nextMove));
-                    
+
                     // Currently possible for a different unit to kill the inteded target before reaching this point so
                     // null check makes sure it is still alive
                     if (next.unit != null && next.attack)
@@ -244,11 +241,12 @@ public class AI : MonoBehaviour {
             {
                 foreach (KeyValuePair<MapTile, object> obj in objectives)
                 {
-                    if(obj.Value != null)
+                    if (obj.Value != null)
                         tempList.Add(obj);
                 }
             }
-        } else
+        }
+        else
         {
             if (unit.CurrentPatrolTile == null)
                 setCurrentPatrolTileClosest(unit);
@@ -271,7 +269,7 @@ public class AI : MonoBehaviour {
         }
         setDangerousTiles(tempList);
         unit.displayMovementPath();
-        
+
         foreach (KeyValuePair<MapTile, object> obj in tempList)
         {
             Contraband contraband;
@@ -293,7 +291,7 @@ public class AI : MonoBehaviour {
                 }
                 pathToObj = FindPathToUnit(unit.currentTile, findClosestAdjacentTile(unit.currentTile, obj.Key));
                 queue.Push(DetermineObjectiveValue(unit.currentTile, unit, objUnit, 0));
-                int closerToObj = 0;
+
                 for (int i = unit.speed; i > 0; i--)
                 {
                     if (pathToObj.Count - i >= 0)
@@ -301,17 +299,26 @@ public class AI : MonoBehaviour {
                         movementPath.Add(pathToObj[pathToObj.Count - i]);
                     }
                 }
+                int closerToObj = -movementPath.Count;
                 foreach (MapTile curTile in movementPath)
                 {
+                    if (debug)
+                    {
+                        print("movement: " + curTile + "  :  " + closerToObj);
+                    }
+
                     queue.Push(DetermineObjectiveValue(curTile, unit, objUnit, closerToObj));
-                    closerToObj -= 2;
+                    closerToObj += 1;
                 }
-              
-            } catch (Exception e) {
+
+            }
+            catch (Exception e)
+            {
                 print("not unit");
                 notUnit = true;
             }
-            try { 
+            try
+            {
                 if (!notContraband)
                 {
                     contraband = (Contraband)obj.Value;
@@ -327,11 +334,13 @@ public class AI : MonoBehaviour {
                     }
                     foreach (MapTile curTile in movementPath)
                     {
+
                         queue.Push(DetermineObjectiveValue(obj.Key, unit, contraband, closerToObj));
                         closerToObj--;
                     }
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 notContraband = true;
             }
@@ -340,21 +349,41 @@ public class AI : MonoBehaviour {
                 remove(obj);
             }
         }
-        foreach(MapTile tile in tileManager.getPathList())
+        foreach (MapTile tile in tileManager.getPathList())
         {
-            queue.Push(DetermineObjectiveValue(tile, unit, 10));
+            queue.Push(DetermineObjectiveValue(tile, unit, 3));
         }
         Objective ret = queue.Pop();
-        while(ret.tile.currentUnit != null)
+        if (ret.tile.currentUnit != unit)
         {
-            ret = queue.Pop();
+            while (ret.tile.currentUnit != null)
+            {
+                ret = queue.Pop();
+            }
+        }
+        if (false)
+        {
+            print(ret.tile + "  :  " + ret.value);
+            int s = 50;
+            while (queue.Size() > 0 && s > 0)
+            {
+                Objective t = queue.Pop();
+                print("Here:  " + t.tile + "  :  " + t.value);
+                s--;
+            }
+            print("");
         }
         tileManager.resetDangerousTiles();
         return ret;
     }
 
+    /**
+     * Determins the value when the AI unit is heading towards an opposing unit
+     **/
     private Objective DetermineObjectiveValue(MapTile tile, UnitClass aiUnit, UnitClass playerUnit, int closerTo)
     {
+        if (debug)
+            print(tile + "  :  " + tile.isInAttackRange() + "," + tile.isInPossibleAttackRange());
         Objective ret = new Objective(tile, 0);
         int value = 0;
         if (tile.isInAttackRange())
@@ -382,6 +411,7 @@ public class AI : MonoBehaviour {
     private Objective DetermineObjectiveValue(MapTile tile, UnitClass aiUnit, Contraband contraband, int closerTo)
     {
         int value = 0;
+
         if (tile.isInAttackRange())
             value += inAttckRangeValue;
         else if (tile.isInPossibleAttackRange())
@@ -410,19 +440,19 @@ public class AI : MonoBehaviour {
         ArrayList dangerousTiles = new ArrayList();
         foreach (KeyValuePair<MapTile, object> obj in objList)
         {
-            if (obj.Value == typeof(UnitClass))
+            try
             {
                 UnitClass playerUnit = (UnitClass)obj.Value;
                 playerUnit.displayMovementPath();
+                determineDangerousTiles(playerUnit.currentTile, true, playerUnit.range, dangerousTiles);
                 foreach (MapTile tile in tileManager.getPathList())
                 {
-                    if (tile == playerUnit.currentTile)
-                        determineDangerousTiles(tile, true, playerUnit.range, dangerousTiles);
-                    else
+                    if (tile != playerUnit.currentTile)
                         determineDangerousTiles(tile, false, playerUnit.range, dangerousTiles);
                 }
                 tileManager.resetMovementTiles();
             }
+            catch (Exception e) { }
         }
         tileManager.setDangerousTiles(dangerousTiles);
     }
@@ -455,7 +485,7 @@ public class AI : MonoBehaviour {
             findDangerousTiles(currentTile.getUp(), range - 1, dangerousTiles, playerTile, temp);
         }
 
-        foreach(MapTile tile in temp)
+        foreach (MapTile tile in temp)
         {
             tile.resetAttackTile();
         }
@@ -476,6 +506,7 @@ public class AI : MonoBehaviour {
         curTile.setStoredRange(range);
         //if (!dangerousTiles.Contains(curTile))
         dangerousTiles.Add(curTile);
+        curTile.GetComponent<SpriteRenderer>().color = Color.blue;
 
 
         if (curTile.getLeft() != null && !tileManager.containsDangerousTile(range - 1, curTile.getLeft(), playerTile))
@@ -497,16 +528,16 @@ public class AI : MonoBehaviour {
     }
 
     /**
-     * Moves the aiUnit towards the playerUnit
+     * Moves the aiUnit towards the destination tile
      */
     private IEnumerator move(UnitClass aiUnit, MapTile dest)
     {
         aiUnit.displayMovementPath();
         int distance = int.MaxValue;
-        
+
         ArrayList pathToUnit = FindPathToUnit(aiUnit.currentTile, dest);
         ArrayList movementPath = new ArrayList();
-        for(int i = aiUnit.speed; i > 0; i--)
+        for (int i = aiUnit.speed; i > 0; i--)
         {
             if (pathToUnit.Count - i >= 0)
             {
@@ -515,17 +546,18 @@ public class AI : MonoBehaviour {
             }
         }
         dest = (MapTile)movementPath[0];
-        if (dest.currentUnit != null)
-        {
-            movementPath.Remove(dest);
-            while (movementPath.Count > 0)
-            {
-                dest = (MapTile)movementPath[0];
-                if (dest.currentUnit == null)
-                    break;
-                movementPath.Remove(dest);
-            }
-        }
+
+        /* if (dest.currentUnit != null)
+         {
+             movementPath.Remove(dest);
+             while (movementPath.Count > 0)
+             {
+                 dest = (MapTile)movementPath[0];
+                 if (dest.currentUnit == null)
+                     break;
+                 movementPath.Remove(dest);
+             }
+         }*/
         aiUnit.MoveTo(movementPath, dest);
         dest.currentUnit = aiUnit;
         tileManager.resetAllTiles();
@@ -545,10 +577,10 @@ public class AI : MonoBehaviour {
 
     private MapTile findClosestAdjacentTile(MapTile ai, MapTile player)
     {
-        
+
         MapTile closest = null;
         List<MapTile> adjacentTiles = player.getAdjacentTiles();
-        
+
         int min = int.MaxValue;
         foreach (MapTile tile in player.getAdjacentTiles())
         {
@@ -558,7 +590,7 @@ public class AI : MonoBehaviour {
                 closest = tile;
             }
         }
-        
+
         return closest;
     }
 
@@ -604,12 +636,18 @@ public class AI : MonoBehaviour {
      **/
     private ArrayList FindPathToUnit(MapTile startTile, MapTile endTile)
     {
+
         ArrayList visited = new ArrayList();
+        if (startTile == endTile)
+        {
+            visited.Add(startTile);
+            return visited;
+        }
         PriorityQueue<Node> queue = new PriorityQueue<Node>();
         Node start = new Node(startTile, null, 0);
         queue.Push(start);
         int currentPathLength = 0;
-        while(true)
+        while (true)
         {
             if (queue.Size() == 0)
                 print("well theres a problem");
@@ -629,6 +667,8 @@ public class AI : MonoBehaviour {
                 {
                     if (!tile.tileType.Equals("Building") && !visited.Contains(tile))
                     {
+                        if (tile == null)
+                            print("grrrr");
                         Node adj = new Node(tile, curNode,
                             tile.getMovementWeight() + ManhattanDistance(tile.gameObject, endTile.gameObject) + curNode.current + 1);
                         adj.current = curNode.current + 1;
@@ -642,14 +682,14 @@ public class AI : MonoBehaviour {
         ArrayList path = new ArrayList();
         // is currently the tile the player unit is on, can't move directly on top so get the tile before it on the path
         //start = start.parent;
-        while(start.tile != startTile)
+        while (start.tile != startTile)
         {
             //rint(start.tile.gameObject.transform.position.x + "," + start.tile.gameObject.transform.position.y);
             path.Add(start.tile);
             start = start.parent;
-            
+
         }
-        
+
         return path;
     }
     // Method shouldn't be needed anymore
@@ -678,7 +718,7 @@ public class AI : MonoBehaviour {
     private void setCurrentPatrolTileClosest(UnitClass unit)
     {
         int min = int.MaxValue;
-        foreach(MapTile tile in patrolTiles)
+        foreach (MapTile tile in patrolTiles)
         {
             int dis = ManhattanDistance(unit.gameObject, tile.gameObject);
             if (dis < min)
@@ -694,7 +734,7 @@ public class AI : MonoBehaviour {
      **/
     private void setNewPatrolTile(UnitClass unit)
     {
-        
+
         int pos = random.Next(patrolTiles.Count);
         MapTile tile = patrolTiles[pos];
         while (tile == unit.CurrentPatrolTile && patrolTiles.Count > 1)
@@ -703,7 +743,7 @@ public class AI : MonoBehaviour {
             tile = patrolTiles[pos];
         }
         unit.CurrentPatrolTile = tile;
-            
+
     }
 
     private float distanceBetween(GameObject unit, GameObject otherUnit)
@@ -718,7 +758,8 @@ public class AI : MonoBehaviour {
     }
 
 
-    public class PriorityQueue<T> where T : IComparable<T> {
+    public class PriorityQueue<T> where T : IComparable<T>
+    {
 
         private List<T> data;
 
@@ -732,10 +773,10 @@ public class AI : MonoBehaviour {
             data.Add(item);
 
             int child = data.Count - 1;
-            
-            while(child > 0)
+
+            while (child > 0)
             {
-                int parent = ((child-1) / 2);
+                int parent = ((child - 1) / 2);
 
                 if (data[parent].CompareTo(data[child]) < 0)
                     break;
@@ -746,17 +787,17 @@ public class AI : MonoBehaviour {
             }
         }
 
-        public T Pop ()
+        public T Pop()
         {
             T ret = data[0];
             data[0] = data[data.Count - 1];
             data.RemoveAt(data.Count - 1);
             int index = 0;
-            
+
             int last = data.Count - 1;
             while (true)
             {
-                int leftChild = index*2+1;
+                int leftChild = index * 2 + 1;
                 int rightChild = leftChild + 1;
                 if (leftChild > last)
                     break;
@@ -820,7 +861,7 @@ public class AI : MonoBehaviour {
 
         public override string ToString()
         {
-            return ""+value;
+            return "" + value;
         }
 
         public int CompareTo(Node other)
