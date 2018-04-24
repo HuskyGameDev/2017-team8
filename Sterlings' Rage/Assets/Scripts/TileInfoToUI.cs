@@ -6,7 +6,13 @@ using UnityEngine.UI;
 public class TileInfoToUI : MonoBehaviour {
 
     public MapTile holding;
-    public Text SelectedInfo;
+    public Text TileType;
+    public Text UnitType;
+    public Text UnitHealth;
+    public Text UnitSpeed;
+    public Text UnitRange;
+    public Text UnitDamage;
+
     bool hadRecent = false;
 	private TileInfoToUI UIInfo;
 	private GameObject UIRightClick;
@@ -60,10 +66,22 @@ public class TileInfoToUI : MonoBehaviour {
         {
             UIUnit.GetComponent<Image>().enabled = false;
         }
-        SelectedInfo.text = holding.tileType;
+        TileType.text = holding.tileType;
         if (holding.GetComponent<MapTile>().currentUnit != null)
         {
-            SelectedInfo.text = holding.tileType + holding.currentUnit.UnitClassName.ToString();
+            UnitType.text = holding.currentUnit.UnitClassName.ToString();
+            UnitHealth.text = holding.currentUnit.health.ToString();
+            UnitSpeed.text = holding.currentUnit.speed.ToString();
+            UnitRange.text = holding.currentUnit.range.ToString();
+            UnitDamage.text = holding.currentUnit.damage.ToString();
+        }
+        else
+        {
+            UnitType.text = "";
+            UnitHealth.text = "";
+            UnitSpeed.text = "";
+            UnitRange.text = "";
+            UnitDamage.text = "";
         }
         //UIInfo.GetComponent<Text>().text = SelectedInfo;
     }

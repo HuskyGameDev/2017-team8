@@ -33,6 +33,7 @@ public class UnitClass : MonoBehaviour {
 	public bool moving;
     public bool playerUnit;
     public bool spotted;
+    public int damageCount;
 
 	public string UnitClassName {
 		get { return unitClassName; }
@@ -419,6 +420,7 @@ public class UnitClass : MonoBehaviour {
         isMovingY = false;
 		isMovingY = false;
 		dest = null;
+        damageCount = 0;
         print(gameObject.tag);
         playerUnit = gameObject.tag.Equals("PlayerUnit");
         spotted = false;

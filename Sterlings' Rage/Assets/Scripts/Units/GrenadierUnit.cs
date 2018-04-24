@@ -42,5 +42,14 @@ void Start(){
             unitManager.unitKilled(this);
             Destroy(gameObject);
     	}
+        //damaged tick
+        if (damageCount != 0)
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = Color.white;
+        }
     }
 }
