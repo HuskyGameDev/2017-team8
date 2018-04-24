@@ -168,6 +168,37 @@ public class UnitClass : MonoBehaviour {
         }
     }
 
+    /**
+     * Needed for the AI to better calculate the dangerous tiles
+     **/
+    public void displayMovementPathForAI(int speed)
+    {
+        // Resets if the user had already selected a different unit
+        if (unitManager.getSelectedUnit() != null)
+            tileManager.resetMovementTiles();
+        unitManager.setSelectedUnit(this);
+
+        ArrayList pathTiles = new ArrayList();
+
+        if (currentTile.getLeft() != null)
+        {
+            findPossiblePaths(currentTile.getLeft(), speed - currentTile.getLeft().getMovementWeight(), pathTiles, currentTile);
+        }
+        if (currentTile.getDown() != null)
+        {
+            findPossiblePaths(currentTile.getDown(), speed - currentTile.getDown().getMovementWeight(), pathTiles, currentTile);
+        }
+        if (currentTile.getRight() != null)
+        {
+            findPossiblePaths(currentTile.getRight(), speed - currentTile.getRight().getMovementWeight(), pathTiles, currentTile);
+        }
+        if (currentTile.getUp() != null)
+        {
+            findPossiblePaths(currentTile.getUp(), speed - currentTile.getUp().getMovementWeight(), pathTiles, currentTile);
+        }
+        tileManager.setPathList(pathTiles);
+    }
+
     public void displayMovementPath()
     {
         // Resets if the user had already selected a different unit

@@ -24,7 +24,14 @@ public class AI : MonoBehaviour
     private static int acquireContrabandValue = -8;
     private static int attackUnitValue = -32;
     private static int killUnitValue = -60;
+    private static int dyingValue = 50;
     private static int unitViewDistance = 10;
+    private static int thresholdBetweenUnits = 4;
+    private static int safteyInNumbersValue = -3;
+    private static int closeThreshold = 5;
+    private static int closeObjectiveValue = -5;
+    private static int tooFarDist = 15;
+    private static int tooFarDistValue = 10;
 
     private bool debug = false;
 
@@ -270,6 +277,8 @@ public class AI : MonoBehaviour
         setDangerousTiles(tempList);
         unit.displayMovementPath();
 
+        
+        
         foreach (KeyValuePair<MapTile, object> obj in tempList)
         {
             Contraband contraband;
@@ -278,10 +287,15 @@ public class AI : MonoBehaviour
             ArrayList movementPath = new ArrayList();
             bool notUnit = false;
             bool notContraband = false;
-
+            
+            // Using the keyValuePairs to store different types made a couple problems so it tries to cast
+            // to a unit and if that fails tries casting to contraband. So if both fail should remove the objective
+            // from the list if it failed to be removed before
             try
             {
+                
                 objUnit = (UnitClass)obj.Value;
+                
                 // Unit is no longer there
                 if (ManhattanDistance(unit.gameObject, obj.Key.gameObject) <= 2 && obj.Key.currentUnit == null)
                 {
@@ -289,26 +303,31 @@ public class AI : MonoBehaviour
                     notUnit = true;
                     setCurrentPatrolTileClosest(unit);
                 }
-                pathToObj = FindPathToUnit(unit.currentTile, findClosestAdjacentTile(unit.currentTile, obj.Key));
-                queue.Push(DetermineObjectiveValue(unit.currentTile, unit, objUnit, 0));
-
-                for (int i = unit.speed; i > 0; i--)
+                if (!unit.UnitClassName.Equals("MedicUnit"))
                 {
-                    if (pathToObj.Count - i >= 0)
-                    {
-                        movementPath.Add(pathToObj[pathToObj.Count - i]);
-                    }
-                }
-                int closerToObj = -movementPath.Count;
-                foreach (MapTile curTile in movementPath)
-                {
-                    if (debug)
-                    {
-                        print("movement: " + curTile + "  :  " + closerToObj);
-                    }
 
-                    queue.Push(DetermineObjectiveValue(curTile, unit, objUnit, closerToObj));
-                    closerToObj += 1;
+
+                    pathToObj = FindPathToUnit(unit.currentTile, findClosestAdjacentTile(unit.currentTile, obj.Key));
+                    queue.Push(DetermineObjectiveValue(unit.currentTile, unit, objUnit, 0));
+
+                    for (int i = unit.speed; i > 0; i--)
+                    {
+                        if (pathToObj.Count - i >= 0)
+                        {
+                            movementPath.Add(pathToObj[pathToObj.Count - i]);
+                        }
+                    }
+                    int closerToObj = -movementPath.Count;
+                    foreach (MapTile curTile in movementPath)
+                    {
+                        if (debug)
+                        {
+                            print("movement: " + curTile + "  :  " + closerToObj);
+                        }
+
+                        queue.Push(DetermineObjectiveValue(curTile, unit, objUnit, closerToObj));
+                        closerToObj += 1;
+                    }
                 }
 
             }
@@ -322,7 +341,10 @@ public class AI : MonoBehaviour
                 if (!notContraband)
                 {
                     contraband = (Contraband)obj.Value;
-                    print(contraband.gameObject);
+
+                    // Wierd case where the contraband object still exists after the gameObject was destroyed
+                    // So calling this throws an expection that is caught so that it will be removed from the objetive list
+                    GameObject test = contraband.gameObject;
                     pathToObj = FindPathToUnit(unit.currentTile, contraband.currentTile);
                     int closerToObj = 0;
                     for (int i = unit.speed; i > 0; i--)
@@ -349,9 +371,32 @@ public class AI : MonoBehaviour
                 remove(obj);
             }
         }
+        if (unit.UnitClassName.Equals("MedicUnit"))
+        {
+            foreach(UnitClass ally in unitManager.EnemyUnits)
+            {
+                ArrayList pathToObj = FindPathToUnit(unit.currentTile, findClosestAdjacentTile(unit.currentTile, ally.currentTile));
+                ArrayList movementPath = new ArrayList();
+                int closerToAlly = 0;
+                for (int i = unit.speed; i > 0; i--)
+                {
+                    if (pathToObj.Count - i >= 0)
+                    {
+                        movementPath.Add(pathToObj[pathToObj.Count - i]);
+                    }
+                }
+
+                foreach (MapTile curTile in movementPath)
+                {
+                    queue.Push(DetermineObjectiveValueForMedic(curTile, unit, ally, closerToAlly));
+                    closerToAlly -= 3;
+                }
+            }
+        }
+
         foreach (MapTile tile in tileManager.getPathList())
         {
-            queue.Push(DetermineObjectiveValue(tile, unit, 3));
+            queue.Push(DetermineObjectiveValue(tile, unit, 10));
         }
         Objective ret = queue.Pop();
         if (ret.tile.currentUnit != unit)
@@ -360,18 +405,6 @@ public class AI : MonoBehaviour
             {
                 ret = queue.Pop();
             }
-        }
-        if (false)
-        {
-            print(ret.tile + "  :  " + ret.value);
-            int s = 50;
-            while (queue.Size() > 0 && s > 0)
-            {
-                Objective t = queue.Pop();
-                print("Here:  " + t.tile + "  :  " + t.value);
-                s--;
-            }
-            print("");
         }
         tileManager.resetDangerousTiles();
         return ret;
@@ -386,10 +419,7 @@ public class AI : MonoBehaviour
             print(tile + "  :  " + tile.isInAttackRange() + "," + tile.isInPossibleAttackRange());
         Objective ret = new Objective(tile, 0);
         int value = 0;
-        if (tile.isInAttackRange())
-            value += inAttckRangeValue;
-        else if (tile.isInPossibleAttackRange())
-            value += inPossibleAttackRangeValue;
+        value += determineDangerousTilesValue(tile, aiUnit);
         if (ManhattanDistance(tile.gameObject, playerUnit.gameObject) <= aiUnit.range)
         {
             if (tile.calculateAttackDamage(aiUnit, playerUnit) >= playerUnit.health)
@@ -401,7 +431,10 @@ public class AI : MonoBehaviour
             ret.unit = playerUnit;
             ret.attack = true;
         }
-        value += closerTo;
+        if (ManhattanDistance(playerUnit.gameObject, tile.gameObject) < ManhattanDistance(aiUnit.gameObject, playerUnit.gameObject))
+            value += closerTo;
+        value += determineMoveTowards(tile.gameObject, playerUnit.gameObject); 
+        value += allyUnitsInRange(aiUnit);
         ret.value = value;
         return ret;
     }
@@ -412,13 +445,12 @@ public class AI : MonoBehaviour
     {
         int value = 0;
 
-        if (tile.isInAttackRange())
-            value += inAttckRangeValue;
-        else if (tile.isInPossibleAttackRange())
-            value += inPossibleAttackRangeValue;
+        value += determineDangerousTilesValue(tile, aiUnit);
         if (contraband.currentTile == tile)
             value += acquireContrabandValue;
         value += 2 * closerTo;
+        value += allyUnitsInRange(aiUnit);
+        value += determineMoveTowards(tile.gameObject, contraband.gameObject);
         Objective ret = new Objective(tile, value);
         return ret;
     }
@@ -426,13 +458,24 @@ public class AI : MonoBehaviour
     private Objective DetermineObjectiveValue(MapTile tile, UnitClass aiUnit, int initalValue)
     {
         int value = initalValue;
-        if (tile.isInAttackRange())
-            value += inAttckRangeValue;
-        else if (tile.isInPossibleAttackRange())
-            value += inPossibleAttackRangeValue;
+        value += determineDangerousTilesValue(tile, aiUnit);
         value -= ManhattanDistance(tile.gameObject, aiUnit.gameObject);
         //print("Here: " + tile + ", " + value);
+        value += allyUnitsInRange(aiUnit);
         return new Objective(tile, value);
+    }
+
+    private Objective DetermineObjectiveValueForMedic(MapTile tile, UnitClass unit, UnitClass ally, int initialValue)
+    {
+        int value = initialValue;
+        value += determineDangerousTilesValue(tile, unit);
+        value += allyUnitsInRange(unit);
+        if (ManhattanDistance(tile.gameObject, ally.gameObject) <= unit.range)
+            value += ((1 / ally.health) * 30);
+        Objective ret = new Objective(tile, value);
+        ret.attack = true;
+        ret.unit = ally;
+        return ret;
     }
 
     private void setDangerousTiles(ArrayList objList)
@@ -443,12 +486,12 @@ public class AI : MonoBehaviour
             try
             {
                 UnitClass playerUnit = (UnitClass)obj.Value;
-                playerUnit.displayMovementPath();
-                determineDangerousTiles(playerUnit.currentTile, true, playerUnit.range, dangerousTiles);
+                playerUnit.displayMovementPathForAI(playerUnit.speed);
+                determineDangerousTiles(playerUnit.currentTile, true, playerUnit.range, dangerousTiles, playerUnit);
                 foreach (MapTile tile in tileManager.getPathList())
                 {
                     if (tile != playerUnit.currentTile)
-                        determineDangerousTiles(tile, false, playerUnit.range, dangerousTiles);
+                        determineDangerousTiles(tile, false, playerUnit.range, dangerousTiles,playerUnit);
                 }
                 tileManager.resetMovementTiles();
             }
@@ -465,24 +508,24 @@ public class AI : MonoBehaviour
      *            range of the playerUnit or if it is possible for the unit to move and attack the AI's unit. The AI is more likely to avoid
      *            walking into immediate attack range than somewhere that the player could potentailly move to and attack.
      **/
-    public void determineDangerousTiles(MapTile currentTile, bool playerTile, int range, ArrayList dangerousTiles)
+    public void determineDangerousTiles(MapTile currentTile, bool playerTile, int range, ArrayList dangerousTiles, UnitClass playerUnit)
     {
         ArrayList temp = new ArrayList();
         if (currentTile.getLeft() != null)
         {
-            findDangerousTiles(currentTile.getLeft(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(currentTile.getLeft(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
         if (currentTile.getDown() != null)
         {
-            findDangerousTiles(currentTile.getDown(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(currentTile.getDown(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
         if (currentTile.getRight() != null)
         {
-            findDangerousTiles(currentTile.getRight(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(currentTile.getRight(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
         if (currentTile.getUp() != null)
         {
-            findDangerousTiles(currentTile.getUp(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(currentTile.getUp(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
 
         foreach (MapTile tile in temp)
@@ -491,40 +534,86 @@ public class AI : MonoBehaviour
         }
     }
 
-    public void findDangerousTiles(MapTile curTile, int range, ArrayList dangerousTiles, bool playerTile, ArrayList temp)
+    public void findDangerousTiles(MapTile curTile, int range, ArrayList dangerousTiles, bool playerTile, ArrayList temp, UnitClass playerUnit)
     {
         if (range < 0)
         {
             return;
         }
         if (playerTile)
-            curTile.setInAttackRange(true);
+            curTile.setInAttackRange(true, playerUnit);
         else
-            curTile.setInPossibleAttackRange(true);
+            curTile.setInPossibleAttackRange(true, playerUnit);
 
         temp.Add(curTile);
         curTile.setStoredRange(range);
-        //if (!dangerousTiles.Contains(curTile))
         dangerousTiles.Add(curTile);
-        curTile.GetComponent<SpriteRenderer>().color = Color.blue;
 
 
-        if (curTile.getLeft() != null && !tileManager.containsDangerousTile(range - 1, curTile.getLeft(), playerTile))
+        if (curTile.getLeft() != null && !tileManager.containsDangerousTile(range - 1, curTile.getLeft(), playerTile, playerUnit))
         {
-            findDangerousTiles(curTile.getLeft(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(curTile.getLeft(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
-        if (curTile.getDown() != null && !tileManager.containsDangerousTile(range - 1, curTile.getDown(), playerTile))
+        if (curTile.getDown() != null && !tileManager.containsDangerousTile(range - 1, curTile.getDown(), playerTile, playerUnit))
         {
-            findDangerousTiles(curTile.getDown(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(curTile.getDown(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
-        if (curTile.getRight() != null && !tileManager.containsDangerousTile(range - 1, curTile.getRight(), playerTile))
+        if (curTile.getRight() != null && !tileManager.containsDangerousTile(range - 1, curTile.getRight(), playerTile, playerUnit))
         {
-            findDangerousTiles(curTile.getRight(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(curTile.getRight(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
-        if (curTile.getUp() != null && !tileManager.containsDangerousTile(range - 1, curTile.getUp(), playerTile))
+        if (curTile.getUp() != null && !tileManager.containsDangerousTile(range - 1, curTile.getUp(), playerTile, playerUnit))
         {
-            findDangerousTiles(curTile.getUp(), range - 1, dangerousTiles, playerTile, temp);
+            findDangerousTiles(curTile.getUp(), range - 1, dangerousTiles, playerTile, temp, playerUnit);
         }
+    }
+
+    /**
+     * Finds units within a specified range as the AI units will prefer saftey in numbers
+     **/
+    private int allyUnitsInRange(UnitClass aiUnit)
+    {
+        int ret = 0;
+        foreach (UnitClass unit in unitManager.EnemyUnits)
+        {
+            if (aiUnit != unit && ManhattanDistance(aiUnit.gameObject, unit.gameObject) < thresholdBetweenUnits)
+                ret -= safteyInNumbersValue;
+        }
+        return ret;
+    }
+
+    /**
+     * calculates a value based on how many units can attack the tile
+     **/
+    private int determineDangerousTilesValue(MapTile tile, UnitClass aiUnit)
+    {
+        int ret = 0;
+        foreach (UnitClass unit in tile.getInAttackRangeUnits())
+        {
+            print(unit);
+            ret += inAttckRangeValue;
+            if (unit.damage >= aiUnit.health)
+                ret += dyingValue;
+        }
+        
+        foreach (UnitClass unit in tile.getInPossibleAttackRangeUnits())
+        {
+            ret += inPossibleAttackRangeValue;
+            if (unit.damage >= aiUnit.health)
+                ret += dyingValue/2;
+        }
+        return ret;
+    }
+
+    private int determineMoveTowards(GameObject tile, GameObject objective)
+    {
+        int ret = 0;
+        if (ManhattanDistance(tile, objective) > tooFarDist)
+            ret += tooFarDistValue;
+        else if (ManhattanDistance(tile, objective) < closeThreshold)
+            ret += closeObjectiveValue;
+        return ret;
+
     }
 
     /**
