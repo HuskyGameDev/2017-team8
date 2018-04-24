@@ -46,6 +46,7 @@ void Start(){
         if (damageCount != 0)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
+            damageCount--;
         }
         else
         {
