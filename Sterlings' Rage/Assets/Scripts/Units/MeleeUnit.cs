@@ -45,6 +45,7 @@ public class MeleeUnit : UnitClass {
         if (damageCount != 0)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
+            damageCount--;
         }
         else
         {
