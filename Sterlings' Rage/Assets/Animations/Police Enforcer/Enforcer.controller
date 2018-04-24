@@ -48,8 +48,8 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Firing
-  m_Speed: 1
+  m_Name: Attack
+  m_Speed: 0.15
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101353643695799712}
@@ -61,7 +61,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c608b9ade660a0e478e4f17863a9e317, type: 2}
+  m_Motion: {fileID: 7400000, guid: a590498a10a201c4eb69384aa6f13c3b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -73,7 +73,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Idle
-  m_Speed: 1
+  m_Speed: 0.15
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -84,7 +84,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 763d385a5f6bad34594100beb0595ea9, type: 2}
+  m_Motion: {fileID: 7400000, guid: 60ab4264ba320c24bbe3a4833098c640, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
